@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Regisztráció</title>
+
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Kezdőlap</a></li>
+            <li><a href="enciklopedia.html">Enciklopédia</a></li>
+            <li><a href="turaszervezes.html">Túrák</a></li>
+            <li><a href="terkep.html">Térkép</a></li>
+            <li><a href="forum.html">Fórum</a></li>
+            <li><a href="http://localhost:3000/login/login.html">Bejelentkezés</a></li>
+            <li><a href="http://localhost:3000/register/register.html">Regisztráció</a></li>
+        </ul>
+    </nav>
+
+    <form action="/register"method="post">
+        <div class="container"> <!--A fő containere a felületnek-->
+            <div class="row full-height justify-content-center"><!--Egy sort állít be ami      betölti  az egész oldalt-->
+                <div class="align-self-center py-5"><!--Középre igazítjás, py-5= padding *top,*bottom-->
+                    <div class="section pb-5 pt-5 text-center">
+                                <!--Register felület (kártya hátulja)-->
+                                <div class="card-3d-wrap mx-auto">
+                                    <div>
+                                <div class="card-back">
+                                    <div class="center-wrap">
+                                        <div class="section text-center">
+                                            <h4 class="mb-4 pb-3">Regisztráció</h4>
+
+                                            <div class="form-group">
+                                                <input type="text" class="form-style" name="name" placeholder="Felhasználónév:">
+                                                <i class="input-icon uil uil-user"></i>
+                                            </div>
+                                            
+                                            <div class="form-group mt-2">
+                                                <input type="email" class="form-style" name="email" placeholder="valami@gmail.com">
+                                                <i class="input-icon uil uil-at"></i>
+                                            </div>
+
+                                            <div class="form-group mt-2">
+                                                <input type="password" class="form-style" name="password" placeholder="Jelszó:">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+
+                                            <div class="form-group mt-2">
+                                                <input type="password" class="form-style" name="passwordAgain" placeholder="Jelszó ismét:">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+
+                                            <input type="submit" value="Regisztráció" class="btn mt-4">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        
+
+            </div>
+        </div>
+    </form>
+
+
+</body>
+</html>
