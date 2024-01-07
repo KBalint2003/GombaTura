@@ -1,4 +1,4 @@
-<form action="http://localhost:3000/register/register.html"method="post">
+<form action="" method="post" (submit)="onSubmit()">
   <div class="container"> <!--A fő containere a felületnek-->
     <div class="row full-height justify-content-center"><!--Egy sort állít be ami      betölti  az egész oldalt-->
       <div class="align-self-center py-5"><!--Középre igazítjás, py-5= padding *top,*bottom-->
@@ -12,17 +12,17 @@
                     <h4 class="mb-4 pb-3">Regisztráció</h4>
 
                     <div class="form-group">
-                      <input type="text" class="form-style" name="felhasznalonev" placeholder="Felhasználónév:">
+                      <input type="text" class="form-style" name="felhasznalonev" placeholder="Felhasználónév:" [(ngModel)]="felhasznalo.felhasznalonev">
                       <i class="input-icon uil uil-user"></i>
                     </div>
 
                     <div class="form-group mt-2">
-                      <input type="email" class="form-style" name="email" placeholder="valami@gmail.com">
+                      <input type="email" class="form-style" name="email" placeholder="valami@gmail.com" [(ngModel)]="felhasznalo.email">
                       <i class="input-icon uil uil-at"></i>
                     </div>
 
                     <div class="form-group mt-2">
-                      <input type="password" class="form-style" name="jelszo" placeholder="Jelszó:">
+                      <input type="password" class="form-style" name="jelszo" placeholder="Jelszó:" [(ngModel)]="felhasznalo.jelszo">
                       <i class="input-icon uil uil-lock-alt"></i>
                     </div>
 
