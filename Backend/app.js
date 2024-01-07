@@ -49,7 +49,7 @@ app.post('/login',checkNotAuthenticated, passport.authenticate('local', {
 }))
 
 app.get('/register',checkNotAuthenticated, (req, res) => {
-    res.render('register.ejs')
+    res.render('regisztracio.ejs')
 })
 
 app.post('/register' ,checkNotAuthenticated, async (req, res) => {

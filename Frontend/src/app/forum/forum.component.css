@@ -1,0 +1,33 @@
+.forum {
+  background-color: #FBF9F1;
+  border: 2px  solid black;
+  border-radius: 20px;
+  margin: 3% 10% 0 10%;
+}
+
+.forumFelhasznaloNev {
+  padding: 2%;
+  border-bottom: 2px solid black;
+  margin-top: 1.5%;
+}
+.forumKerdes {
+  margin-top: 1.5%;
+  text-align: center;
+}
+
+.like, .dislike{
+  margin-left: 10px;
+  width: 30px;
+}
+
+.forumHozzaadas {
+  bottom: 75%;
+  margin-left: 95%;
+  border: 3px solid black;
+  border-radius: 100px;
+  height: 50px;
+  width: 50px;
+  position: sticky;
+}
+
+

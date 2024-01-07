@@ -1,0 +1,30 @@
+.tura {
+  background-color: #FBF9F1;
+  margin: 2% 5% 0 10%;
+  border: 2px solid black;
+  border-radius: 20px;
+}
+
+.turaNevHelye {
+  border-bottom: 2px solid black;
+  padding: 0;
+}
+
+.turaNeve {
+  margin: 2% 0 2% 5%;
+  font-weight: bold;
+}
+
+.turaAdat {
+  margin: 2% 0 2% 10%;
+}
+
+.turaHozzaadas {
+  bottom: 75%;
+  margin-left: 95%;
+  border: 3px solid black;
+  border-radius: 100px;
+  height: 50px;
+  width: 50px;
+  position: sticky;
+}
