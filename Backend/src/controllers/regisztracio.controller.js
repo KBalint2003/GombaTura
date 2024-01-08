@@ -11,6 +11,8 @@ async function regisztracioPOSTController (req, res){
 
         const { felhasznalonev, email, jelszo } = req.body;
 
+        console.log(req.body);
+
         let felhasznalo = new Felhasznalo();
 
         let msg = false;
