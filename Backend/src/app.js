@@ -3,7 +3,9 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 
-const regisztracioRouter = require("./routes/regisztracio.route")
+const sequelize = require('./models/adatbazisKapcsolat.model')
+
+const regisztracioRouter = require("./routes/regisztracio.route");
 
 //Az express Szerver konfigurálása
 const app = express()
@@ -12,6 +14,9 @@ const PORT = 3000;
 app.use(express.json());
 
 app.use("/",regisztracioRouter);
+
+sequelize.kapcsolat();
+
 
 //A HTTP Szerver indítása a 3000-es porton
 app.listen(PORT, () => {
