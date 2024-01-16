@@ -20,7 +20,7 @@ app.use("/",regisztracioRouter);
 async function kapcsolat() {
     try {
         await sequelize.authenticate();
-        console.log('Sikeres kapcsolat az adatbázissal');
+        console.log('Sikeres kapcsolat az adatbázissal!');
 
         app.listen(PORT, () => {
             console.log(`A szerver elindult és elérhető a http://localhost:${PORT} URL-en!`)

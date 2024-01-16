@@ -1,4 +1,4 @@
-const Felhasznalo = require('../models/felhasznalo.model')
+const Felhasznalo = require('../models/felhasznalo')
 
 
 function regisztracioGETController(req, res){
@@ -10,8 +10,6 @@ async function regisztracioPOSTController (req, res){
     try{
 
         const { felhasznalonev, email, jelszo } = req.body;
-
-        console.log(req.body);
 
         let felhasznalo = new Felhasznalo();
 
