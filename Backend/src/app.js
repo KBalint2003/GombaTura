@@ -1,9 +1,9 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
-const passport = require('passport');
-const bodyParser = require('body-parser');
 
-const sequelize = require('./models/adatbazisKapcsolat.model')
+const sequelize = require('./models/adatbazisKapcsolat')
+const FelhasznaloModel = require('./models/felhasznalo.model')
+
+
 
 const regisztracioRouter = require("./routes/regisztracio.route");
 
@@ -31,7 +31,18 @@ async function kapcsolat() {
       }
 }
 
+sequelize.authenticate().then(() => {
+  console.log('Sikeres kapcsolat az adatbázissal!');
+  sequelize.modelManager.addModel(FelhasznaloModel);
+
+  sequelize.sync({alter:true}).then(() =>{
+
+    felhasznalo.save()
+  })
+}).catch((error) => {
+  console.log("Az adatbázissszerverrel való kapcsolat sikertelen")
+  console.log(error);})
+
 //A HTTP Szerver indítása a 3000-es porton
-kapcsolat();  
 
 

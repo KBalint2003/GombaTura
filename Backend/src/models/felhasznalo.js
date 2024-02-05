@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const validate = require('validate.js'); 
-const megkotesek = require('./megkotesek');
+const megkotesek = require('../megkotesek');
 const bcrypt = require('bcrypt');
 
 let felhasznaloModel = class Felhasznalo {

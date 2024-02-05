@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
-const sequelize = require("./adatbazisKapcsolat.model");
+const sequelize = require("./adatbazisKapcsolat");
 
 const Felhasznalo = sequelize.define('belepes', {
     
@@ -38,4 +38,4 @@ const Felhasznalo = sequelize.define('belepes', {
     timestamps: false
 });
 
-await Felhasznalo.sync({alter: true});
+module.exports = Felhasznalo;
