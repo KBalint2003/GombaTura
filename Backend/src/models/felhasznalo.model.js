@@ -1,11 +1,11 @@
-const { Sequelize } = require("sequelize");
-const sequelize = require("./adatbazisKapcsolat.model");
-const { DataTypes } = Sequelize;
+const { Sequelize,DataTypes } = require("sequelize");
+const sequelize = require("./adatbazisKapcsolat");
+
 
 const Felhasznalo = sequelize.define('belepes', {
     
     User_id: {
-        type: DataTypes.STRING(32),
+        type: DataTypes.STRING(50),
         allowNull: false,
         primaryKey: true
     },
@@ -16,30 +16,20 @@ const Felhasznalo = sequelize.define('belepes', {
     },
 
     Jelszo: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false,
 
     },
 
     Email: {
         type: DataTypes.STRING,
-        allowNull: false,
+       allowNull: false,
     },
 
-    Szuletesi_ido: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-        
-    },
 
-    Telefon_szam: {
-        allowNull: false,
-    }
+
 
 });
 
-await Felhasznalo.sync({alter: true}).then(()=> {
+module.exports = Felhasznalo;
 
-}).catch(() => {
-    
-});

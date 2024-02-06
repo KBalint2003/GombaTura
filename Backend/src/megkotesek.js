@@ -1,6 +1,6 @@
 let megkotesek = {};
 
-const regex = "[\-\'A-Za-z0-9áéíóöőúüűÁÉÍÓÖŐÚÜŰ ]+";
+const regex = "[\-\'A-Za-z0-9áéíóöőúüűÁÉÍÓÖŐÚÜŰ]+";
 
 megkotesek.felhasznalonev = () => {
     
