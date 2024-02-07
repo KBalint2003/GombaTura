@@ -1,4 +1,4 @@
-const felhasznaloModell = require('../models/felhasznalo.model')
+const felhasznaloModell = require('../models/felhasznalo.model') //
 
 const validate = require('validate.js'); 
 const { v4: uuidv4 } = require('uuid');
@@ -87,19 +87,16 @@ async function regisztracioPUTController (req, res){
             }
         }
     
-        const letarolandoJelszo = await jelszoHash(jelszo);
-
-
-
 
          felhasznalo = await felhasznaloModell.build({
             User_id: uuidv4(),
             Felhasznalonev: felhasznalonev,
             Email: email,
-            Jelszo: letarolandoJelszo
+            Jelszo: await jelszoHash(jelszo)
         })
         
 
+        
 
     await felhasznalo.save();
 

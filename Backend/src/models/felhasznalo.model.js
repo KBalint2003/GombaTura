@@ -1,5 +1,5 @@
 const { Sequelize,DataTypes } = require("sequelize");
-const sequelize = require("./adatbazisKapcsolat");
+const sequelize = require("../adatbazisKapcsolat");
 
 
 const Felhasznalo = sequelize.define('belepes', {

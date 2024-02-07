@@ -1,6 +1,6 @@
 const express = require('express');
 
-const sequelize = require('./models/adatbazisKapcsolat')
+const sequelize = require('./adatbazisKapcsolat')
 const FelhasznaloModel = require('./models/felhasznalo.model')
 
 
@@ -17,7 +17,6 @@ app.use("/",regisztracioRouter);
 
 
 //kapcsolat function, segítségével csatlakoztatni tudjuk az adatbázist a backend szerverrel, a backend csak akkor indul el, ha a bach-db közötti kapcsolat sikeres.
-
 
 sequelize.authenticate().then(() => {
   console.log('Sikeres kapcsolat az adatbázissal!');
