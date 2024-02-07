@@ -1,6 +1,6 @@
 const express = require('express');
 
-const sequelize = require('./models/adatbazisKapcsolat')
+const sequelize = require('./adatbazisKapcsolat')
 const FelhasznaloModel = require('./models/felhasznalo.model')
 
 
@@ -17,27 +17,16 @@ app.use("/",regisztracioRouter);
 
 
 //kapcsolat function, segítségével csatlakoztatni tudjuk az adatbázist a backend szerverrel, a backend csak akkor indul el, ha a bach-db közötti kapcsolat sikeres.
-async function kapcsolat() {
-    try {
-        await sequelize.authenticate();
-        console.log('Sikeres kapcsolat az adatbázissal!');
-
-        app.listen(PORT, () => {
-            console.log(`A szerver elindult és elérhető a http://localhost:${PORT} URL-en!`)
-        })
-      } 
-      catch (error) {
-        console.error('Nem sikerült csatlakozni az adatbázishoz.', error);
-      }
-}
 
 sequelize.authenticate().then(() => {
   console.log('Sikeres kapcsolat az adatbázissal!');
+
   sequelize.modelManager.addModel(FelhasznaloModel);
 
-  sequelize.sync({alter:true}).then(() =>{
-
-    felhasznalo.save()
+  sequelize.sync({}).then(() =>{
+    app.listen(PORT, () => {
+      console.log(`A szerver elindult és elérhető a http://localhost:${PORT} URL-en!`)
+  })
   })
 }).catch((error) => {
   console.log("Az adatbázissszerverrel való kapcsolat sikertelen")

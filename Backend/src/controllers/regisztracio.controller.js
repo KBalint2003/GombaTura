@@ -1,4 +1,4 @@
-const felhasznaloModell = require('../models/felhasznalo.model')
+const felhasznaloModell = require('../models/felhasznalo.model') //
 
 const validate = require('validate.js'); 
 const { v4: uuidv4 } = require('uuid');
@@ -9,13 +9,18 @@ function regisztracioGETController(req, res){
     res.send("Működik")
 }
 
+async function jelszoHash(jelszo){
+    const hashedJelszo = await bcrypt.hash(jelszo, 10);
+    return hashedJelszo;
+}
+
 async function regisztracioPUTController (req, res){
 
         const { felhasznalonev, email, jelszo } = req.body;
 
         //Felhasználónév lekezelése
         
-        if (!felhasznalonev) {
+        if (felhasznalonev === undefined) {
             res.status(400).json({
                 code:400,
                 message:"Nem lett megadva felhasználónév!"
@@ -38,7 +43,7 @@ async function regisztracioPUTController (req, res){
         
             //Email lekezelése
 
-            if (!email) {
+            if (email === undefined) {
                 res.status(400).json({
                     code:400,
                     message:"Nem lett megadva email cím!"
@@ -61,7 +66,7 @@ async function regisztracioPUTController (req, res){
         
         //jelszó lekezelése
 
-        if (!jelszo) {
+        if (jelszo === undefined) {
             res.status(400).json({
                 code:400,
                 message:"Nem lett megadva jelszó!"
@@ -81,22 +86,28 @@ async function regisztracioPUTController (req, res){
                 return;
             }
         }
-        
     
-        async function jelszoHash(jelszo){
-            const hashedJelszo = await bcrypt.hash(jelszo, 10);
-        }
-        
-        felhasznalo = felhasznaloModell.build({
-            id: uuidv4(),
-            felhasznalonev: felhasznalonev,
-            email: email,
-            jelszo: jelszoHash(jelszo)
+
+         felhasznalo = await felhasznaloModell.build({
+            User_id: uuidv4(),
+            Felhasznalonev: felhasznalonev,
+            Email: email,
+            Jelszo: await jelszoHash(jelszo)
         })
+        
+
+        
+
+    await felhasznalo.save();
+
 
         res.status(200).json({felhasznalo});
         
 };
+
+
+
+
 
 module.exports= {
     regisztracioGETController, regisztracioPUTController
