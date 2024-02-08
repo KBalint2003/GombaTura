@@ -11,6 +11,9 @@
                   <div class="section text-center">
                     <h4 class="mb-4 pb-3">Regisztráció</h4>
 
+                    <!-- A regisztáriós panel input részei.
+                    Az ngModel a regisztracio.component.ts fájlban deklarált változóba tárolja az adatokat. -->
+
                     <div class="form-group">
                       <input type="text" class="form-style" name="felhasznalonev" placeholder="Felhasználónév:" [(ngModel)]="felhasznalo.felhasznalonev">
                       <i class="input-icon uil uil-user"></i>
@@ -30,6 +33,8 @@
                       <input type="password" class="form-style" name="jelszoEllenorzes" placeholder="Jelszó ismét:">
                       <i class="input-icon uil uil-lock-alt"></i>
                     </div>
+
+                    <!-- A metódust végrehajtó gomb. -->
 
                     <input type="submit" value="Regisztráció" class="btn mt-4">
                   </div>

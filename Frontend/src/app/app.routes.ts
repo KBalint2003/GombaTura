@@ -8,6 +8,7 @@ import {UserComponent} from "./user/user.component";
 import {BejelentkezesComponent} from "./bejelentkezes/bejelentkezes.component";
 import {RegisztracioComponent} from "./regisztracio/regisztracio.component";
 
+// A navbar-ban használt routerLink ezekre az útvonalakra hivatkozik a Routing folyamat során.
 export const routes: Routes = [
   {'path': '', component: HomeComponent},
   {'path': 'enciklopedia', component: EnciklopediaComponent},

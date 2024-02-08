@@ -1,4 +1,29 @@
+/* A navigációs sáv alapértékei */
 nav {
+  background-color: #333;
+  text-align: center;
+  padding: 1%;
   top: 0;
   position: sticky;
+}
+
+/* A navigációs sávon megjelenő menüpontok */
+
+nav ul{
+  margin: 0;
+  padding: 0;
+}
+nav ul li {
+
+  display: inline-block;
+  list-style-type: none;
+}
+
+
+nav > ul > li > a {
+  color: #aaa;
+  display: block;
+  line-height: 2em;
+  padding: 0.5em 0.5em;
+  text-decoration: none;
 }

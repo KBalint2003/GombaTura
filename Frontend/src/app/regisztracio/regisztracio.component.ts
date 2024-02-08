@@ -14,6 +14,7 @@ import {FelhasznaloService} from "./regisztracio.service";
 })
 
 export class RegisztracioComponent {
+  // A regisztáció során megadott adatok itt kerülnek tárolásra.
   felhasznalo: User = {
     felhasznalonev: '',
     email: '',
@@ -22,6 +23,7 @@ export class RegisztracioComponent {
 
   constructor(private felhasznaloService: FelhasznaloService) {}
 
+  // A regisztracio.service.ts fájlban deklarált meródus itt kerül meghívásra.
   onSubmit() {
     this.felhasznaloService.ujFelhasznalo(this.felhasznalo);
   }

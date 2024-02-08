@@ -1,0 +1,27 @@
+/* A footer elhelyezése */
+footer {
+  margin-top: 50%;
+}
+
+/* A kapcsolat és a forrás igazításai*/
+
+#kapcsolat, #forras {
+  display: inline-block;
+}
+
+#kapcsolat {
+  float: right;
+  margin-right: 10%;
+}
+
+#forras {
+  float: left;
+  margin-left: 10%;
+}
+
+#kapcs,#forr {
+  color: rgb(255, 0, 0);
+  font-size: larger;
+}
+
+

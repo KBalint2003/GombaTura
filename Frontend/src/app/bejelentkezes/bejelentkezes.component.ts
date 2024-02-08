@@ -12,12 +12,14 @@ import {FormsModule} from "@angular/forms";
 })
 export class BejelentkezesComponent {
 
+  // Az ngModul segítségével kinyert adatok ebbe a változóba kerülnek bele
+
   felhasznalo: any = {
     email: '',
     jelszo: '',
   };
 
-  onSubmit() {
+  onSubmit() {  // A bejelentkezés gombra kattintva, ez a metódus fog lefutni
     console.log(this.felhasznalo)
   }
 }

@@ -1,3 +1,4 @@
+/* Túra kártya megjelenése */
 .tura {
   background-color: #FBF9F1;
   margin: 2% 5% 0 10%;
@@ -5,6 +6,7 @@
   border-radius: 20px;
 }
 
+/* Túra nevének elhelyezése, megjelenítése */
 .turaNevHelye {
   border-bottom: 2px solid black;
   padding: 0;
@@ -15,9 +17,13 @@
   font-weight: bold;
 }
 
+/* Túra adatainak formázása*/
+
 .turaAdat {
   margin: 2% 0 2% 10%;
 }
+
+/* Új túra létrehozása gomb. */
 
 .turaHozzaadas {
   bottom: 75%;

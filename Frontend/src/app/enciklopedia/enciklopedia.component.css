@@ -1,4 +1,4 @@
-/*----- Enciklopédia kártyák-----*/
+/* Az enciklopédia kártya háttere */
 
 .kartya {
   background-color: #3c915f;
@@ -12,6 +12,8 @@
   display: inline-block;
 }
 
+/* Az enciklopédia kártya címsora */
+
 #kartyacim {
   text-align: left;
   margin-bottom: 5%;
@@ -20,19 +22,22 @@
   padding: 2%;
 }
 
+/* Az enciklopédia kártyán szereplő kép */
+
 .kartyakep {
   height: 150px;
   width: 150px;
   margin-bottom: 5%;
 }
 
+/* Az enciklopédia kártya leírása */
+
 .kartyaleiras {
   text-align: left;
 }
 
-/*----- Enciklopédia kártyák VÉGE-----*/
+/* A kereső input része */
 
-/*-----Enciklipédia kereső-----*/
 .search {
   width: 100%;
   position: relative;
@@ -55,6 +60,8 @@
   color: black;
 }
 
+/* A kereső kattintható gombja */
+
 .searchButton {
   width: 40px;
   height: 36px;
@@ -67,6 +74,8 @@
   font-size: 20px;
 }
 
+
+
 .wrap{
   width: 20%;
   margin-top: 5%;
@@ -77,9 +86,11 @@
   transform: translate(-50%, -50%);
 }
 
+/* A keresőben kihozott találatok */
+
 .talalat {
   background-color: white;
   font-size: larger;
   padding: 3% 0% 0% 2%;
 }
-/*-----Enciklopédia kereső VÉGE-----*/
+
