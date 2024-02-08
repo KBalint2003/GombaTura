@@ -1,94 +1,50 @@
-const { v4: uuidv4 } = require('uuid');
-const validate = require('validate.js'); 
-const megkotesek = require('./megkotesek');
-const bcrypt = require('bcrypt');
+const { Sequelize,DataTypes } = require("sequelize");
+const sequelize = require("../adatbazisKapcsolat");
 
-let felhasznaloModel = class Felhasznalo {
+
+const Felhasznalo = sequelize.define('belepes', {
     
-    constructor() {
-        this.id = uuidv4();
-        this.felhasznalonev = null;
-        this.email = null;
-        this.security = {
-        jelszoHash: null
-        };
-    }
-
-    //A felhasználó mentése az adatbázisba.
-    mentes() {
-        console.log(`Sikeresen mentve ${this.id} azonosítóval az adatbázisba.`);
-    };
-
-    //A megadott id-jú felhasználó megkeresése az adatbázisban.
-    kereses(id) {
-        return '';
-    };
-
-    setFelhasznalonev(felhasznalonev) {
-        
-        try{
-            if (felhasznalonev) {
-                felhasznalonev = felhasznalonev.trim().replace(/ +/g, ' ');
-            }
-
-            let msg = validate.single(felhasznalonev, megkotesek.felhasznalonev);
-
-            if (msg) {
-                return msg;
-            }
-            else{
-                this.felhasznalonev = felhasznalonev;
-                return;
-            }
-
-        }
-        catch(e){
-            throw new Error(e);
-        }
-    }
-
-    setEmail(email) {
-
-        try{
-            let msg = validate.single(email, megkotesek.email);
-        
-            if (msg) {
-                return msg;
-            }
-            else{
-                this.email = email;
-                return;
-            }
-        }
-
-       
-
-        catch(e){
-            throw new Error(e);
-        }
-
-    }
-
-    async setJelszo(jelszo){
-        try{
-            let msg = validate.single(jelszo, megkotesek.jelszo);
-        
-            if (msg) {
-                return msg;
-            }
-            else{
-               this.security.jelszoHash = await bcrypt.hash(jelszo, 10);
-                return;
-            }
-        }
-
+    User_id: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+        primaryKey: true
+    },
     
-    catch(e){
-        throw new Error(e);
-    }
-}
-};
+    Felhasznalonev: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+
+    Jelszo: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+
+    },
+
+    Email: {
+        type: DataTypes.STRING,
+       allowNull: false,
+    },
+
+     Szuletesi_ido: {
+        type: DataTypes.DATEONLY,
+        allowNull: false
+     },
+
+     Telefon_szam: {
+        type: DataTypes.STRING(12),
+        allowNull: true
+     },
+
+     FelhasznaloProfilKep: {
+        type: DataTypes.STRING(50),
+        allowNull: true
+     }
 
 
 
-module.exports = felhasznaloModel;
+
+});
+
+module.exports = Felhasznalo;
+
