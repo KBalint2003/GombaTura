@@ -1,3 +1,5 @@
+/* A fórum kártyája */
+
 .forum {
   background-color: #FBF9F1;
   border: 2px  solid black;
@@ -5,20 +7,29 @@
   margin: 3% 10% 0 10%;
 }
 
+/* A téma létrehozójának a neve */
+
 .forumFelhasznaloNev {
   padding: 2%;
   border-bottom: 2px solid black;
   margin-top: 1.5%;
 }
+
+/* A bejegyzés témája */
+
 .forumKerdes {
   margin-top: 1.5%;
   text-align: center;
 }
 
+/* A reakciógombok a bejegyzéshez */
+
 .like, .dislike{
   margin-left: 10px;
   width: 30px;
 }
+
+/* Új bejegyzés létrehozása */
 
 .forumHozzaadas {
   bottom: 75%;

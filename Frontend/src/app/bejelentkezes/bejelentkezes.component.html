@@ -1,7 +1,7 @@
 <form action="http://localhost:3000/login/login.html" method="post" (submit)="onSubmit()">
   <div class="container"> <!--A fő containere a felületnek-->
-    <div class="row full-height justify-content-center"><!--Egy sort állít be ami      betölti  az egész oldalt-->
-      <div class="align-self-center py-5"><!--Középre igazítjás, py-5= padding *top,*bottom-->
+    <div class="row full-height justify-content-center"><!--Egy sort állít be ami betölti  az egész oldalt-->
+      <div class="align-self-center py-5"><!--Középre igazítás-->
         <div class="section pb-5 pt-5 text-center">
           <!--A login felület-->
 
@@ -13,7 +13,7 @@
                     <h4 class="mb-4 pb-3">Bejelentkezés</h4>
 
                     <div class="form-group">
-                      <input type="email" class="form-style" name="emailBej" placeholder="valami@gmail.com" [(ngModel)]="felhasznalo.email">
+                      <input type="email" class="form-style" name="emailBej" placeholder="valami@gmail.com" [(ngModel)]="felhasznalo.email"> <!-- Az ngModel segítségével változóba kerül a beírt adat -->
                       <i class="input-icon uil uil-at"></i>
                     </div>
 
@@ -22,7 +22,7 @@
                       <i class="input-icon uil uil-lock-alt"></i>
                     </div>
 
-                    <input type="submit" value="Bejelentkezés" class="btn mt-4">
+                    <input type="submit" value="Bejelentkezés" class="btn mt-4"> <!-- Az adatok elüldése -->
 
                     <p class="mb-0 mt-4"><a href="" class="link">Elfelejtetted a jelszavad?</a></p>
                   </div>

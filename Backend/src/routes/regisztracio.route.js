@@ -6,7 +6,7 @@ const regisztracioRouter = express.Router();
 
 regisztracioRouter.get("/regisztracio", regisztracioController.regisztracioGETController);
 
-regisztracioRouter.post("/regisztracio", regisztracioController.regisztracioPOSTController);
+regisztracioRouter.put("/regisztracio", regisztracioController.regisztracioPUTController);
 
 
 module.exports = regisztracioRouter;

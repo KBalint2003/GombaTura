@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
+import {User} from "../User";
+import {FelhasznaloService} from "./regisztracio.service";
 
 @Component({
   selector: 'app-regisztracio',
@@ -10,15 +12,20 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './regisztracio.component.html',
   styleUrl: './regisztracio.component.css'
 })
+
 export class RegisztracioComponent {
-  felhasznalo: any = {
+  // A regisztáció során megadott adatok itt kerülnek tárolásra.
+  felhasznalo: User = {
     felhasznalonev: '',
     email: '',
     jelszo: '',
   };
 
+  constructor(private felhasznaloService: FelhasznaloService) {}
+
+  // A regisztracio.service.ts fájlban deklarált meródus itt kerül meghívásra.
   onSubmit() {
-        console.log(this.felhasznalo)
+    this.felhasznaloService.ujFelhasznalo(this.felhasznalo);
   }
 
 }
