@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {User} from "../User";
 import {FelhasznaloService} from "./regisztracio.service";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-regisztracio',
