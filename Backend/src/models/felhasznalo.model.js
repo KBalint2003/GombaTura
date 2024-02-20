@@ -28,7 +28,7 @@ const Felhasznalo = sequelize.define('belepes', {
 
      Szuletesi_ido: {
         type: DataTypes.DATEONLY,
-        allowNull: false
+        allowNull: true
      },
 
      Telefon_szam: {

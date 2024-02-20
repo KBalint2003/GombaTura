@@ -3,7 +3,7 @@ const express = require('express');
 const sequelize = require('./adatbazisKapcsolat')
 const FelhasznaloModel = require('./models/felhasznalo.model')
 const TuraraJelentkezes = require('./models/turaJelentkezes.model')
-
+const cors = require('cors');
 
 const regisztracioRouter = require("./routes/regisztracio.route");
 
@@ -11,8 +11,9 @@ const regisztracioRouter = require("./routes/regisztracio.route");
 const app = express()
 const PORT = 3000;
 
-app.use(express.json());
 
+app.use(express.json());
+app.use(cors());
 app.use("/",regisztracioRouter);
 
 

@@ -25,8 +25,9 @@ export class RegisztracioComponent {
   constructor(private felhasznaloService: FelhasznaloService) {}
 
   // A regisztracio.service.ts fájlban deklarált meródus itt kerül meghívásra.
-  onSubmit() {
-    this.felhasznaloService.ujFelhasznalo(this.felhasznalo);
+  regisztralas() {
+    this.felhasznaloService.ujFelhasznalo(this.felhasznalo).subscribe(value => {console.log("Sikeres küldés")});
+
   }
 
 }
