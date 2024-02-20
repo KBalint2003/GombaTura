@@ -11,10 +11,10 @@
         <img src="/assets/img/profilepic.jpg" alt="Profilkép" id="profilkep">
         <div class="adatmezo">
           <label for="telszam">Telefonszám:</label>
-          <input type="text" name="telszam" id="telszam" placeholder="06201234567">
+          <input type="text" name="telszam" id="telszam" placeholder="06201234567" [(ngModel)]="felhasznaloadatok.telSzam">
           <label for="szulEv">Születési év:</label><br>
-          <input type="date" name="szulEv" id="szulEv" placeholder="">
-          <button type="button" id="adatMentes">Adatok mentése</button>
+          <input type="date" name="szulEv" id="szulEv" placeholder="" [(ngModel)]="felhasznaloadatok.szulDatum">
+          <button type="button" id="adatMentes" (click)="adatMentesGomb()">Adatok mentése</button>
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@
     </div>
     <div class="col-2">
       <!-- Profil törlésére szolgáló gomb -->
-      <button type="button" id="profdelete">Profil törlése</button>
+      <button type="button" id="profdelete" (click)="profilTorlesGomb">Profil törlése</button>
     </div>
   </div>
 </div>

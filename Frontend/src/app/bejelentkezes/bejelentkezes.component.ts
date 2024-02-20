@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {FormsModule} from "@angular/forms";
-import {User} from "../User";
+import { FormsModule } from "@angular/forms";
+import { loginObj } from "../loginObj";
 
 @Component({
   selector: 'app-bejelentkezes',
@@ -15,13 +15,12 @@ export class BejelentkezesComponent {
 
   // Az ngModul segítségével kinyert adatok ebbe a változóba kerülnek bele
 
-  felhasznalo: User = {
+  felhasznalo: loginObj = {
     felhasznalonev: '',
-    email: '',
     jelszo: '',
   };
 
-  onSubmit() {  // A bejelentkezés gombra kattintva, ez a metódus fog lefutni
-    
+  bejelentkezes() {  // A bejelentkezés gombra kattintva, ez a metódus fog lefutni
+
   }
 }
