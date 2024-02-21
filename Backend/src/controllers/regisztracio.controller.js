@@ -16,7 +16,7 @@ async function jelszoHash(jelszo){
 
 async function regisztracioPUTController (req, res){
 
-    const { felhasznalonev, email, jelszo, szuletesiIdo, telefonSzam } = req.body;
+    const { felhasznalonev, email, jelszo, jelszoUjra, szuletesiIdo, telefonSzam } = req.body;
 
     //Felhasználónév lekezelése
 
@@ -79,6 +79,13 @@ async function regisztracioPUTController (req, res){
         res.status(400).json({
             code:400,
             message:"Nem lett megadva jelszó!"
+        })
+        return;
+    }
+    else if(jelszo !== jelszoUjra) {
+        res.status(400).json({
+            code:400,
+            message:"A két jelszó nem egyezik!"
         })
         return;
     }

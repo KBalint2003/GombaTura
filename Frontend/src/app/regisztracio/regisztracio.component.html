@@ -29,13 +29,13 @@
                     </div>
 
                     <div class="form-group mt-2">
-                      <input type="password" class="form-style" name="jelszoEllenorzes" placeholder="Jelszó ismét:">
+                      <input type="password" class="form-style" name="jelszoEllenorzes" placeholder="Jelszó ismét: "[(ngModel)]="felhasznalo.jelszoUjra">
                       <i class="input-icon uil uil-lock-alt"></i>
                     </div>
 
                     <!-- A metódust végrehajtó gomb. -->
 
-                    <button type="submit" value="Regisztráció" class="btn mt-4" (click)="regisztralas()">Regisztráció</button>
+                    <button type="submit" value="Regisztráció" class="btn mt-4" (click)="regisztracioGomb()">Regisztráció</button>
                   </div>
                 </div>
               </div>
