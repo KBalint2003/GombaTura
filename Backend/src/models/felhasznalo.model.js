@@ -1,11 +1,9 @@
-const { Sequelize,DataTypes } = require("sequelize");
+const {Sequelize, DataTypes } = require('sequelize');
 const sequelize = require("../adatbazisKapcsolat");
-
-
-const Felhasznalo = sequelize.define('belepes', {
+const Felhasznalo = sequelize.define('Felhasznalok', {
     
     User_id: {
-        type: DataTypes.STRING(50),
+        type:DataTypes.STRING,
         allowNull: false,
         primaryKey: true
     },
@@ -16,7 +14,7 @@ const Felhasznalo = sequelize.define('belepes', {
     },
 
     Jelszo: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(60),
         allowNull: false,
 
     },
@@ -26,10 +24,26 @@ const Felhasznalo = sequelize.define('belepes', {
        allowNull: false,
     },
 
+     Szuletesi_ido: {
+        type: DataTypes.DATEONLY,
+        allowNull: true
+     },
 
+     Telefon_szam: {
+        type: DataTypes.STRING(12),
+        allowNull: true
+     },
+
+     FelhasznaloProfilKep: {
+        type: DataTypes.STRING(50),
+        allowNull: true
+     }
 
 
 });
+
+//Felhasznalo.belongsToMany(Tura, { through: TuraraJelentkezes });
+
 
 module.exports = Felhasznalo;
 

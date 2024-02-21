@@ -1,5 +1,4 @@
-/*-----Profil-----*/
-
+/* Felhasználó üdvözlése */
 #username {
   font-size: 24px;
   font-weight: bold;
@@ -8,6 +7,7 @@
   margin: 3% 0 3%  0;
 }
 
+/* Felhasználó profilképének formázása. */
 #profilkep {
   height: 80%;
   width: 80%;
@@ -16,19 +16,36 @@
   margin-left: 10%;
 }
 
+/* Minden felhasználói adat elrendezése. */
 .profiladat {
   padding: 10px;
   border: 3px solid black;
   border-radius: 20px;
   padding: 20% 5% 20% 5%;
-  background-color: #3c915f;
+  background-color: burlywood;
 }
+
+#adatMentes {
+  margin-top: 30px;
+  padding: 7px;
+  border: 3px solid black;
+  border-radius: 20px;
+  background-color: #4BB543;
+}
+
+#telszam {
+  margin-bottom: 12px;
+}
+
+/* Email és jelszó beviteli mező */
 
 .adatmezo {
   padding: 1%;
   margin: 15% 10% 2% 10%;
 
 }
+
+/* Túrák */
 
 .tura{
   padding: 10px;
@@ -43,6 +60,7 @@
   background-color: #3c915f;
 }
 
+/* Profil törlése gomb. */
 
 #profdelete {
   margin-top: 180%;
@@ -53,4 +71,4 @@
   font-size: larger;
 
 }
-/*-----Profil vége-----*/
+

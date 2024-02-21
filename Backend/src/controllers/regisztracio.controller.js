@@ -1,4 +1,4 @@
-const felhasznaloModell = require('../models/felhasznalo.model') //
+const felhasznaloModell = require('../models/felhasznalo.model')
 
 const validate = require('validate.js'); 
 const { v4: uuidv4 } = require('uuid');
@@ -16,7 +16,7 @@ async function jelszoHash(jelszo){
 
 async function regisztracioPUTController (req, res){
 
-        const { felhasznalonev, email, jelszo } = req.body;
+        const { felhasznalonev, email, jelszo, jelszoUjra, szuletesiIdo, telefonSzam } = req.body;
 
         //Felhasználónév lekezelése
         
@@ -39,6 +39,15 @@ async function regisztracioPUTController (req, res){
                 })
                 return;
             }
+        }
+
+        const letezikEFelhasznalonev = await felhasznaloModell.findOne({ where: { Felhasznalonev: felhasznalonev } });
+        if (letezikEFelhasznalonev !== null) {
+            res.status(400).json({
+                code:400,
+                message:"Már létezik felhasználó ilyen felhasználónévvel!"
+            })
+            return;
         }
         
             //Email lekezelése
@@ -73,6 +82,13 @@ async function regisztracioPUTController (req, res){
             })
             return;
         }
+        else if(jelszo !== jelszoUjra) {
+            res.status(400).json({
+                code:400,
+                message:"A két jelszó nem egyezik!"
+            })
+            return;
+        }
 
         else{
             let msg = validate.single(jelszo, megkotesek.jelszo);
@@ -87,12 +103,22 @@ async function regisztracioPUTController (req, res){
             }
         }
     
+        const letezikEEmail = await felhasznaloModell.findOne({ where: { Email: email } });
+        if (letezikEEmail !== null) {
+            res.status(400).json({
+                code:400,
+                message:"Már létezik felhasználó ilyen email címmel!"
+            })
+            return;
+        }
 
          felhasznalo = await felhasznaloModell.build({
             User_id: uuidv4(),
             Felhasznalonev: felhasznalonev,
             Email: email,
-            Jelszo: await jelszoHash(jelszo)
+            Jelszo: await jelszoHash(jelszo),
+            Szuletesi_ido: szuletesiIdo,
+            Telefon_szam: telefonSzam
         })
         
 
