@@ -1,11 +1,25 @@
-const {Sequelize, DataTypes}=require("sequelize");
-const Felhasznalo = require('./felhasznalo.model')
-
+const {DataTypes}=require("sequelize");
 
 const sequelize=require("../adatbazisKapcsolat");
 
 const TuraraJelentkezes=sequelize.define("TuraraJelentkezesTabla",{
     
+    Felhasznalo_Id: {
+        type: DataTypes.STRING,
+        references: {
+            model: Felhasznalo,
+            key: 'User_id'
+        }
+    },
+
+    Tura_Id: {
+        type: DataTypes.STRING,
+        references: {
+            model: Tura,
+            key: 'Tura_id'
+        }
+    }
+
 },
 
 {
@@ -14,10 +28,5 @@ const TuraraJelentkezes=sequelize.define("TuraraJelentkezesTabla",{
 });
 TuraraJelentkezes.removeAttribute('id');
 
-TuraraJelentkezes.belongsTo(Felhasznalo, {
-    foreignKey: "Felhasznalo_id",
-    targetKey: "User_id",
-});
 
-
-module.exports=TuraraJelentkezes;  
+//module.exports=TuraraJelentkezes;  
