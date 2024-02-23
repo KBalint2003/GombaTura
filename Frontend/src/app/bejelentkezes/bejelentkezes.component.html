@@ -12,7 +12,7 @@
                     <h4 class="mb-4 pb-3">Bejelentkezés</h4>
 
                     <div class="form-group">
-                      <input type="text" class="form-style" name="felhasznaloNevBej" placeholder="Felhasználónév" [(ngModel)]="felhasznalo.felhasznalonev"> <!-- Az ngModel segítségével változóba kerül a beírt adat -->
+                      <input type="text" class="form-style" name="emailBej" placeholder="Email-cím" [(ngModel)]="felhasznalo.email"> <!-- Az ngModel segítségével változóba kerül a beírt adat -->
                       <i class="input-icon uil uil-at"></i>
                     </div>
 
@@ -21,7 +21,7 @@
                       <i class="input-icon uil uil-lock-alt"></i>
                     </div>
 
-                    <button type="submit" value="Bejelentkezés" class="btn mt-4" (click)="bejelentkezes()">Bejelentkezés</button> <!-- Az adatok elüldése -->
+                    <button type="submit" value="Bejelentkezés" class="btn mt-4" (click)="bejelentkezesGomb()">Bejelentkezés</button> <!-- Az adatok elüldése -->
 
                     <p class="mb-0 mt-4"><a href="" class="link">Elfelejtetted a jelszavad?</a></p>
                   </div>
