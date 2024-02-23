@@ -27,7 +27,6 @@ export class RegisztracioComponent {
   // A regisztracio.service.ts fájlban deklarált meródus itt kerül meghívásra.
   regisztracioGomb() {
     this.regisztracioService.ujFelhasznalo(this.felhasznalo).subscribe(value => {console.log("Sikeres küldés")});
-    console.log(this.felhasznalo)
   }
 
 }

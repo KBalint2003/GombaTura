@@ -1,5 +1,5 @@
-// A regisztracio.component.ts ezen  interface alapján határozza meg az objektum paramétereit.
+// A bejelentkezés.component.ts ezen  interface alapján határozza meg az objektum paramétereit.
 export interface loginObj {
-  felhasznalonev: string;
+  email: string;
   jelszo: string;
 }

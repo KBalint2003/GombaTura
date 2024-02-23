@@ -14,7 +14,7 @@ export class regisztracioService {
 
   private eleresiUt = "http://localhost:3000/regisztracio";
 
-  // Ez a metódus a regisztráció során megadott adatokat HTTP PUt metódussal, a backend szervernek küldi.
+  // Ez a metódus a regisztráció során megadott adatokat HTTP PUT metódussal, a backend szervernek küldi.
 
   ujFelhasznalo(felhasznalo : signupObj) : Observable<signupObj> {
     return this.http.put<signupObj>(this.eleresiUt, felhasznalo)
