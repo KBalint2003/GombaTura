@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { loginObj } from "../loginObj";
+import {BejelentkezesService} from "./bejelentkezes.service";
 
 @Component({
   selector: 'app-bejelentkezes',
@@ -13,14 +14,16 @@ import { loginObj } from "../loginObj";
 })
 export class BejelentkezesComponent {
 
+  constructor(private bejelentkezesService: BejelentkezesService) { }
+
   // Az ngModul segítségével kinyert adatok ebbe a változóba kerülnek bele
 
   felhasznalo: loginObj = {
-    felhasznalonev: '',
+    email: '',
     jelszo: '',
   };
 
-  bejelentkezes() {  // A bejelentkezés gombra kattintva, ez a metódus fog lefutni
-
+  bejelentkezesGomb() {  // A bejelentkezés gombra kattintva, ez a metódus fog lefutni
+    this.bejelentkezesService.bejelentkezes(this.felhasznalo).subscribe(value => {console.log("Sikeres küldés")});
   }
 }
