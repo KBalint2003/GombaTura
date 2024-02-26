@@ -1,13 +1,13 @@
 const {Sequelize, DataTypes } = require('sequelize');
 const sequelize = require("../adatbazisKapcsolat");
 const Felhasznalo = sequelize.define('Felhasznalok', {
-    
+
     User_id: {
         type:DataTypes.STRING,
         allowNull: false,
         primaryKey: true
     },
-    
+
     Felhasznalonev: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -21,23 +21,23 @@ const Felhasznalo = sequelize.define('Felhasznalok', {
 
     Email: {
         type: DataTypes.STRING,
-       allowNull: false,
+        allowNull: false,
     },
 
-     Szuletesi_ido: {
+    Szuletesi_ido: {
         type: DataTypes.DATEONLY,
         allowNull: true
-     },
+    },
 
-     Telefon_szam: {
+    Telefon_szam: {
         type: DataTypes.STRING(12),
         allowNull: true
-     },
+    },
 
-     FelhasznaloProfilKep: {
+    FelhasznaloProfilKep: {
         type: DataTypes.STRING(50),
         allowNull: true
-     }
+    }
 
 
 });

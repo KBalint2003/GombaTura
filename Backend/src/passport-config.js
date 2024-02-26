@@ -5,48 +5,46 @@ const  FelhasznaloModell  = require('./models/felhasznalo.model');
 
 function setupPassport(passport) {
   passport.use(new LocalStrategy(
-    {
-      usernameField: 'email', 
-      passwordField: 'jelszo'
-    },
-    async (email, password, done) => {
-      try {
-        
-        const felhasznalo = await FelhasznaloModell.findOne({ where: { Email: email } });
-        console.log(password, felhasznalo.Jelszo)
-        
-        const isMatching = await bcrypt.compare(password, felhasznalo.Jelszo)
+      {
+        usernameField: 'email',
+        passwordField: 'jelszo'
+      },
+      async (email, password, done) => {
+        try {
 
-        console.log(isMatching);
+          const felhasznalo = await FelhasznaloModell.findOne({ where: { Email: email } });
 
-        if (!felhasznalo || isMatching === false) {
-          return done(null, false, { message: 'Érvénytelen felhasználónév vagy jelszó.' });
+          const isMatching = await bcrypt.compare(password, felhasznalo.Jelszo)
+
+          if (!felhasznalo || isMatching === false) {
+            return done(null, false, { message: 'Érvénytelen email cím vagy jelszó.' });
+          }
+
+
+          return done(null, felhasznalo);
+
+        } catch (error) {
+          return done(error);
         }
-
-
-        return done(null, felhasznalo);
-
-      } catch (error) {
-        return done(error);
       }
-    }
   ));
 
   passport.serializeUser((felhasznalo, done) => {
-    done(null, felhasznalo.User_id);
+    done(null, felhasznalo);
   });
 
-  passport.deserializeUser(async (id, done) => {
-    try {
-      const felhasznalo = await FelhasznaloModell.findByPk(id);
-      done(null, felhasznalo);
-      console.log("deserializer "+felhasznalo);
-    } catch (error) {
-      console.error(error)
-      done(error);
-    }
-  });
+  passport.deserializeUser((felhasznalo, done) => {
+    done (null, felhasznalo )
+  })
+
+  checkAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated()) { return next() }
+    res.redirect("/")
+  }
+
 }
+
+
 
 module.exports = setupPassport;
 
