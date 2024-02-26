@@ -3,7 +3,7 @@ let megkotesek = {};
 const regex = "[\-\'A-Za-z0-9áéíóöőúüűÁÉÍÓÖŐÚÜŰ]+";
 
 megkotesek.felhasznalonev = () => {
-    
+
     const megkotes = {
         'presence': {
             allowEmpty: false

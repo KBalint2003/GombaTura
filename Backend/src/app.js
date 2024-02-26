@@ -6,6 +6,7 @@ const TuraModel = require('./models/turak.model')
 
 const regisztracioRouter = require("./routes/regisztracio.route");
 const bejelentkezesRouter = require("./routes/bejelentkezes.route")
+const fooldalRouter = require('./routes/fooldal.routes')
 //Az express Szerver konfigurálása
 const app = express();
 const cors = require('cors');
@@ -16,21 +17,22 @@ const setupPassport = require('./passport-config');
 
 app.use(session({
   secret: "secret",
-  resave: "false",
-  saveUninitialized: false,
+  resave: "false",// Ha true lenne, minden kérésnél új sessiont csinálna, akkor is, ha ugyanaz a felhasználó
+  saveUninitialized: true,
 }))
 
+app.use(express.json());
+app.use(cors({ origin: 'http://localhost:4200', credentials: true }));
+
+setupPassport(passport)
 app.use(passport.initialize());
 app.use(passport.session());
-setupPassport(passport)
 const PORT = 3000;
 
-app.use(express.json());
-app.use(cors());
 
-
+app.use("/", fooldalRouter);
 app.use("/",regisztracioRouter);
-app.use('/',bejelentkezesRouter);
+app.use("/",bejelentkezesRouter);
 
 //kapcsolat function, segítségével csatlakoztatni tudjuk az adatbázist a backend szerverrel, a backend csak akkor indul el, ha a bach-db közötti kapcsolat sikeres.
 
@@ -42,10 +44,10 @@ sequelize.authenticate().then(() => {
   sequelize.modelManager.addModel(TuraModel);
 
 
-  sequelize.sync({force: true}).then(() =>{
+  sequelize.sync({}).then(() =>{
     app.listen(PORT, () => {
       console.log(`A szerver elindult és elérhető a http://localhost:${PORT} URL-en!`)
-  })
+    })
   })
 }).catch((error) => {
   console.log("Az adatbázissszerverrel való kapcsolat sikertelen")
