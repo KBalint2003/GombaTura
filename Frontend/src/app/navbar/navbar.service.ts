@@ -6,13 +6,18 @@ import {Observable} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
+
 export class NavbarService {
+
 
   constructor(private http: HttpClient) { }
 
-  private eleresiUt = "http://localhost:3000/login";
+  private eleresiUt = "http://localhost:3000/logout";
+
+  private  felhasznaloID = ""
 
   kijelentkezes(felhasznalo: loginObj): Observable<loginObj> {
+
     return this.http.delete<loginObj>(this.eleresiUt)
   }
 
