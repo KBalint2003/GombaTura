@@ -28,7 +28,7 @@ function bejelentkezesPOSTController(req, res, next) {
             req.session.user = felhasznalo;
 
             // Válasz JSON küldése
-            return res.json({ message: 'Sikeres bejelentkezés ', felhasznalo: felhasznalo.User_id });
+            return res.json({ message: 'Sikeres bejelentkezés ', felhasznalo: felhasznalo.User_id, success:true });
         });
     })(req, res, (err) => {
         // Passport által kezelt hibakezelés
@@ -43,10 +43,7 @@ function bejelentkezesPOSTController(req, res, next) {
 
 
 function kijelentkezesDELETEController(req, res) {
-    console.log(req.session.passport.user);
-
-
-    if (req.body.User_id === req.session.passport.user.User_id) {
+    if (!req.isAuthenticated()) {
         req.logout((err) => {
             if (err) {
                 console.error(err);

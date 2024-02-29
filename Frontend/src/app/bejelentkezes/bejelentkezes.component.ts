@@ -25,7 +25,7 @@ export class BejelentkezesComponent {
   };
 
   bejelentkezesGomb() {  // A bejelentkezés gombra kattintva, ez a metódus fog lefutni
-    this.bejelentkezesService.bejelentkezes(this.felhasznalo).subscribe(value => {console.log("Sikeres küldés")})
+    this.bejelentkezesService.bejelentkezes(this.felhasznalo)
   }
 
 }

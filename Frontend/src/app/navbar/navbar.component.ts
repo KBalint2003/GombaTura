@@ -21,7 +21,7 @@ export class NavbarComponent {
   constructor(private navbarService : AutService) { }
 
   kijelentkezesGomb() {
-    this.navbarService.kijelentkezes(this.felhasznalo).subscribe(value => {console.log("Sikeres küldés")});
+    this.navbarService.kijelentkezes().subscribe(value => {console.log("Sikeres küldés")});
   }
 
 }
