@@ -3,3 +3,14 @@ export interface felhasznaloAdatObj {
   telSzam: string;
   szulDatum: string;
 }
+export interface loginObj {
+  email: string;
+  jelszo: string;
+}
+
+export interface signupObj {
+  felhasznalonev: string;
+  email: string;
+  jelszo: string;
+  jelszoUjra: string
+}
