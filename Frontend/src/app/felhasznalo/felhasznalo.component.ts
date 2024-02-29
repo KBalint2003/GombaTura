@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {felhasznaloAdatObj} from "../felhasznaloAdatObj";
 import {FelhasznaloService} from "./felhasznalo.service";
-import {signupObj} from "../signupObj";
+import {signupObj} from "../felhasznaloAdatObj";
 
 @Component({
   selector: 'app-felhasznalo',

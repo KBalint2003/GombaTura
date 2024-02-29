@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {loginObj} from "../loginObj";
-import {NavbarService} from "./navbar.service";
+import { loginObj } from "../felhasznaloAdatObj";
+import { AutService } from "../aut.service";
 
 @Component({
   selector: 'app-navbar',
@@ -15,10 +15,10 @@ export class NavbarComponent {
 
   felhasznalo: loginObj = {
     email: '',
-    jelszo: ''
-}
+    jelszo: '',
+  };
 
-  constructor(private navbarService : NavbarService) { }
+  constructor(private navbarService : AutService) { }
 
   kijelentkezesGomb() {
     this.navbarService.kijelentkezes(this.felhasznalo).subscribe(value => {console.log("Sikeres küldés")});
