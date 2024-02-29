@@ -8,5 +8,4 @@ regisztracioRouter.get("/regisztracio", regisztracioController.regisztracioGETCo
 
 regisztracioRouter.put("/regisztracio", regisztracioController.regisztracioPUTController);
 
-
 module.exports = regisztracioRouter;

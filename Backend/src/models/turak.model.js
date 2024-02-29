@@ -23,7 +23,7 @@ const Tura=sequelize.define("Turak",{
         allowNull: false,
     },
 
-    Varhato_erkezési_ido:{
+    Varhato_erkezesi_ido:{
         type:DataTypes.DATE,
         allowNull: false,
     },

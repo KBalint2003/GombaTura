@@ -5,9 +5,8 @@ function bejelentkezesGETController(req, res) {
 }
 
 function bejelentkezesPOSTController(req, res, next) {
-    // Ellenőrizze, hogy a felhasználó be van-e jelentkezve
     if (req.isAuthenticated()) {
-        return res.redirect('/'); // Átirányítás, ha már be van jelentkezve
+        return res.redirect('/'); 
     }
 
     passport.authenticate('local', (err, felhasznalo, info) => {
@@ -27,16 +26,14 @@ function bejelentkezesPOSTController(req, res, next) {
 
             req.session.user = felhasznalo;
 
-            // Válasz JSON küldése
             return res.json({ message: 'Sikeres bejelentkezés ', felhasznalo: felhasznalo.User_id });
         });
     })(req, res, (err) => {
-        // Passport által kezelt hibakezelés
+
         if (err) {
             return next(err);
         }
 
-        // Átirányítás csak sikeres bejelentkezés esetén
         res.redirect('/');
     });
 }

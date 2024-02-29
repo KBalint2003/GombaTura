@@ -5,8 +5,9 @@ const FelhasznaloModel = require('./models/felhasznalo.model')
 const TuraModel = require('./models/turak.model')
 
 const regisztracioRouter = require("./routes/regisztracio.route");
-const bejelentkezesRouter = require("./routes/bejelentkezes.route")
-const fooldalRouter = require('./routes/fooldal.routes')
+const bejelentkezesRouter = require("./routes/bejelentkezes.route");
+const fooldalRouter = require('./routes/fooldal.routes');
+const turakRouter = require('./routes/turak.route')
 //Az express Szerver konfigurálása
 const app = express();
 const cors = require('cors');
@@ -33,7 +34,7 @@ const PORT = 3000;
 app.use("/", fooldalRouter);
 app.use("/",regisztracioRouter);
 app.use("/",bejelentkezesRouter);
-
+app.use("/", turakRouter)
 //kapcsolat function, segítségével csatlakoztatni tudjuk az adatbázist a backend szerverrel, a backend csak akkor indul el, ha a bach-db közötti kapcsolat sikeres.
 
 sequelize.authenticate().then(() => {
