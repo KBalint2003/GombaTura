@@ -23,6 +23,7 @@ async function bejelentkezesPOSTController(req, res) {
             status: 500,
             message: "Szerver hiba"
         });
+        return;
     }
 
     if (!letezoFelhasznalo || isMatching === false) {
@@ -31,6 +32,7 @@ async function bejelentkezesPOSTController(req, res) {
             status: 400,
             message: "Hibás felhasználónév vagy jelszó!"
         });
+        return;
     }
 
 //JWT Token létrehozása
@@ -54,6 +56,7 @@ async function bejelentkezesPOSTController(req, res) {
             status: 500,
             message: "Szerver hiba (jwt)"
         })
+        return;
     }
     res.status(200).json({
         success: true,
@@ -90,6 +93,7 @@ function kijelentkezesDELETEController(req, res) {
     }
 
 }
+
 
 module.exports = {
     bejelentkezesGETController,bejelentkezesPOSTController, kijelentkezesDELETEController

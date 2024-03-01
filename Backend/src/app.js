@@ -34,6 +34,52 @@ app.use("/", fooldalRouter);
 app.use("/",regisztracioRouter);
 app.use("/",bejelentkezesRouter);
 app.use("/", turakRouter)
+
+
+
+app.get('/profile', (req, res) => {
+  //const token = req.headers.authorization.split(' ')[1];
+  //Auth: Bearer token
+
+  if (req.headers.authorization === undefined) {
+    res.status(400)
+        .json(
+            {
+                success: false,
+                message: "Hiba! Nincs token."
+            });
+            return;
+}
+  
+
+var token = req.headers.authorization.split(' ')[1];
+
+
+const decodedToken =
+            jwt.verify(token, "titkositokulcs");
+
+  if (decodedToken === false) {
+    res.status(401).json(
+      {
+          success: false,
+          message: "Not authorized"
+      });
+      return;
+  }
+
+        res.status(200).json(
+            {
+                success: true,
+                data: {
+                    userId: decodedToken.userId,
+                    email: decodedToken.email
+                }
+            });
+
+})
+
+
+
 //kapcsolat function, segítségével csatlakoztatni tudjuk az adatbázist a backend szerverrel, a backend csak akkor indul el, ha a bach-db közötti kapcsolat sikeres.
 
 sequelize.authenticate().then(() => {
@@ -58,11 +104,10 @@ sequelize.authenticate().then(() => {
 
 //USER1: 
     //"email":"gombamester2@test.com",
-    //"jelszo":"tesztJelszo2024",
-    //"User_id": "2855a7f0-7939-44f9-b3c7-5569aa45fe89",
-
-
-//USER1: 
-    //"email":"gombamester1@test.com",
     //"jelszo":"tesztJelszo2",
-    //"User_id": "2836a19f-b056-410a-8069-ce1a7cf98b5f",
+
+//USER2: 
+    //id: 0a1db610-92ba-4391-92a3-6a10196f1fbb
+    //"email":"gombamester1@test.com",
+    //"jelszo":"tesztJelszo1",
+    //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYTFkYjYxMC05MmJhLTQzOTEtOTJhMy02YTEwMTk2ZjFmYmIiLCJpYXQiOjE3MDkyODY2MDcsImV4cCI6MTcwOTI5MDIwN30.qPkoEqIClNENQ_asJ3SfnX3s7L3h_NMMTgCSWlw7cEw
