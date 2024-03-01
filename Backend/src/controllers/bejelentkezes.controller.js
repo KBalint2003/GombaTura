@@ -40,10 +40,7 @@ function bejelentkezesPOSTController(req, res, next) {
 
 
 function kijelentkezesDELETEController(req, res) {
-    console.log(req.session.passport.user);
-
-
-    if (req.body.User_id === req.session.passport.user.User_id) {
+    if (!req.isAuthenticated()) {
         req.logout((err) => {
             if (err) {
                 console.error(err);

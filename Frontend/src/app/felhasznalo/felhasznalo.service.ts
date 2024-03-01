@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {felhasznaloAdatObj} from "../felhasznaloAdatObj";
 import {Observable, tap} from "rxjs";
-import {signupObj} from "../signupObj";
+import {signupObj} from "../felhasznaloAdatObj";
 
 @Injectable({
   providedIn: 'root'

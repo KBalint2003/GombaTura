@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
-import {signupObj} from "../signupObj";
-import {regisztracioService} from "./regisztracio.service";
+import {signupObj} from "../felhasznaloAdatObj";
+import { AutService } from "../aut.service";
 
 @Component({
   selector: 'app-regisztracio',
@@ -22,7 +22,7 @@ export class RegisztracioComponent {
     jelszoUjra: ''
   };
 
-  constructor(private regisztracioService: regisztracioService) {}
+  constructor(private regisztracioService: AutService) {}
 
   // A regisztracio.service.ts fájlban deklarált meródus itt kerül meghívásra.
   regisztracioGomb() {
