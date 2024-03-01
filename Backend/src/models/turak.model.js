@@ -53,6 +53,6 @@ const Tura=sequelize.define("Turak",{
 
 });
 
-//Tura.belongsToMany(Felhasznalo, { through: TuraraJelentkezes });
+//
 
 module.exports=Tura;

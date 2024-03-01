@@ -1,41 +1,69 @@
-const passport = require("passport");
+const  FelhasznaloModell  = require('../models/felhasznalo.model');
+const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+
 
 function bejelentkezesGETController(req, res) {
     res.status(200).send("Login Page");
 }
 
-function bejelentkezesPOSTController(req, res, next) {
-    if (req.isAuthenticated()) {
-        return res.redirect('/'); 
+async function bejelentkezesPOSTController(req, res) {
+    let {email, jelszo} = req.body;
+
+    let letezoFelhasznalo;
+    let isMatching;
+    try{
+        letezoFelhasznalo = await FelhasznaloModell.findOne({ where: { email: email } });
+        isMatching = await bcrypt.compare(jelszo, letezoFelhasznalo.Jelszo)
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).json({
+            eror: true,
+            status: 500,
+            message: "Szerver hiba"
+        });
     }
 
-    passport.authenticate('local', (err, felhasznalo, info) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ message: 'Szerver hiba 1' });
-        }
-        if (!felhasznalo) {
-            return res.status(401).json({ message: 'Érvénytelen felhasználónév vagy jelszó.' });
-        }
-
-        req.logIn(felhasznalo, (err) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ message: "Szerver hiba 2" });
-            }
-
-            req.session.user = felhasznalo;
-
-            return res.json({ message: 'Sikeres bejelentkezés ', felhasznalo: felhasznalo.User_id });
+    if (!letezoFelhasznalo || isMatching === false) {
+        res.status(400).json({
+            error: true,
+            status: 400,
+            message: "Hibás felhasználónév vagy jelszó!"
         });
-    })(req, res, (err) => {
+    }
 
-        if (err) {
-            return next(err);
-        }
+//JWT Token létrehozása
 
-        res.redirect('/');
+    let token;
+    try {
+        
+        token = jwt.sign(
+            {
+                userId: letezoFelhasznalo.User_id,
+                email: letezoFelhasznalo.email
+            },
+            "titkositokulcs",
+            { expiresIn: "1h" }
+        );
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error: true,
+            status: 500,
+            message: "Szerver hiba (jwt)"
+        })
+    }
+    res.status(200).json({
+        success: true,
+        data: {
+            felhasznaloId: letezoFelhasznalo.User_id,
+            email: letezoFelhasznalo.email,
+            token: token,
+        },
     });
+    
 }
 
 

@@ -42,7 +42,7 @@ const Felhasznalo = sequelize.define('Felhasznalok', {
 
 });
 
-//Felhasznalo.belongsToMany(Tura, { through: TuraraJelentkezes });
+//
 
 
 module.exports = Felhasznalo;
