@@ -4,7 +4,7 @@ nav {
   text-align: center;
   padding: 1%;
   top: 0;
-  position: sticky;
+  z-index: 2;
 }
 
 /* A navigációs sávon megjelenő menüpontok */
