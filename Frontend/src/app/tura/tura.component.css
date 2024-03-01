@@ -15,6 +15,13 @@
 .turaNeve {
   margin: 2% 0 2% 5%;
   font-weight: bold;
+  display: inline-block;
+}
+
+.jelentkezesGomb {
+  margin-left: 70%;
+  border: 2px solid black;
+  border-radius: 40px;
 }
 
 /* Túra adatainak formázása*/
@@ -22,6 +29,8 @@
 .turaAdat {
   margin: 2% 0 2% 10%;
 }
+
+
 
 /* Új túra létrehozása gomb. */
 

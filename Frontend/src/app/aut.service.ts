@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 import { loginObj } from "./felhasznaloAdatObj";
 import { signupObj } from "./felhasznaloAdatObj";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -11,23 +12,29 @@ import { signupObj } from "./felhasznaloAdatObj";
 
 export class AutService{
 
-  constructor(private http: HttpClient, private cookie: CookieService) { }
+  constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
 
   private regisztracioRoute = "http://localhost:3000/regisztracio";
   private bejelentkezesRoute = "http://localhost:3000/login";
   private kijelentkezesRoute = "http://localhost:3000/logout"
 
-  bejelentkezve  = new BehaviorSubject(false)
+  bejelentkezve: boolean = false
 
   ujFelhasznalo(felhasznalo : signupObj) : Observable<signupObj> {
-    return this.http.put<signupObj>(this.regisztracioRoute, felhasznalo)
+    return this.http.put<signupObj>(this.regisztracioRoute, felhasznalo, )
   }
 
   bejelentkezes(felhasznalo: loginObj): Subscription {
     return this.http.post<loginObj>(this.bejelentkezesRoute, felhasznalo).subscribe((valasz: any) => {
       if (valasz.success) {
-        this.bejelentkezve.next(false)
-        console.log(this.bejelentkezve.value)
+        this.bejelentkezve = true
+        this.router.navigate(['/'])
+          .then(() => {
+            console.log("Sikeres navigálás")
+          })
+          .catch(() => {
+            console.log("Sikertelen navigálás")
+          })
       }
     })
   }
