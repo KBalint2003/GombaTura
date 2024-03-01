@@ -55,10 +55,9 @@ app.get('/profile', (req, res) => {
 var token = req.headers.authorization.split(' ')[1];
 
 
-const decodedToken =
-            jwt.verify(token, "titkositokulcs");
 
-  if (decodedToken === false) {
+
+ if (decodedToken === false) {
     res.status(401).json(
       {
           success: false,
@@ -75,6 +74,8 @@ const decodedToken =
                     email: decodedToken.email
                 }
             });
+
+
 
 })
 
