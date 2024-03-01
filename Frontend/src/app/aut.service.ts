@@ -19,6 +19,7 @@ export class AutService{
   private kijelentkezesRoute = "http://localhost:3000/logout"
 
   bejelentkezve: boolean = false
+  tokenID: string = ''
 
   ujFelhasznalo(felhasznalo : signupObj) : Observable<signupObj> {
     return this.http.put<signupObj>(this.regisztracioRoute, felhasznalo, )
@@ -26,11 +27,13 @@ export class AutService{
 
   bejelentkezes(felhasznalo: loginObj): Subscription {
     return this.http.post<loginObj>(this.bejelentkezesRoute, felhasznalo).subscribe((valasz: any) => {
+     this.tokenID = valasz.data.token
       if (valasz.success) {
         this.bejelentkezve = true
         this.router.navigate(['/'])
           .then(() => {
             console.log("Sikeres navigálás")
+            console.log(this.tokenID)
           })
           .catch(() => {
             console.log("Sikertelen navigálás")
