@@ -1,6 +1,7 @@
 const  FelhasznaloModell  = require('../models/felhasznalo.model');
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
+const feketeLista = require('../models/feketeLista.model');
 
 
 function bejelentkezesGETController(req, res) {
@@ -39,7 +40,6 @@ async function bejelentkezesPOSTController(req, res) {
 
     let token;
     try {
-        
         token = jwt.sign(
             {
                 userId: letezoFelhasznalo.User_id,
@@ -70,27 +70,31 @@ async function bejelentkezesPOSTController(req, res) {
 }
 
 
-function kijelentkezesDELETEController(req, res) {
-    if (!req.isAuthenticated()) {
-        req.logout((err) => {
-            if (err) {
-                console.error(err);
-                return next(err);
-            }
+async function kijelentkezesDELETEController(req, res) {
 
+    const token = req.body.token;
 
-            console.log(req.body);
-            res.status(200)
-            res.redirect('/');
+    try {
+
+        kijelentkezettToken = await feketeLista.build({
+            token: token,
+        })
+
+        await kijelentkezettToken.save();
+
+        res.status(200).json({
+            message: "Sikeres kijelentkezés!"
         });
     }
-    else{
-        res.status(401).json({
+    catch (error) {
+        console.log(error);
+        res.status(500).json({
             error: true,
-            code: 401,
-            message: "Nincs felhasználó, aki ki tudna jelentkezni!"
+            status: 500,
+            message: "Szerver hiba"
         })
     }
+
 
 }
 

@@ -5,7 +5,7 @@ const sequelize = require('./adatbazisKapcsolat')
 const FelhasznaloModel = require('./models/felhasznalo.model')
 const TuraModel = require('./models/turak.model')
 const TuraraJelentkezes = require('./models/turaJelentkezes.model');
-
+const { idozitettFLTorles } = require('./idozitettFeketeListaTorles')
 
 
 TuraModel.belongsToMany(FelhasznaloModel, { through: TuraraJelentkezes, foreignKey: 'Tura_id'});
@@ -18,6 +18,8 @@ const turakRouter = require('./routes/turak.route')
 //Az express Szerver konfigurálása
 const app = express();
 const cors = require('cors');
+const tokenErvenyesites = require('./middlewares/AuthMiddleware');
+const feketeLista = require('./models/feketeLista.model');
 
 //const passport = require('passport');
 //const setupPassport = require('./passport-config');
@@ -35,47 +37,12 @@ app.use("/",regisztracioRouter);
 app.use("/",bejelentkezesRouter);
 app.use("/", turakRouter)
 
+app.get('/profile', tokenErvenyesites, (req, res) => {
 
-
-app.get('/profile', (req, res) => {
-  //const token = req.headers.authorization.split(' ')[1];
-  //Auth: Bearer token
-
-  if (req.headers.authorization === undefined) {
-    res.status(400)
-        .json(
-            {
-                success: false,
-                message: "Hiba! Nincs token."
-            });
-            return;
-}
-  
-
-var token = req.headers.authorization.split(' ')[1];
-
-
-
-
- if (decodedToken === false) {
-    res.status(401).json(
-      {
-          success: false,
-          message: "Not authorized"
-      });
-      return;
-  }
-
-        res.status(200).json(
-            {
-                success: true,
-                data: {
-                    userId: decodedToken.userId,
-                    email: decodedToken.email
-                }
-            });
-
-
+  res.status(200).json({ 
+    success: true,
+    message:"Profil oldal"
+  });
 
 })
 
@@ -89,12 +56,13 @@ sequelize.authenticate().then(() => {
   sequelize.modelManager.addModel(FelhasznaloModel);
   sequelize.modelManager.addModel(TuraModel);
   sequelize.modelManager.addModel(TuraraJelentkezes);
+sequelize.modelManager.addModel(feketeLista)
 
-
-  sequelize.sync({}).then(() =>{
+  sequelize.sync({alter: true}).then(() =>{
     app.listen(PORT, () => {
       console.log(`A szerver elindult és elérhető a http://localhost:${PORT} URL-en!`)
-    })
+      idozitettFLTorles.start()
+    });
   })
 }).catch((error) => {
   console.log("Az adatbázissszerverrel való kapcsolat sikertelen")
@@ -103,11 +71,11 @@ sequelize.authenticate().then(() => {
 //A HTTP Szerver indítása a 3000-es porton
 
 
-//USER1: 
+//USER2: 
     //"email":"gombamester2@test.com",
     //"jelszo":"tesztJelszo2",
 
-//USER2: 
+//USER1: 
     //id: 0a1db610-92ba-4391-92a3-6a10196f1fbb
     //"email":"gombamester1@test.com",
     //"jelszo":"tesztJelszo1",
