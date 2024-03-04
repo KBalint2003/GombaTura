@@ -58,7 +58,7 @@ sequelize.authenticate().then(() => {
   sequelize.modelManager.addModel(TuraraJelentkezes);
 sequelize.modelManager.addModel(feketeLista)
 
-  sequelize.sync({alter: true}).then(() =>{
+  sequelize.sync({ }).then(() =>{
     app.listen(PORT, () => {
       console.log(`A szerver elindult és elérhető a http://localhost:${PORT} URL-en!`)
       idozitettFLTorles.start()
@@ -77,6 +77,6 @@ sequelize.modelManager.addModel(feketeLista)
 
 //USER1: 
     //id: 0a1db610-92ba-4391-92a3-6a10196f1fbb
-    //"email":"gombamester1@test.com",
+    //"email":"gombamester1@test.com"
     //"jelszo":"tesztJelszo1",
     //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYTFkYjYxMC05MmJhLTQzOTEtOTJhMy02YTEwMTk2ZjFmYmIiLCJpYXQiOjE3MDkyODY2MDcsImV4cCI6MTcwOTI5MDIwN30.qPkoEqIClNENQ_asJ3SfnX3s7L3h_NMMTgCSWlw7cEw

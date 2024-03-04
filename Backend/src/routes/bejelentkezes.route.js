@@ -5,5 +5,5 @@ const bejelentkezesRouter = express.Router();
 
 bejelentkezesRouter.get("/login", bejelentkezesController.bejelentkezesGETController)
 bejelentkezesRouter.post("/login", bejelentkezesController.bejelentkezesPOSTController)
-bejelentkezesRouter.delete("/logout", bejelentkezesController.kijelentkezesDELETEController)
+bejelentkezesRouter.post("/logout", bejelentkezesController.kijelentkezesPOSTController)
 module.exports = bejelentkezesRouter;
