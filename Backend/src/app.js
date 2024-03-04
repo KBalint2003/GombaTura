@@ -35,7 +35,7 @@ const PORT = 3000;
 app.use("/", fooldalRouter);
 app.use("/",regisztracioRouter);
 app.use("/",bejelentkezesRouter);
-app.use("/", turakRouter)
+app.use("/", turakRouter);
 
 app.get('/profile', tokenErvenyesites, (req, res) => {
 
