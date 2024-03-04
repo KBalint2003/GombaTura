@@ -1,12 +1,13 @@
-let megkotesek = {};
+let regisztracioMegkotesek = {};
 
 const regex = "[\-\'A-Za-z0-9áéíóöőúüűÁÉÍÓÖŐÚÜŰ]+";
 
-megkotesek.felhasznalonev = () => {
+regisztracioMegkotesek.felhasznalonev = () => {
 
     const megkotes = {
         'presence': {
-            allowEmpty: false
+            allowEmpty: false,
+            message: "Kötelező megadni felhasználónevet!"
         },
         'type': 'string',
         'length':{
@@ -24,7 +25,7 @@ megkotesek.felhasznalonev = () => {
     return megkotes;
 }
 
-megkotesek.email = () => {
+regisztracioMegkotesek.email = () => {
 
     const megkotes = {
         'presence': {
@@ -38,7 +39,7 @@ megkotesek.email = () => {
 
 }
 
-megkotesek.jelszo = () => {
+regisztracioMegkotesek.jelszo = () => {
     const megkotes = {
         'presence': {
             allowEmpty: false
@@ -57,4 +58,4 @@ megkotesek.jelszo = () => {
     return megkotes;
 }
 
-module.exports = megkotesek;
+module.exports = regisztracioMegkotesek;

@@ -43,7 +43,8 @@ async function bejelentkezesPOSTController(req, res) {
         token = jwt.sign(
             {
                 userId: letezoFelhasznalo.User_id,
-                email: letezoFelhasznalo.email
+                email: letezoFelhasznalo.Email,
+                felhasznalonev: letezoFelhasznalo.Felhasznalonev
             },
             "titkositokulcs",
             { expiresIn: "1h" }
@@ -60,9 +61,12 @@ async function bejelentkezesPOSTController(req, res) {
     }
     res.status(200).json({
         success: true,
+        
         data: {
+            felhasznalonev: letezoFelhasznalo.Felhasznalonev, 
             felhasznaloId: letezoFelhasznalo.User_id,
-            email: letezoFelhasznalo.email,
+            email: letezoFelhasznalo.Email,
+            
             token: token,
         },
     });
@@ -70,7 +74,7 @@ async function bejelentkezesPOSTController(req, res) {
 }
 
 
-async function kijelentkezesDELETEController(req, res) {
+async function kijelentkezesPOSTController(req, res) {
 
     const token = req.body.token;
 
@@ -100,5 +104,5 @@ async function kijelentkezesDELETEController(req, res) {
 
 
 module.exports = {
-    bejelentkezesGETController,bejelentkezesPOSTController, kijelentkezesDELETEController
+    bejelentkezesGETController,bejelentkezesPOSTController, kijelentkezesPOSTController
 }

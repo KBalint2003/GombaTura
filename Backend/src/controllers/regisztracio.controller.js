@@ -2,7 +2,7 @@ const felhasznaloModell = require('../models/felhasznalo.model')
 
 const validate = require('validate.js');
 const { v4: uuidv4 } = require('uuid');
-const megkotesek = require('../megkotesek')
+const regisztracioMegkotesek = require('../megkotesek/regisztracioMegkotesek')
 const bcrypt = require('bcrypt');
 
 function regisztracioGETController(req, res){
@@ -29,7 +29,7 @@ async function regisztracioPUTController (req, res){
     }
 
     else{
-        let msg = validate.single(felhasznalonev, megkotesek.felhasznalonev);
+        let msg = validate.single(felhasznalonev, regisztracioMegkotesek.felhasznalonev);
 
         if (msg) {
             res.status(400).json({
@@ -61,7 +61,7 @@ async function regisztracioPUTController (req, res){
     }
 
     else{
-        let msg = validate.single(email, megkotesek.email);
+        let msg = validate.single(email, regisztracioMegkotesek.email);
 
         if (msg) {
             res.status(400).json({
@@ -91,7 +91,7 @@ async function regisztracioPUTController (req, res){
     }
 
     else{
-        let msg = validate.single(jelszo, megkotesek.jelszo);
+        let msg = validate.single(jelszo, regisztracioMegkotesek.jelszo);
 
         if (msg) {
             res.status(400).json({

@@ -10,7 +10,7 @@ const Tura=sequelize.define("Turak",{
 
     Letrehozo:{
         type:DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 
     Indulas_ido:{
@@ -37,16 +37,22 @@ const Tura=sequelize.define("Turak",{
     },
     Szervezo_elerhetosege:{
         type:DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     Tura_dija:{
-        type:DataTypes.STRING,
+        type:DataTypes.INTEGER,
         allowNull: true,
+        defaultValue: 0
     },
     Elmarad_a_tura:{
-        type:DataTypes.TINYINT,
+        type:DataTypes.BOOLEAN,
         allowNull: true,
+        defaultValue: false
     },
+    Leiras:{
+        type: DataTypes.TEXT,
+        allowNull: true
+    }
 
 },{
     tableName:"Turak"
