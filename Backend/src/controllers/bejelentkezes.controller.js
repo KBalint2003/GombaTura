@@ -77,17 +77,20 @@ async function bejelentkezesPOSTController(req, res) {
 async function kijelentkezesPOSTController(req, res) {
 
     const token = req.body.token;
+    kijelentkezettToken = token
 
     try {
-
+        console.log(token)
+        console.log(kijelentkezettToken)
         kijelentkezettToken = await feketeLista.build({
-            token: token,
+            token: kijelentkezettToken
         })
 
         await kijelentkezettToken.save();
 
         res.status(200).json({
-            message: "Sikeres kijelentkezés!"
+            message: "Sikeres kijelentkezés!",
+            success: true
         });
     }
     catch (error) {

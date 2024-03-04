@@ -14,3 +14,7 @@ export interface signupObj {
   jelszo: string;
   jelszoUjra: string
 }
+
+export interface token {
+  token: string;
+}
