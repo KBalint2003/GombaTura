@@ -2,11 +2,21 @@ const Turak = require('../models/turak.model');
 const TuraraJelentkezes = require('../models/turaJelentkezes.model')
 const passport = require("passport");
 const { v4: uuidv4 } = require('uuid');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const Felhasznalo = require('../models/felhasznalo.model');
 
-function turakGETController (req, res){
 
-    Turak.findAll()
+function turakGETController(params) {
+
+    const id = req.user.userId;
+
+    Turak.findByPk(userId)
+}
+
+
+function osszesTurakGETController (req, res){
+
+    Turak.findAll({ include: Felhasznalo})
     .then((turak)=>{
         console.log("A túrák lekérdezése sikeres!");
         res.status(200).json({turak})
@@ -62,79 +72,75 @@ async function turakPOSTController(req, res) {
 }
 
 async function turakPUTController(req, res) {
-        
-        var { Indulas_ido, Indulas_hely, Varhato_erkezesi_ido, Erkezesi_hely, Utvonal_nehezsege, Szervezo_elerhetosege, Tura_dija, Leiras } = req.body;
+    
+    
+    var { Indulas_ido, Indulas_hely, Varhato_erkezesi_ido, Erkezesi_hely, Utvonal_nehezsege, Szervezo_elerhetosege, Tura_dija, Leiras } = req.body;
 
-       /* var letrehozoId = req.user.userId;
-        var Letrehozo = req.user.felhasznalonev;
-        var elerhetosegAlapertelmezett = req.user.email;
-*/
+    var Letrehozo = req.user.userId;
 
-var Letrehozo = req.user.felhasznalonev;
+    if (Indulas_ido === undefined) {
+        res.status(400).json({
+            error:true,
+            status: 400,
+            message: "Hiányzó adat: Indulás ideje"
+        })
+    }
 
-if (Indulas_ido === undefined) {
-    res.status(400).json({
-        error:true,
-        status: 400,
-        message: "Hiányzó adat: Indulás ideje"
+    if (Indulas_hely === undefined) {
+        res.status(400).json({
+            error:true,
+            status: 400,
+            message: "Hiányzó adat: Indulás helye"
+        })
+    }
+
+    if (Varhato_erkezesi_ido === undefined) {
+        res.status(400).json({
+            error:true,
+            status: 400,
+            message: "Hiányzó adat: Várható érkezési idő"
+        })
+    }
+
+    if (Erkezesi_hely === undefined) {
+        res.status(400).json({
+            error:true,
+            status: 400,
+            message: "Hiányzó adat: érkezés helye"
+        })
+    }
+
+    if (Utvonal_nehezsege === undefined) {
+        res.status(400).json({
+            error:true,
+            status: 400,
+            message: "Hiányzó adat: útvonal nehézsége"
+        })
+    }
+
+    if (Szervezo_elerhetosege === undefined) {
+        Szervezo_elerhetosege = req.user.email;
+    }
+    else{
+        Szervezo_elerhetosege = req.body.Szervezo_elerhetosege;
+    }
+
+
+    tura = await Turak.build({
+        Tura_id: uuidv4(),
+        Letrehozo: Letrehozo,
+        Indulas_ido: Indulas_ido,
+        Indulas_hely: Indulas_hely,
+        Varhato_erkezesi_ido: Varhato_erkezesi_ido,
+        Erkezesi_hely: Erkezesi_hely,
+        Utvonal_nehezsege: Utvonal_nehezsege,
+        Szervezo_elerhetosege: Szervezo_elerhetosege,
+        Tura_dija: Tura_dija,
+        Leiras: Leiras
     })
-}
 
-if (Indulas_hely === undefined) {
-    res.status(400).json({
-        error:true,
-        status: 400,
-        message: "Hiányzó adat: Indulás helye"
-    })
-}
-
-if (Varhato_erkezesi_ido === undefined) {
-    res.status(400).json({
-        error:true,
-        status: 400,
-        message: "Hiányzó adat: Várható érkezési idő"
-    })
-}
-
-if (Erkezesi_hely === undefined) {
-    res.status(400).json({
-        error:true,
-        status: 400,
-        message: "Hiányzó adat: érkezés helye"
-    })
-}
-
-if (Utvonal_nehezsege === undefined) {
-    res.status(400).json({
-        error:true,
-        status: 400,
-        message: "Hiányzó adat: útvonal nehézsége"
-    })
-}
-
-if (Szervezo_elerhetosege === undefined) {
-    Szervezo_elerhetosege = req.user.email;
-}
-else{
-    Szervezo_elerhetosege = req.body.Szervezo_elerhetosege;
-}
-
-
-tura = await Turak.build({
-    Tura_id: uuidv4(),
-    Letrehozo: Letrehozo,
-    Indulas_ido: Indulas_ido,
-    Indulas_hely: Indulas_hely,
-    Varhato_erkezesi_ido: Varhato_erkezesi_ido,
-    Erkezesi_hely: Erkezesi_hely,
-    Utvonal_nehezsege: Utvonal_nehezsege,
-    Szervezo_elerhetosege: Szervezo_elerhetosege,
-    Tura_dija: Tura_dija,
-    Leiras: Leiras
-})
-
-await tura.save();
-res.status(200).json({tura});
+    await tura.save();
+    res.status(200).json({tura});
 
 }
 
@@ -181,5 +187,5 @@ function turakDELETEController(req, res) {
 
 
 module.exports = {
-    turakGETController, turakPOSTController ,turakPUTController, turakDELETEController
+    osszesTurakGETController ,turakGETController, turakPOSTController ,turakPUTController, turakDELETEController
 }
