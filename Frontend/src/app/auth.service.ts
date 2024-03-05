@@ -4,12 +4,13 @@ import {Observable, Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 import { loginObj, signupObj, token } from "./felhasznaloAdatObj";
 import {Router} from "@angular/router";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class AutService{
+export class AuthService {
 
   constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
 
@@ -19,9 +20,41 @@ export class AutService{
 
   bejelentkezve: any
   tokenIDjson: any
+  regHiba: string = ''
 
-  ujFelhasznalo(felhasznalo : signupObj) : Observable<signupObj> {
-    return this.http.put<signupObj>(this.regisztracioRoute, felhasznalo, )
+
+  ujFelhasznalo(felhasznalo : signupObj) : Subscription {
+    return this.http.put<signupObj>(this.regisztracioRoute, felhasznalo, ).subscribe((valasz : any) => {
+
+    }, error => {
+      if (error.error.type === "Nincsfnev") {
+        this.regHiba = "Nincsfnev"
+      }
+      else if (error.error.type === "Nemjofnev") {
+        this.regHiba = "Nemjofnev"
+      }
+      else if (error.error.type === "Vanilyenfnev") {
+        this.regHiba = "Vanilyenfnev"
+      }
+      else if (error.error.type === "Nincsemail") {
+        this.regHiba = "Nincsemail"
+      }
+      else if (error.error.type === "Rosszemail") {
+        this.regHiba = "Rosszemail"
+      }
+      else if (error.error.type === "Vanmaremail") {
+        this.regHiba = "Vanmaremail"
+      }
+      else if (error.error.type === "Nincsjelszo") {
+        this.regHiba = "Nincsjelszo"
+      }
+      else if (error.error.type === "Nemegyezojelszavak") {
+        this.regHiba = "Nemegyezojelszavak"
+      }
+      else if (error.error.type === "Nemjojelszo") {
+        this.regHiba = "Nemjojelszo"
+      }
+    })
   }
 
   bejelentkezes(felhasznalo: loginObj): Subscription {
@@ -44,10 +77,11 @@ export class AutService{
 
   kijelentkezes() {
     return this.http.post(this.kijelentkezesRoute, this.tokenIDjson).subscribe((valasz: any) => {
+      console.log(this.tokenIDjson)
+      localStorage.removeItem("access")
       console.log("Sikeres küldés!")
       if(valasz.success) {
         this.bejelentkezve = false;
-        localStorage.removeItem("access",)
         this.router.navigate(['/'])
           .then(() => {
             console.log("Sikeres navigálás")
@@ -55,7 +89,6 @@ export class AutService{
           .catch(() => {
             console.log("Sikertelen navigálás")
           })
-
       }
     })
   }

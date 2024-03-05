@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {RouterLink} from "@angular/router";
 import { loginObj } from "../felhasznaloAdatObj";
-import { AutService } from "../aut.service";
+import { AuthService } from "../auth.service";
 import {NgIf} from "@angular/common";
 
 @Component({
@@ -15,10 +15,11 @@ import {NgIf} from "@angular/common";
 export class NavbarComponent {
 
 
-  constructor(protected navbarService : AutService) { }
+  constructor(protected navbarService : AuthService) { }
 
   kijelentkezesGomb() {
     this.navbarService.kijelentkezes();
   }
 
+  protected readonly localStorage = localStorage;
 }
