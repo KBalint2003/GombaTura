@@ -76,32 +76,42 @@ async function bejelentkezesPOSTController(req, res) {
 
 async function kijelentkezesPOSTController(req, res) {
 
-    const token = req.body.token;
-    kijelentkezettToken = token
-
     try {
-        console.log(token)
-        console.log(kijelentkezettToken)
-        kijelentkezettToken = await feketeLista.build({
-            token: kijelentkezettToken
-        })
+    
+        const token = req.body.token;
 
-        await kijelentkezettToken.save();
+        try {
 
-        res.status(200).json({
-            message: "Sikeres kijelentkezés!",
-            success: true
-        });
-    }
+            kijelentkezettToken = await feketeLista.build({
+                token: token,
+            })
+    
+            await kijelentkezettToken.save();
+    
+            res.status(200).json({
+                message: "Sikeres kijelentkezés!"
+            });
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500).json({
+                error: true,
+                status: 500,
+                message: "Szerver hiba"
+            })
+        }
+    
+    } 
     catch (error) {
-        console.log(error);
-        res.status(500).json({
-            error: true,
-            status: 500,
-            message: "Szerver hiba"
-        })
-    }
+    console.log(error);
+    res.status(400).json({
+        error: true,
+        status: 400,
+        message: "Nem érkezett meg a felhasználó tokenje!"
+    })
+}
 
+    
 
 }
 

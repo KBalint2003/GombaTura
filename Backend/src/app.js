@@ -7,6 +7,10 @@ const TuraModel = require('./models/turak.model')
 const TuraraJelentkezes = require('./models/turaJelentkezes.model');
 const { idozitettFLTorles } = require('./idozitettFeketeListaTorles')
 
+FelhasznaloModel.hasMany(TuraModel, {
+  foreignKey: 'Letrehozo'
+});
+TuraModel.belongsTo(FelhasznaloModel, {foreignKey: 'Letrehozo'});
 
 TuraModel.belongsToMany(FelhasznaloModel, { through: TuraraJelentkezes, foreignKey: 'Tura_id'});
 FelhasznaloModel.belongsToMany(TuraModel, { through: TuraraJelentkezes, foreignKey: 'User_id' });
