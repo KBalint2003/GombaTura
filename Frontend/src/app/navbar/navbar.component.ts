@@ -14,15 +14,11 @@ import {NgIf} from "@angular/common";
 })
 export class NavbarComponent {
 
-  felhasznalo: loginObj = {
-    email: '',
-    jelszo: '',
-  };
 
   constructor(protected navbarService : AutService) { }
 
   kijelentkezesGomb() {
-    this.navbarService.kijelentkezes().subscribe(value => {console.log("Sikeres küldés")});
+    this.navbarService.kijelentkezes();
   }
 
 }

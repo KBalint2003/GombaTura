@@ -11,6 +11,6 @@
     <li><a *ngIf="navbarService.bejelentkezve" routerLink="felhasznalo">Profil</a></li>
     <li><a *ngIf="!navbarService.bejelentkezve" routerLink="/regisztracio">Regisztráció</a></li>
     <li><a *ngIf="!navbarService.bejelentkezve" routerLink="/bejelentkezes">Bejelentkezés</a></li>
-    <li><a *ngIf="navbarService.bejelentkezve" (click)="kijelentkezesGomb()">Kijelentkezés</a></li>
+    <li><a *ngIf="navbarService.bejelentkezve" routerLink="" (click)="kijelentkezesGomb()">Kijelentkezés</a></li>
   </ul>
 </nav>
