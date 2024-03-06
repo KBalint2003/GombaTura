@@ -11,14 +11,13 @@ import {NgIf} from "@angular/common";
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
 
 
-  constructor(protected navbarService : AuthService) { }
+  constructor(protected navbarService: AuthService) {}
 
   ngOnInit() {
-    this.navbarService.tokenIDjson = localStorage.getItem('access')
-    console.log(this.navbarService.tokenIDjson)
+    this.navbarService.tokenIDjson = {"token" : localStorage.getItem('access')}
   }
 
 

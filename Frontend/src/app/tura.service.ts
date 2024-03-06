@@ -8,13 +8,13 @@ export class TuraService {
 
   constructor(private http: HttpClient) { }
 
-  private turaLekeresRoute = "http://localhost:3000/turaGET"
-  private turaJelentkezesRoute = "http://localhost:3000/turaPOST"
-  private turaLetrehozasRoute = "http://localhost:3000/turaPUT"
-  private turaSzerkesztesRoute = "http://localhost:3000/turaPATCH"
-  private turaTorlesRoute = "http://localhost:3000/turaDELETE"
+  public turaLekeresRoute = "http://localhost:3000/turak/osszes"
+  public turaJelentkezesRoute = "http://localhost:3000/turak"
+  public turaLetrehozasRoute = "http://localhost:3000/turak"
+  public turaSzerkesztesRoute = "http://localhost:3000/turak"
+  public turaTorlesRoute = "http://localhost:3000/turak"
 
-  
+
 
 
 }

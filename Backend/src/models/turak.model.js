@@ -8,6 +8,11 @@ const Tura=sequelize.define("Turak",{
         primaryKey:true,
     },
 
+    Tura_neve: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+
     Letrehozo:{
         type:DataTypes.STRING,
         allowNull: true,

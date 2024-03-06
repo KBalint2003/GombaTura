@@ -1,22 +1,22 @@
 <!-- Feljegyzett túa -->
 
-<div class="container tura">
+<div class="container tura" *ngFor="let tura of turak">
   <!-- A túra megnevezése -->
   <div class="turaNevHelye">
-    <p class="turaNeve">Túra neve: ***</p>
+    <p class="turaNeve">Túra neve: {{tura.Tura_neve}}</p>
     <button class="jelentkezesGomb btn btn-success"> Jelentkezés</button>
   </div>
   <!-- túra adatai -->
   <div class="row turaAdat">
     <div class="col-md">
-      <p>Létrehozó:</p>
-      <p>Indulási pont:</p>
-      <p>Érkezési pont:</p>
+      <p>Létrehozó: {{tura.LetrehozoNeve.Felhasznalonev}}</p>
+      <p>Indulási pont:{{tura.Indulas_hely}}</p>
+      <p>Érkezési pont:{{tura.Erkezesi_hely}}</p>
     </div>
     <div class="col-md">
-      <p>Túra nehézsége:</p>
-      <p>Indulási idő: (hónap, nap, óra, perc)</p>
-      <p>Érkezési idő: (hónap, nap, óra, perc)</p>
+      <p>Túra nehézsége:{{tura.Utvonal_nehezsege}}</p>
+      <p>Indulási idő: {{tura.Indulas_ido}} (hónap, nap, óra, perc)</p>
+      <p>Érkezési idő: {{tura.Varhato_erkezesi_ido}} (hónap, nap, óra, perc)</p>
     </div>
   </div>
 </div>

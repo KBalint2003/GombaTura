@@ -74,9 +74,17 @@ async function turakPOSTController(req, res) {
 async function turakPUTController(req, res) {
     
     
-    var { Indulas_ido, Indulas_hely, Varhato_erkezesi_ido, Erkezesi_hely, Utvonal_nehezsege, Szervezo_elerhetosege, Tura_dija, Leiras } = req.body;
+    var { Tura_neve, Indulas_ido, Indulas_hely, Varhato_erkezesi_ido, Erkezesi_hely, Utvonal_nehezsege, Szervezo_elerhetosege, Tura_dija, Leiras } = req.body;
 
     var Letrehozo = req.user.userId;
+
+    if (Tura_neve === undefined) {
+        res.status(400).json({
+            error:true,
+            status: 400,
+            message: "Hiányzó adat: Túra neve"
+        })
+    }
 
     if (Indulas_ido === undefined) {
         res.status(400).json({

@@ -11,14 +11,12 @@
                 <div class="center-wrap">
                   <div class="section text-center">
                     <div class="tavtarto">
-                      <p class="alert alert-danger" *ngIf="bejelentkezesService.bejHiba === 'Szerver1'">
-                        Szerver hiba 1!
+                      <p class="alert alert-danger" *ngIf="bejelentkezesService.bejHiba === 'Szerver1' || bejelentkezesService.bejHiba ==='Hibasadatok'">
+                        Helytelen bejelentkezési adatok!
                       </p>
-                      <p class="alert alert-danger" *ngIf="bejelentkezesService.bejHiba === 'Hibasadatok'">
-                        Nincs ilyen email cím és jelszó kombináció
-                      </p>
+
                       <p class="alert alert-danger" *ngIf="bejelentkezesService.bejHiba === 'Szerver2'">
-                        Szerver hiba 2!
+                        Oops! Próbálja újra később!
                       </p>
                     </div>
                     <div class="form-group">

@@ -15,6 +15,9 @@ export interface signupObj {
   jelszoUjra: string
 }
 
-export interface token {
-  token: string;
+export interface UserData {
+  felhasznalonev: string,
+  felhasznaloID: string,
+  email: string,
+  token: string
 }

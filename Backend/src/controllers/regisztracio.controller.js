@@ -133,7 +133,7 @@ async function regisztracioPUTController (req, res){
     await felhasznalo.save();
 
 
-    res.status(200).json({felhasznalo});
+    res.status(200).json({felhasznalo, success: true});
 
 };
 
