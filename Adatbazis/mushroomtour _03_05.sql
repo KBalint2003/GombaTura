@@ -72,10 +72,10 @@ INSERT INTO `jelentkezok_turara` (`User_id`, `Tura_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `post_databse`
+-- Tábla szerkezet ehhez a táblához `post_table`
 --
 
-CREATE TABLE `post_databse` (
+CREATE TABLE `post_table` (
   `Id` int(10) NOT NULL,
   `Postolo_neve` varchar(20) COLLATE utf8_hungarian_ci NOT NULL,
   `Kep_id` varchar(20) COLLATE utf8_hungarian_ci NOT NULL,
@@ -85,10 +85,10 @@ CREATE TABLE `post_databse` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
--- A tábla adatainak kiíratása `post_databse`
+-- A tábla adatainak kiíratása `post_table`
 --
 
-INSERT INTO `post_databse` (`Id`, `Postolo_neve`, `Kep_id`, `Comment`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `post_table` (`Id`, `Postolo_neve`, `Kep_id`, `Comment`, `createdAt`, `updatedAt`) VALUES
 (1, 'Gombamester21', 'Csaszar_galoca', 'Ez egy védett gomba!', '0000-00-00', '0000-00-00'),
 (2, 'Papsapka', 'Kucsma_gomba', 'Ez egy finom gomba.', '0000-00-00', '0000-00-00');
 
@@ -282,9 +282,9 @@ ALTER TABLE `jelentkezok_turara`
   ADD KEY `Tura_id` (`Tura_id`);
 
 --
--- A tábla indexei `post_databse`
+-- A tábla indexei `post_table`
 --
-ALTER TABLE `post_databse`
+ALTER TABLE `post_table`
   ADD PRIMARY KEY (`Id`),
   ADD UNIQUE KEY `Postolo_neve` (`Postolo_neve`),
   ADD KEY `Id` (`Id`);
@@ -314,10 +314,10 @@ ALTER TABLE `jelentkezok_turara`
   ADD CONSTRAINT `Jelentkezok_turara_ibfk_2` FOREIGN KEY (`Tura_id`) REFERENCES `tervezet_turak` (`Tura_id`);
 
 --
--- Megkötések a táblához `post_databse`
+-- Megkötések a táblához `post_table`
 --
-ALTER TABLE `post_databse`
-  ADD CONSTRAINT `post_databse_ibfk_1` FOREIGN KEY (`Postolo_neve`) REFERENCES `felhasznalo` (`Felhasznalonev`);
+ALTER TABLE `post_table`
+  ADD CONSTRAINT `post_table_ibfk_1` FOREIGN KEY (`Postolo_neve`) REFERENCES `felhasznalo` (`Felhasznalonev`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
