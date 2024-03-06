@@ -22,6 +22,7 @@ async function bejelentkezesPOSTController(req, res) {
         res.status(500).json({
             eror: true,
             status: 500,
+            type: "Szerver1",
             message: "Szerver hiba"
         });
         return;
@@ -31,6 +32,7 @@ async function bejelentkezesPOSTController(req, res) {
         res.status(400).json({
             error: true,
             status: 400,
+            type: "Hibasadatok",
             message: "Hibás felhasználónév vagy jelszó!"
         });
         return;
@@ -55,6 +57,7 @@ async function bejelentkezesPOSTController(req, res) {
         res.status(500).json({
             error: true,
             status: 500,
+            type: "Szerver2",
             message: "Szerver hiba (jwt)"
         })
         return;
@@ -76,23 +79,29 @@ async function kijelentkezesPOSTController(req, res) {
 
     try {
 
-        const token = req.body.token;
+        const token =  req.body.token;
         console.log(token)
 
+            try  {
+                kijelentkezettToken = await feketeLista.build({
+                    token: token
+                })
 
+                await kijelentkezettToken.save();
 
-            kijelentkezettToken = await feketeLista.build({
-                token: token,
-            })
+                res.status(200).json({
+                    message: "Sikeres kijelentkezés!"
+                })
+            }
 
-            await kijelentkezettToken.save();
-
-            res.status(200).json({
-                message: "Sikeres kijelentkezés!"
-            })
-
-
-    
+            catch (error) {
+                console.log(error)
+                res.status(500).json({
+                    error: true,
+                    status: 500,
+                    message: "Szerver hiba"
+                })
+            }
     } 
     catch (error) {
     console.log(error);

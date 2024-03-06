@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { loginObj } from "../felhasznaloAdatObj";
 import {AuthService} from "../auth.service";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-bejelentkezes',
   standalone: true,
   imports: [
     FormsModule,
+    NgIf,
   ],
   templateUrl: './bejelentkezes.component.html',
   styleUrl: './bejelentkezes.component.css'

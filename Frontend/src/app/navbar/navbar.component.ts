@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import { loginObj } from "../felhasznaloAdatObj";
-import { AuthService } from "../auth.service";
+import {AuthService} from "../auth.service";
 import {NgIf} from "@angular/common";
 
 @Component({
@@ -12,10 +11,16 @@ import {NgIf} from "@angular/common";
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit{
 
 
   constructor(protected navbarService : AuthService) { }
+
+  ngOnInit() {
+    this.navbarService.tokenIDjson = localStorage.getItem('access')
+    console.log(this.navbarService.tokenIDjson)
+  }
+
 
   kijelentkezesGomb() {
     this.navbarService.kijelentkezes();

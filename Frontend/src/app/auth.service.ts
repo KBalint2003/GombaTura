@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, Subscription} from "rxjs";
+import { Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
-import { loginObj, signupObj, token } from "./felhasznaloAdatObj";
+import { loginObj, signupObj} from "./felhasznaloAdatObj";
 import {Router} from "@angular/router";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +20,9 @@ export class AuthService {
   bejelentkezve: any
   tokenIDjson: any
   regHiba: string = ''
+  bejHiba: string = ''
+
+
 
 
   ujFelhasznalo(felhasznalo : signupObj) : Subscription {
@@ -62,7 +64,6 @@ export class AuthService {
       this.tokenIDjson = {"token": valasz.data.token}
       console.log(this.tokenIDjson)
       if (valasz.success) {
-        this.bejelentkezve = true
         localStorage.setItem("access", valasz.data.token)
         this.router.navigate(['/'])
           .then(() => {
@@ -72,13 +73,23 @@ export class AuthService {
             console.log("Sikertelen navigálás")
           })
       }
+    }, error => {
+      if (error.error.type === "Szerver1") {
+        this.bejHiba = "Szerver1"
+      }
+      else if (error.error.type === "Hibasadatok") {
+        this.bejHiba = "Hibasadatok"
+      }
+      else if (error.error.type === "Szerver2") {
+        this.bejHiba = "Szerver2"
+      }
     })
   }
 
   kijelentkezes() {
     return this.http.post(this.kijelentkezesRoute, this.tokenIDjson).subscribe((valasz: any) => {
       console.log(this.tokenIDjson)
-      localStorage.removeItem("access")
+      localStorage.removeItem('access')
       console.log("Sikeres küldés!")
       if(valasz.success) {
         this.bejelentkezve = false;
@@ -90,6 +101,8 @@ export class AuthService {
             console.log("Sikertelen navigálás")
           })
       }
+    }, error => {
+      console.log(this.tokenIDjson)
     })
   }
 

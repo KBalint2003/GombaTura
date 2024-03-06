@@ -7,10 +7,20 @@
           <div class="card-3d-wrap mx-auto">
             <div>
               <div class="card-front">
+                <p class="fw-bold bej">Bejelentkezés</p>
                 <div class="center-wrap">
                   <div class="section text-center">
-                    <h4 class="mb-4 pb-3">Bejelentkezés</h4>
-
+                    <div class="tavtarto">
+                      <p class="alert alert-danger" *ngIf="bejelentkezesService.bejHiba === 'Szerver1'">
+                        Szerver hiba 1!
+                      </p>
+                      <p class="alert alert-danger" *ngIf="bejelentkezesService.bejHiba === 'Hibasadatok'">
+                        Nincs ilyen email cím és jelszó kombináció
+                      </p>
+                      <p class="alert alert-danger" *ngIf="bejelentkezesService.bejHiba === 'Szerver2'">
+                        Szerver hiba 2!
+                      </p>
+                    </div>
                     <div class="form-group">
                       <input type="text" class="form-style" name="emailBej" placeholder="Email-cím" [(ngModel)]="felhasznalo.email"> <!-- Az ngModel segítségével változóba kerül a beírt adat -->
                       <i class="input-icon uil uil-at"></i>
