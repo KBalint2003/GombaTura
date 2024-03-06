@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {signupObj} from "../felhasznaloAdatObj";
-import { AutService } from "../aut.service";
+import { AuthService } from "../auth.service";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-regisztracio',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './regisztracio.component.html',
   styleUrl: './regisztracio.component.css'
@@ -22,11 +24,11 @@ export class RegisztracioComponent {
     jelszoUjra: ''
   };
 
-  constructor(private regisztracioService: AutService) {}
+  constructor(protected regisztracioService: AuthService) {}
 
   // A regisztracio.service.ts fájlban deklarált meródus itt kerül meghívásra.
   regisztracioGomb() {
-    this.regisztracioService.ujFelhasznalo(this.felhasznalo).subscribe(value => {console.log("Sikeres küldés")});
+    this.regisztracioService.ujFelhasznalo(this.felhasznalo)
   }
 
 }

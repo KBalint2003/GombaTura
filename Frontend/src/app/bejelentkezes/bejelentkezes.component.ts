@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { loginObj } from "../felhasznaloAdatObj";
-import {AutService} from "../aut.service";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-bejelentkezes',
@@ -14,7 +14,7 @@ import {AutService} from "../aut.service";
 })
 export class BejelentkezesComponent {
 
-  constructor(protected bejelentkezesService: AutService) { }
+  constructor(protected bejelentkezesService: AuthService) { }
 
 
   // Az ngModul segítségével kinyert adatok ebbe a változóba kerülnek bele

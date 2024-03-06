@@ -2,6 +2,11 @@ a:hover{
   text-decoration: none;
 }
 
+.reg {
+  font-size: 24px;
+  margin-top: 20px;
+}
+
 .link{
   color: #245639;
 }
@@ -28,7 +33,7 @@ h4{
 
 .card-front, .card-back{
   width: 100%;
-  height: 120%;
+  height: 100%;
   background-color: #3c915f;
   position:absolute;
   border-radius: 6px;
@@ -64,8 +69,8 @@ h4{
   line-height: 22px;
   letter-spacing: 0.5px;
   outline: none;
-  color: #245639;
-  background-color: #323134;
+  color: black;
+  background-color: white;
   border: none;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
@@ -79,7 +84,7 @@ h4{
 }
 
 ::placeholder{
-  color:rgba(190, 190, 190, 0.623);
+  color: black;
 }
 
 .input-icon{

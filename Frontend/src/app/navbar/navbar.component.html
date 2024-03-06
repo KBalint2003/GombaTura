@@ -8,9 +8,9 @@
     <li><a routerLink="/tura">Túrák</a></li>
     <li><a routerLink="/terkep">Térkép</a></li>
     <li><a routerLink="/forum">Fórum</a></li>
-    <li><a *ngIf="navbarService.bejelentkezve" routerLink="felhasznalo">Profil</a></li>
-    <li><a *ngIf="!navbarService.bejelentkezve" routerLink="/regisztracio">Regisztráció</a></li>
-    <li><a *ngIf="!navbarService.bejelentkezve" routerLink="/bejelentkezes">Bejelentkezés</a></li>
-    <li><a *ngIf="navbarService.bejelentkezve" routerLink="" (click)="kijelentkezesGomb()">Kijelentkezés</a></li>
+    <li><a *ngIf="localStorage.getItem('access')" routerLink="felhasznalo">Profil</a></li>
+    <li><a *ngIf="!localStorage.getItem('access')" routerLink="/regisztracio">Regisztráció</a></li>
+    <li><a *ngIf="!localStorage.getItem('access')" routerLink="/bejelentkezes">Bejelentkezés</a></li>
+    <li><a *ngIf="localStorage.getItem('access')" routerLink="" (click)="kijelentkezesGomb()">Kijelentkezés</a></li>
   </ul>
 </nav>

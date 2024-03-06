@@ -61,12 +61,10 @@ async function bejelentkezesPOSTController(req, res) {
     }
     res.status(200).json({
         success: true,
-        
         data: {
             felhasznalonev: letezoFelhasznalo.Felhasznalonev, 
             felhasznaloId: letezoFelhasznalo.User_id,
             email: letezoFelhasznalo.Email,
-            
             token: token,
         },
     });
@@ -77,29 +75,23 @@ async function bejelentkezesPOSTController(req, res) {
 async function kijelentkezesPOSTController(req, res) {
 
     try {
-    
-        const token = req.body.token;
 
-        try {
+        const token = req.body.token;
+        console.log(token)
+
+
 
             kijelentkezettToken = await feketeLista.build({
                 token: token,
             })
-    
+
             await kijelentkezettToken.save();
-    
+
             res.status(200).json({
                 message: "Sikeres kijelentkezés!"
-            });
-        }
-        catch (error) {
-            console.log(error);
-            res.status(500).json({
-                error: true,
-                status: 500,
-                message: "Szerver hiba"
             })
-        }
+
+
     
     } 
     catch (error) {
