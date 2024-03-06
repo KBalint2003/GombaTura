@@ -4,6 +4,7 @@ const passport = require("passport");
 const { v4: uuidv4 } = require('uuid');
 const jwt = require('jsonwebtoken');
 const Felhasznalo = require('../models/felhasznalo.model');
+const { Op } = require('sequelize');
 
 
 function turakGETController(params) {
@@ -14,23 +15,30 @@ function turakGETController(params) {
 }
 
 
-function osszesTurakGETController (req, res){
+async function osszesTurakGETController(req, res) {
+    
+    const turak = await Turak.findAll({
+        where: {
+          Indulas_ido: {
+            [Op.ne]: new Date().toISOString()
+          }
+        },
+        include: [{
+          model: Felhasznalo,
+          attributes: ["Felhasznalonev"],
+          as: "LetrehozoNeve",
+        }],
+        attributes: {
+          exclude: ["Letrehozo"], // A "Letrehozo" mező kizárása
+        }
+      });
 
-    Turak.findAll({ include: Felhasznalo})
-    .then((turak)=>{
-        console.log("A túrák lekérdezése sikeres!");
-        res.status(200).json({turak})
-    })
-    .catch((err)=>{
-        console.log("A túrák lekérdezése sikertelen!");
-        console.log(err);
-        res.status(500).json({
-            error: true,
-            code: 500,
-            message: "A túrák lekérdezése sikertelen!"
-        })
-    })
+      res.status(200).json({
+        turak:turak
+      })
 }
+
+  
 
 async function turakPOSTController(req, res) {
   
@@ -137,6 +145,7 @@ async function turakPUTController(req, res) {
     tura = await Turak.build({
         Tura_id: uuidv4(),
         Letrehozo: Letrehozo,
+        Tura_neve: Tura_neve,
         Indulas_ido: Indulas_ido,
         Indulas_hely: Indulas_hely,
         Varhato_erkezesi_ido: Varhato_erkezesi_ido,

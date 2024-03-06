@@ -1,6 +1,7 @@
 let regisztracioMegkotesek = {};
 
-const regex = "[\-\'A-Za-z0-9áéíóöőúüűÁÉÍÓÖŐÚÜŰ]+";
+const regexFelhasznalo = "[\-\'A-Za-z0-9áéíóöőúüűÁÉÍÓÖŐÚÜŰ]+";
+const regexJelszo = /^(?=.*[a-z+áéíóöőúüű])(?=.*[A-Z+ÁÉÍÓÖŐÚÜŰ])(?=.*\d).+$/;
 
 regisztracioMegkotesek.felhasznalonev = () => {
 
@@ -11,12 +12,12 @@ regisztracioMegkotesek.felhasznalonev = () => {
         },
         'type': 'string',
         'length':{
-            'minimum': 8,
+            'minimum': 10,
             'maximum':32,
             'message': 'A felhasználónév túl rövid vagy túl hosszú! A felhasználónévnek 10 és 32 karakterhossz közöttinek kell lennie!'
         },
         'format': {
-            'pattern' : regex,
+            'pattern' : regexFelhasznalo,
             'flags' : 'i',
             'message':'A felhasználónévnek a következő sémát kell követnie: Nagybetű A-Z, kisbetű a-z, számok 0-9'
         }
@@ -29,7 +30,8 @@ regisztracioMegkotesek.email = () => {
 
     const megkotes = {
         'presence': {
-            allowEmpty: false
+            allowEmpty: false,
+            message: "Kötelező megadni jelszót!"
         },
         'type': 'string',
         'email':true
@@ -42,16 +44,18 @@ regisztracioMegkotesek.email = () => {
 regisztracioMegkotesek.jelszo = () => {
     const megkotes = {
         'presence': {
-            allowEmpty: false
+            allowEmpty: false,
+            message: "Kötelező megadni jelszót!"
         },
         'type': 'string',
         'length':{
-            'minimum': 10
+            'minimum': 10,
+            message: "A jelszónak legalább 10 karakter hosszúnak kell lennie!"
         },
         'format': {
-            'pattern' : regex,
+            'pattern' : regexJelszo,
             'flags' : 'i',
-            'message':'A jelszónak a következő sémát kell követnie: '+ regex
+            'message': "A jelszónak a következő karaktereket kell tartalmaznia: Kisbetű, nagybetű, szám."
         }
     }
 

@@ -8,9 +8,13 @@ const TuraraJelentkezes = require('./models/turaJelentkezes.model');
 const { idozitettFLTorles } = require('./idozitettFeketeListaTorles')
 
 FelhasznaloModel.hasMany(TuraModel, {
-  foreignKey: 'Letrehozo'
+  foreignKey: 'Letrehozo',
+  as: 'TuraLetrehozasok'
 });
-TuraModel.belongsTo(FelhasznaloModel, {foreignKey: 'Letrehozo'});
+TuraModel.belongsTo(FelhasznaloModel, {
+  foreignKey: 'Letrehozo',
+  as: 'LetrehozoNeve'
+});
 
 TuraModel.belongsToMany(FelhasznaloModel, { through: TuraraJelentkezes, foreignKey: 'Tura_id'});
 FelhasznaloModel.belongsToMany(TuraModel, { through: TuraraJelentkezes, foreignKey: 'User_id' });
@@ -65,6 +69,10 @@ sequelize.modelManager.addModel(feketeLista)
   sequelize.sync({}).then(() =>{
     app.listen(PORT, () => {
       console.log(`A szerver elindult és elérhető a http://localhost:${PORT} URL-en!`)
+
+      console.log(FelhasznaloModel.associations);
+      console.log(TuraModel.associations);
+
       idozitettFLTorles.start()
     });
   })

@@ -20,10 +20,9 @@ async function regisztracioPUTController (req, res){
 
     //Felhasználónév lekezelése
 
-    if (felhasznalonev === '') {
+    if (felhasznalonev === undefined) {
         res.status(400).json({
             code:400,
-            type: "Nincsfnev",
             message:"Nem lett megadva felhasználónév!"
         })
         return;
@@ -35,7 +34,7 @@ async function regisztracioPUTController (req, res){
         if (msg) {
             res.status(400).json({
                 code: 400,
-                type: "Nemjofnev",
+                type: "Felhasználónév",
                 message: msg
             })
             return;
@@ -46,7 +45,6 @@ async function regisztracioPUTController (req, res){
     if (letezikEFelhasznalonev !== null) {
         res.status(400).json({
             code:400,
-            type: "Vanilyenfnev",
             message:"Már létezik felhasználó ilyen felhasználónévvel!"
         })
         return;
@@ -54,10 +52,9 @@ async function regisztracioPUTController (req, res){
 
     //Email lekezelése
 
-    if (email === '') {
+    if (email === undefined) {
         res.status(400).json({
             code:400,
-            type: 'Nincsemail',
             message:"Nem lett megadva email cím!"
         })
         return;
@@ -69,28 +66,18 @@ async function regisztracioPUTController (req, res){
         if (msg) {
             res.status(400).json({
                 code: 400,
-                type: "Rosszemail",
+                type: "Email",
                 message: msg
             })
             return;
         }
     }
-    const letezikEEmail = await felhasznaloModell.findOne({ where: { Email: email } });
-    if (letezikEEmail !== null) {
-        res.status(400).json({
-            code:400,
-            type: 'Vanmaremail',
-            message:"Már létezik felhasználó ilyen email címmel!"
-        })
-        return;
-    }
 
     //jelszó lekezelése
 
-    if (jelszo === '') {
+    if (jelszo === undefined) {
         res.status(400).json({
             code:400,
-            type: 'Nincsjelszo',
             message:"Nem lett megadva jelszó!"
         })
         return;
@@ -98,7 +85,6 @@ async function regisztracioPUTController (req, res){
     else if(jelszo !== jelszoUjra) {
         res.status(400).json({
             code:400,
-            type: 'Nemegyezojelszavak',
             message:"A két jelszó nem egyezik!"
         })
         return;
@@ -110,13 +96,21 @@ async function regisztracioPUTController (req, res){
         if (msg) {
             res.status(400).json({
                 code: 400,
-                type: "Nemjojelszo",
+                type: "jelszó",
                 message: msg
             })
             return;
         }
     }
 
+    const letezikEEmail = await felhasznaloModell.findOne({ where: { Email: email } });
+    if (letezikEEmail !== null) {
+        res.status(400).json({
+            code:400,
+            message:"Már létezik felhasználó ilyen email címmel!"
+        })
+        return;
+    }
 
     felhasznalo = await felhasznaloModell.build({
         User_id: uuidv4(),

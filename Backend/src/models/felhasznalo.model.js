@@ -40,6 +40,10 @@ const Felhasznalo = sequelize.define('Felhasznalok', {
     }
 
 
+},
+{
+    tableName:"Felhasznalok"
+
 });
 
 //
