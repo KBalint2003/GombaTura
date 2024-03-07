@@ -57,7 +57,6 @@ async function regisztracioPUTController (req, res){
     if (email === '') {
         res.status(400).json({
             code:400,
-            type: 'Nincsemail',
             message:"Nem lett megadva email cím!"
         })
         return;
@@ -75,6 +74,7 @@ async function regisztracioPUTController (req, res){
             return;
         }
     }
+
     const letezikEEmail = await felhasznaloModell.findOne({ where: { Email: email } });
     if (letezikEEmail !== null) {
         res.status(400).json({
@@ -133,7 +133,7 @@ async function regisztracioPUTController (req, res){
     await felhasznalo.save();
 
 
-    res.status(200).json({felhasznalo});
+    res.status(200).json({felhasznalo, success: true});
 
 };
 

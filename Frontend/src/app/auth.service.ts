@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, Subscription} from "rxjs";
+import { Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
-import { loginObj, signupObj, token } from "./felhasznaloAdatObj";
+import {loginObj, signupObj, UserData} from "./felhasznaloAdatObj";
 import {Router} from "@angular/router";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 
 export class AuthService {
 
@@ -21,11 +22,28 @@ export class AuthService {
   bejelentkezve: any
   tokenIDjson: any
   regHiba: string = ''
+  bejHiba: string = ''
+
+  Userinfo: UserData = {
+    felhasznalonev: '',
+    felhasznaloID: '',
+    email: '',
+    token: ''
+  }
+
 
 
   ujFelhasznalo(felhasznalo : signupObj) : Subscription {
     return this.http.put<signupObj>(this.regisztracioRoute, felhasznalo, ).subscribe((valasz : any) => {
-
+      if (valasz.success) {
+        this.router.navigate(['/'])
+          .then(() => {
+            console.log("Sikeres navigálás")
+          })
+          .catch(() => {
+            console.log("Sikertelen navigálás")
+          })
+      }
     }, error => {
       if (error.error.type === "Nincsfnev") {
         this.regHiba = "Nincsfnev"
@@ -60,9 +78,11 @@ export class AuthService {
   bejelentkezes(felhasznalo: loginObj): Subscription {
     return this.http.post<loginObj>(this.bejelentkezesRoute, felhasznalo).subscribe((valasz: any) => {
       this.tokenIDjson = {"token": valasz.data.token}
-      console.log(this.tokenIDjson)
       if (valasz.success) {
-        this.bejelentkezve = true
+
+        this.Userinfo =
+          {felhasznalonev: valasz.data.felhasznalonev, felhasznaloID: valasz.data.felhasznaloId,
+          email: valasz.data.email, token: valasz.data.token}
         localStorage.setItem("access", valasz.data.token)
         this.router.navigate(['/'])
           .then(() => {
@@ -72,13 +92,22 @@ export class AuthService {
             console.log("Sikertelen navigálás")
           })
       }
+    }, error => {
+      if (error.error.type === "Szerver1") {
+        this.bejHiba = "Szerver1"
+      }
+      else if (error.error.type === "Hibasadatok") {
+        this.bejHiba = "Hibasadatok"
+      }
+      else if (error.error.type === "Szerver2") {
+        this.bejHiba = "Szerver2"
+      }
     })
   }
 
   kijelentkezes() {
     return this.http.post(this.kijelentkezesRoute, this.tokenIDjson).subscribe((valasz: any) => {
-      console.log(this.tokenIDjson)
-      localStorage.removeItem("access")
+      localStorage.removeItem('access')
       console.log("Sikeres küldés!")
       if(valasz.success) {
         this.bejelentkezve = false;

@@ -7,7 +7,7 @@ const lejaratiIdoTipus = new DataTypes.DATE({
 
 const feketeLista = sequelize.define('Feketelista', {
     token: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(300),
         allowNull: false
     }
 },
