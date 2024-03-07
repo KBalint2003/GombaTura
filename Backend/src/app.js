@@ -66,7 +66,7 @@ sequelize.authenticate().then(() => {
   sequelize.modelManager.addModel(TuraraJelentkezes);
 sequelize.modelManager.addModel(feketeLista)
 
-  sequelize.sync({}).then(() =>{
+  sequelize.sync({force: true}).then(() =>{
     app.listen(PORT, () => {
       console.log(`A szerver elindult és elérhető a http://localhost:${PORT} URL-en!`)
 

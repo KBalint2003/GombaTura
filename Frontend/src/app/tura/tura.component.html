@@ -22,4 +22,20 @@
 </div>
 <!-- Új túra létrehozása. -->
 
-<button class="turaHozzaadas"><img src="/assets/img/add.png"></button>
+<button class="turaHozzaadas" (click)="open(content)"><img src="/assets/img/add.png"></button>
+
+<ng-template #content let-modal>
+	<div class="modal-header centered">
+		<h4 class="modal-title" id="modal-basic-title">Új túra létrehozása</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Mentés</button>
+	</div>
+</ng-template>
+
+
+

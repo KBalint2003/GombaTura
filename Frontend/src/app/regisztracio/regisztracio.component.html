@@ -19,6 +19,9 @@
                       <p class="alert alert-danger" *ngIf="regisztracioService.regHiba == 'Vanilyenfnev'">
                         Már van regisztrált felhasználó ezzel a felhasználónévvel!
                       </p>
+                      <p class="alert alert-danger" *ngIf="regisztracioService.regHiba == 'Nincsemail'">
+                        Emailcím megadása kötelező
+                      </p>
                       <p class="alert alert-danger" *ngIf="regisztracioService.regHiba === 'Rosszemail'">
                         A megadott email cím nem felel meg az elvárásoknak!
                       </p>

@@ -57,6 +57,7 @@ async function regisztracioPUTController (req, res){
     if (email === '') {
         res.status(400).json({
             code:400,
+            type: "Nincsemail",
             message:"Nem lett megadva email cím!"
         })
         return;

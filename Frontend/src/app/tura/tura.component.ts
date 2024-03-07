@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, inject} from '@angular/core';
 import { AuthService } from "../auth.service";
 import {HttpClient} from "@angular/common/http";
 import {Tura, Turak} from "./tura";
 import {TuraService} from "../tura.service";
 import {NgForOf} from "@angular/common";
-import {Observable} from "rxjs";
+import { NgbModal,  } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-tura',
   standalone: true,
   imports: [
-    NgForOf
+    NgForOf, 
   ],
   templateUrl: './tura.component.html',
   styleUrl: './tura.component.css'
@@ -19,6 +19,12 @@ export class TuraComponent implements  OnInit{
 
   constructor(protected authservice: AuthService, protected http: HttpClient, protected turaservice: TuraService) {  }
 
+  private modalService = inject(NgbModal);
+	closeResult = '';
+
+  open(content: TemplateRef<any>) {
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+	}
 
   turak: Tura[] = []
 
