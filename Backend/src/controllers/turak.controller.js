@@ -140,13 +140,13 @@ async function turakPOSTController(req, res) {
 async function turakPUTController(req, res) {
 
     try {
-        var { TuraNeve, IndulasIdo, IndulasHely, ErkezesiIdo, ErkezesiHely, UtvonalNehezsege, SzervezoElerhetosege, TuraDija, Leiras } = req.body.ujTura;
+        var { Tura_neve, Indulas_ido, Indulas_hely, Erkezesi_ido, Erkezesi_hely, Utvonal_nehezsege, Szervezo_elerhetosege, Tura_dija, Leiras } = req.body.ujTura;
 
-        console.log(TuraNeve)
+        console.log(Tura_neve)
 
         var Letrehozo = req.user.userId;
     
-        if (TuraNeve === undefined) {
+        if (Tura_neve === undefined) {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -155,7 +155,7 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (IndulasIdo === undefined) {
+        if (Indulas_ido === undefined) {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -164,7 +164,7 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (IndulasHely === undefined) {
+        if (Indulas_hely === undefined) {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -173,7 +173,7 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (ErkezesiIdo === undefined) {
+        if (Erkezesi_ido === undefined) {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -182,7 +182,7 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (ErkezesiHely === undefined) {
+        if (Erkezesi_hely === undefined) {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -191,7 +191,7 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (UtvonalNehezsege === undefined) {
+        if (Utvonal_nehezsege === undefined) {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -200,25 +200,25 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (SzervezoElerhetosege === undefined) {
-            SzervezoElerhetosege = req.user.email;
+        if (Szervezo_elerhetosege === undefined) {
+            Szervezo_elerhetosege = req.user.email;
         }
         else{
-            SzervezoElerhetosege = req.body.ujTura.SzervezoElerhetosege;
+            Szervezo_elerhetosege= req.body.ujTura.Szervezo_elerhetosege;
         }
     
     
         tura = await Turak.build({
             Tura_id: uuidv4(),
             Letrehozo: Letrehozo,
-            Tura_neve: TuraNeve,
-            Indulas_ido: IndulasIdo,
-            Indulas_hely: IndulasHely,
-            Varhato_erkezesi_ido: ErkezesiIdo,
-            Erkezesi_hely: ErkezesiHely,
-            Utvonal_nehezsege: UtvonalNehezsege,
-            Szervezo_elerhetosege: SzervezoElerhetosege,
-            Tura_dija: TuraDija,
+            Tura_neve: Tura_neve,
+            Indulas_ido: Indulas_ido,
+            Indulas_hely: Indulas_hely,
+            Varhato_erkezesi_ido: Erkezesi_ido,
+            Erkezesi_hely: Erkezesi_hely,
+            Utvonal_nehezsege: Utvonal_nehezsege,
+            Szervezo_elerhetosege: Szervezo_elerhetosege,
+            Tura_dija: Tura_dija,
             Leiras: Leiras
         })
     

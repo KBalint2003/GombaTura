@@ -29,16 +29,16 @@ export class TuraComponent implements  OnInit{
 	}
 
   ujTura: Tura = {
-    TuraNeve:'',
-    TuraID:'',
-    IndulasIdo:'',
-    IndulasHely:'',
-    ErkezesiIdo:'',
-    ErkezesiHely:'',
-    UtvonalNehezsege:'',
-    SzervezoElerhetosege:'',
-    TuraDija: 0,
-    ElmaradE: false,
+    Tura_id: '',
+    Tura_neve: '',
+    Indulas_ido: '',
+    Indulas_hely: '',
+    Erkezesi_ido: '',
+    Erkezesi_hely: '',
+    Utvonal_nehezsege: '',
+    Szervezo_elerhetosege: '',
+    Tura_dija: 0,
+    Elmarad_a_tura: false,
     Leiras: '',
     LetrehozoNeve: {
       Felhasznalonev: ''
@@ -48,9 +48,9 @@ export class TuraComponent implements  OnInit{
 
   ngOnInit() {
     return this.http.get<Turak>(this.turaservice.turaLekeresRoute).subscribe((valasz:any) => {
-    this.turak =  valasz.turak
-      console.log(valasz)
-  })
+      this.turak = valasz.turak[0].turak
+      console.log(valasz.turak[0].Tura_neve)
+    });
   }
 
 

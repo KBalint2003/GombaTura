@@ -1,14 +1,14 @@
 export interface Tura {
-  TuraID: string;
-  TuraNeve: string;
-  IndulasIdo: string;
-  IndulasHely: string;
-  ErkezesiIdo: string;
-  ErkezesiHely: string;
-  UtvonalNehezsege: string;
-  SzervezoElerhetosege: string;
-  TuraDija: number;
-  ElmaradE: boolean;
+  Tura_id: string;
+  Tura_neve: string;
+  Indulas_ido: string;
+  Indulas_hely: string;
+  Erkezesi_ido: string;
+  Erkezesi_hely: string;
+  Utvonal_nehezsege: string;
+  Szervezo_elerhetosege: string;
+  Tura_dija: number;
+  Elmarad_a_tura: boolean;
   Leiras: string;
   LetrehozoNeve: {
     Felhasznalonev: string;
