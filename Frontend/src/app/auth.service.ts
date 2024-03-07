@@ -112,7 +112,6 @@ export class AuthService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.tokenIDjson.token
     });
-
     return this.http.post(this.kijelentkezesRoute, {}, { headers }).subscribe((valasz: any) => {
       localStorage.removeItem('access')
       console.log("Sikeres küldés!")

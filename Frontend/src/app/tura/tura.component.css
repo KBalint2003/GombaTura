@@ -20,7 +20,7 @@
 }
 
 .jelentkezesGomb {
-  margin-left: 50%;
+  margin-left: 70%;
   border: 2px solid black;
   border-radius: 40px;
 }
@@ -43,4 +43,30 @@
   height: 50px;
   width: 50px;
   position: sticky;
+}
+
+.lenyilo {
+  width: 750px;
+  background-color: white;
+  align-self: center;
+}
+
+.bezaroGomb {
+  color: red;
+  font-weight: bold;
+}
+
+.turaInput{
+  border: 1px solid black;
+  margin-bottom: 8px;
+  width: 70%;
+}
+
+.turaLetrehozasAdat {
+  margin-bottom: 11px;
+}
+
+.mentesGomb {
+  background-color: #198754;
+  color: white;
 }

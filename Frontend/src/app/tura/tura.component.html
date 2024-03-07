@@ -3,20 +3,25 @@
 <div class="container tura" *ngFor="let tura of turak">
   <!-- A túra megnevezése -->
   <div class="turaNevHelye">
-    <p class="turaNeve">Túra neve: {{tura.Tura_neve}}</p>
+    <p class="turaNeve">Túra neve: {{tura.TuraNeve}}</p>
     <button class="jelentkezesGomb btn btn-success"> Jelentkezés</button>
   </div>
   <!-- túra adatai -->
   <div class="row turaAdat">
     <div class="col-md">
       <p>Létrehozó: {{tura.LetrehozoNeve.Felhasznalonev}}</p>
-      <p>Indulási pont:{{tura.Indulas_hely}}</p>
-      <p>Érkezési pont:{{tura.Erkezesi_hely}}</p>
+      <p>Indulási pont: {{tura.IndulasHely}}</p>
+      <p>Érkezési pont: {{tura.ErkezesiHely}}</p>
+      <p>Szervező elérhetősége: {{tura.SzervezoElerhetosege}}</p>
+      <p>Leírás: </p>
+      <p>{{tura.Leiras}}</p>
     </div>
     <div class="col-md">
-      <p>Túra nehézsége:{{tura.Utvonal_nehezsege}}</p>
-      <p>Indulási idő: {{tura.Indulas_ido}} (hónap, nap, óra, perc)</p>
-      <p>Érkezési idő: {{tura.Varhato_erkezesi_ido}} (hónap, nap, óra, perc)</p>
+      <p>Túra nehézsége: {{tura.UtvonalNehezsege}}</p>
+      <p>Indulási idő: {{tura.IndulasIdo}} (hónap, nap, óra, perc)</p>
+      <p>Érkezési idő: {{tura.ErkezesiIdo}} (hónap, nap, óra, perc)</p>
+      <p *ngIf="this.tura.TuraDija != 0">Túra díja: {{tura.TuraDija}}Ft</p>
+      <p *ngIf="this.tura.TuraDija == 0">Túra díja: Ingyenes</p>
     </div>
   </div>
 </div>
@@ -24,16 +29,42 @@
 
 <button class="turaHozzaadas" (click)="open(content)"><img src="/assets/img/add.png"></button>
 
-<ng-template #content let-modal>
-	<div class="modal-header centered">
+
+<ng-template #content let-modal class="lenyilo">
+	<div class="modal-header centered lenyilo">
 		<h4 class="modal-title" id="modal-basic-title">Új túra létrehozása</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+		<button type="button" class="bezaroGomb"  (click)="modal.dismiss('Cross click')">X</button>
 	</div>
-	<div class="modal-body">
-		
+	<div class="modal-body lenyilo">
+    <div class="container">
+      <div class="row">
+        <div class="col-md">
+          <p class="turaLetrehozasAdat">Túra neve:  </p>
+          <p class="turaLetrehozasAdat">Indulási idő:  (év, hónap, nap, óra, perc)</p>
+          <p class="turaLetrehozasAdat">Indulási pont: </p>
+          <p class="turaLetrehozasAdat">Érkezési idő:  (év, hónap, nap, óra, perc)</p>
+          <p class="turaLetrehozasAdat">Érkezési pont: </p>
+          <p class="turaLetrehozasAdat">Túra nehézsége:</p>
+          <p class="turaLetrehozasAdat">Szervező elérhetősége:</p>
+          <p class="turaLetrehozasAdat">Túra díja:</p>
+          <p class="turaLetrehozasAdat">Leírás:</p>
+        </div>
+        <div class="col-md">
+          <input type="text" class="turaInput" placeholder="Gombatúra" [(ngModel)]="ujTura.TuraNeve">
+          <input type="datetime-local" class="turaInput" placeholder="2024-03-07-15-00" [(ngModel)]="ujTura.IndulasIdo">
+          <input type="text" class="turaInput" placeholder="Sátoraljaújhely" [(ngModel)]="ujTura.IndulasHely">
+          <input type="datetime-local" class="turaInput" placeholder="2024-03-07-19-00" [(ngModel)]="ujTura.ErkezesiIdo">
+          <input type="text" class="turaInput" placeholder="Sátoraljaújhely" [(ngModel)]="ujTura.ErkezesiHely">
+          <input type="text" class="turaInput" placeholder="Könnyű" [(ngModel)]="ujTura.UtvonalNehezsege">
+          <input type="text" class="turaInput" placeholder="06-20-111-5654" [(ngModel)]="ujTura.SzervezoElerhetosege">
+          <input type="text" class="turaInput" placeholder="1000Ft" [(ngModel)]="ujTura.TuraDija">
+          <input type="text" class="turaInput" placeholder="Leírás" [(ngModel)]="ujTura.Leiras">
+        </div>
+      </div>
+    </div>
 	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Mentés</button>
+	<div class="modal-footer lenyilo">
+		<button type="button" class="btn btn-outline-dark mentesGomb" (click)="turaservice.turaLetrehozas(ujTura)" >Mentés</button>
 	</div>
 </ng-template>
 
