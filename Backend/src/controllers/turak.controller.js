@@ -12,18 +12,30 @@ async function turakGETController(req, res) {
     try {
         const id = req.user.userId;
 
-        const turak = await Turak.findAll({where: {Letrehozo:id}})
+        const turak = await Turak.findAll({
+            where: {Letrehozo:id},
+            raw: true,
+            attributes: {
+                exclude: ["createdAt", "updatedAt"],
+            },
+        })
     
-        if (turak[0] === undefined) {
+        if (!turak.length) {
             res.status(400).json({
                 message: "Nincs még létrehozott túrád!"
             })
             return;
         }
     
+        const formazottTurak = turak.map(tura => ({
+            ...tura,
+            Indulas_ido: new Date(tura.Indulas_ido).toLocaleString(),
+            Varhato_erkezesi_ido: new Date(tura.Varhato_erkezesi_ido).toLocaleString(),
+        }));
+
         res.status(200).json({
-        turak: turak
-        })
+            turak: formazottTurak
+        });
     }
      catch (error) {
         console.log(error);
@@ -38,46 +50,49 @@ async function turakGETController(req, res) {
 }
 
 async function osszesTurakGETController(req, res) {
-    
-    try{
-    const turak = await Turak.findAll({
-        where: {
-          Indulas_ido: {
-            [Op.ne]: new Date().toLocaleDateString(),   
-          }
-        },
-        include: [{
-          model: Felhasznalo,
-          attributes: ["Felhasznalonev"],
-          as: "LetrehozoNeve",
-        },
-        
-    
-    ],
-        attributes: {
-          exclude: ["Letrehozo"], // A "Letrehozo" mező kizárása
-        }
-      });
-
-      if (turak[0] === undefined) {
-        res.status(400).json({
-            status: 400,
-            message: "Nincs túra, amire jelentkezni lehetne"
+    try {
+        const turak = await Turak.findAll({
+            where: {
+                Indulas_ido: {
+                    [Op.ne]: new Date().toLocaleDateString(),
+                }
+            },
+            include: [{
+                model: Felhasznalo,
+                attributes: ["Felhasznalonev"],
+                as: "LetrehozoNeve",
+            }],
+            attributes: {
+                exclude: ["Letrehozo", "createdAt", "updatedAt"],
+            },
+            raw: true, // Ezt adhatod hozzá
         });
-        return;
-      }
 
-      res.status(200).json({
-        turak:turak
-      })
-    }
-    catch(error){
+        if (!turak.length) {
+            res.status(400).json({
+                status: 400,
+                message: "Nincs túra, amire jelentkezni lehetne"
+            });
+            return;
+        }
+
+        // Manuális dátumformázás
+        const formazottTurak = turak.map(tura => ({
+            ...tura,
+            Indulas_ido: new Date(tura.Indulas_ido).toLocaleString(),
+            Varhato_erkezesi_ido: new Date(tura.Varhato_erkezesi_ido).toLocaleString(),
+        }));
+
+        res.status(200).json({
+            turak: formazottTurak
+        });
+    } catch (error) {
         console.log(error);
         res.status(500).json({
-            error: true,    
+            error: true,
             status: 500,
             message: "Szerver hiba"
-        })
+        });
     }
 }
 

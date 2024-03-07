@@ -9,7 +9,8 @@ const sequelize = new Sequelize('gombaproba','root','',{
     dialectOptions: {
         useUTC: false
     },
-    timezone: "+01:00"
+    timezone: "+01:00",
+    typeCast: true
 })
 
 module.exports = sequelize;
