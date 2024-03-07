@@ -7,47 +7,96 @@ const Felhasznalo = require('../models/felhasznalo.model');
 const { Op } = require('sequelize');
 
 
-function turakGETController(params) {
+async function turakGETController(req, res) {
 
-    const id = req.user.userId;
+    try {
+        const id = req.user.userId;
 
-    Turak.findByPk(userId)
+        const turak = await Turak.findAll({where: {Letrehozo:id}})
+    
+        if (turak[0] === undefined) {
+            res.status(400).json({
+                message: "Nincs még létrehozott túrád!"
+            })
+            return;
+        }
+    
+        res.status(200).json({
+        turak: turak
+        })
+    }
+     catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error: true,
+            status: 500,
+            message: "Szerver hiba"
+        })
+    }
+
+
 }
-
 
 async function osszesTurakGETController(req, res) {
     
+    try{
     const turak = await Turak.findAll({
         where: {
           Indulas_ido: {
-            [Op.ne]: new Date().toISOString()
+            [Op.ne]: new Date().toLocaleDateString(),   
           }
         },
         include: [{
           model: Felhasznalo,
           attributes: ["Felhasznalonev"],
           as: "LetrehozoNeve",
-        }],
+        },
+        
+    
+    ],
         attributes: {
           exclude: ["Letrehozo"], // A "Letrehozo" mező kizárása
         }
       });
 
+      if (turak[0] === undefined) {
+        res.status(400).json({
+            status: 400,
+            message: "Nincs túra, amire jelentkezni lehetne"
+        });
+        return;
+      }
+
       res.status(200).json({
         turak:turak
       })
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).json({
+            error: true,    
+            status: 500,
+            message: "Szerver hiba"
+        })
+    }
 }
-
-  
 
 async function turakPOSTController(req, res) {
   
     try {
 
-        var felhasznaloId = req.user.userId;
-        var turaId = req.body.Tura_id;
+        const felhasznaloId = req.user.userId;
+        const turaId = req.body.Tura_id;
 
-        try {
+        if (felhasznaloId === undefined || turaId === undefined) {
+            res.status(400).json({
+                error:true,
+                status: 400,
+                message: "Nem érkeztek meg a szükséges adatok a jelentkezéshez!"
+            })
+            return;
+        }
+
             osszekapcsolas = await TuraraJelentkezes.build({
                 Tura_id: turaId,
                 User_id: felhasznaloId
@@ -58,21 +107,12 @@ async function turakPOSTController(req, res) {
         
         }
          
-        catch (error) {
-            console.log(error);
-            res.status(500).json({
-                error: true,
-                status:500,
-                message: "Szerver hiba a jelentkezés elmentése közben!"
-            })
-        }
-    } 
     catch (error) {
         console.log(error);
-        res.status(400).json({
+        res.status(500).json({
             error: true,
-            status: 400,
-            message: "Nem jöttek meg a szükséges adatok a jelentkezéshez!"
+            status:500,
+            message: "Szerver hiba a jelentkezés elmentése közben!"
         })
     }
    
@@ -81,88 +121,109 @@ async function turakPOSTController(req, res) {
 
 async function turakPUTController(req, res) {
     
+    try {
+        var { Tura_neve, Indulas_ido, Indulas_hely, Varhato_erkezesi_ido, Erkezesi_hely, Utvonal_nehezsege, Szervezo_elerhetosege, Tura_dija, Leiras } = req.body;
+
+        var Letrehozo = req.user.userId;
     
-    var { Tura_neve, Indulas_ido, Indulas_hely, Varhato_erkezesi_ido, Erkezesi_hely, Utvonal_nehezsege, Szervezo_elerhetosege, Tura_dija, Leiras } = req.body;
-
-    var Letrehozo = req.user.userId;
-
-    if (Tura_neve === undefined) {
-        res.status(400).json({
-            error:true,
-            status: 400,
-            message: "Hiányzó adat: Túra neve"
+        if (Tura_neve === undefined) {
+            res.status(400).json({
+                error:true,
+                status: 400,
+                message: "Hiányzó adat: Túra neve"
+            })
+            return;
+        }
+    
+        if (Indulas_ido === undefined) {
+            res.status(400).json({
+                error:true,
+                status: 400,
+                message: "Hiányzó adat: Indulás ideje"
+            })
+            return;
+        }
+    
+        if (Indulas_hely === undefined) {
+            res.status(400).json({
+                error:true,
+                status: 400,
+                message: "Hiányzó adat: Indulás helye"
+            })
+            return;
+        }
+    
+        if (Varhato_erkezesi_ido === undefined) {
+            res.status(400).json({
+                error:true,
+                status: 400,
+                message: "Hiányzó adat: Várható érkezési idő"
+            })
+            return;
+        }
+    
+        if (Erkezesi_hely === undefined) {
+            res.status(400).json({
+                error:true,
+                status: 400,
+                message: "Hiányzó adat: érkezés helye"
+            })
+            return;
+        }
+    
+        if (Utvonal_nehezsege === undefined) {
+            res.status(400).json({
+                error:true,
+                status: 400,
+                message: "Hiányzó adat: útvonal nehézsége"
+            })
+            return;
+        }
+    
+        if (Szervezo_elerhetosege === undefined) {
+            Szervezo_elerhetosege = req.user.email;
+        }
+        else{
+            Szervezo_elerhetosege = req.body.Szervezo_elerhetosege;
+        }
+    
+    
+        tura = await Turak.build({
+            Tura_id: uuidv4(),
+            Letrehozo: Letrehozo,
+            Tura_neve: Tura_neve,
+            Indulas_ido: Indulas_ido,
+            Indulas_hely: Indulas_hely,
+            Varhato_erkezesi_ido: Varhato_erkezesi_ido,
+            Erkezesi_hely: Erkezesi_hely,
+            Utvonal_nehezsege: Utvonal_nehezsege,
+            Szervezo_elerhetosege: Szervezo_elerhetosege,
+            Tura_dija: Tura_dija,
+            Leiras: Leiras
+        })
+    
+        await tura.save();
+        res.status(201).json({
+            message: "A túra sikeresen létre lett hozva!"
+        });
+    
+    }   
+    catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error: true,
+            status: 500,
+            message: "Szerver hiba"
         })
     }
-
-    if (Indulas_ido === undefined) {
-        res.status(400).json({
-            error:true,
-            status: 400,
-            message: "Hiányzó adat: Indulás ideje"
-        })
-    }
-
-    if (Indulas_hely === undefined) {
-        res.status(400).json({
-            error:true,
-            status: 400,
-            message: "Hiányzó adat: Indulás helye"
-        })
-    }
-
-    if (Varhato_erkezesi_ido === undefined) {
-        res.status(400).json({
-            error:true,
-            status: 400,
-            message: "Hiányzó adat: Várható érkezési idő"
-        })
-    }
-
-    if (Erkezesi_hely === undefined) {
-        res.status(400).json({
-            error:true,
-            status: 400,
-            message: "Hiányzó adat: érkezés helye"
-        })
-    }
-
-    if (Utvonal_nehezsege === undefined) {
-        res.status(400).json({
-            error:true,
-            status: 400,
-            message: "Hiányzó adat: útvonal nehézsége"
-        })
-    }
-
-    if (Szervezo_elerhetosege === undefined) {
-        Szervezo_elerhetosege = req.user.email;
-    }
-    else{
-        Szervezo_elerhetosege = req.body.Szervezo_elerhetosege;
-    }
-
-
-    tura = await Turak.build({
-        Tura_id: uuidv4(),
-        Letrehozo: Letrehozo,
-        Tura_neve: Tura_neve,
-        Indulas_ido: Indulas_ido,
-        Indulas_hely: Indulas_hely,
-        Varhato_erkezesi_ido: Varhato_erkezesi_ido,
-        Erkezesi_hely: Erkezesi_hely,
-        Utvonal_nehezsege: Utvonal_nehezsege,
-        Szervezo_elerhetosege: Szervezo_elerhetosege,
-        Tura_dija: Tura_dija,
-        Leiras: Leiras
-    })
-
-    await tura.save();
-    res.status(200).json({tura});
-
 }
 
 function turakPATCHController(req, res) {
     
+    var { Tura_neve, Indulas_ido, Indulas_hely, Varhato_erkezesi_ido, Erkezesi_hely, Utvonal_nehezsege, Szervezo_elerhetosege, Tura_dija, Elmarad_a_tura, Leiras } = req.body;
+
+    const turaId = req.body.Tura_id
+
 }
 
 function turakDELETEController(req, res) {

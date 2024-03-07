@@ -5,7 +5,11 @@ const sequelize = new Sequelize('gombaproba','root','',{
     dialect: 'mariadb',
     define: {
         freezeTableName: true,
-    }
+    },
+    dialectOptions: {
+        useUTC: false
+    },
+    timezone: "+01:00"
 })
 
 module.exports = sequelize;

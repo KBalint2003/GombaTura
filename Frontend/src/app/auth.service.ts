@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import { Subscription} from "rxjs";
-import {CookieService} from "ngx-cookie-service";
-import {loginObj, signupObj, UserData} from "./felhasznaloAdatObj";
-import {Router} from "@angular/router";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Subscription } from "rxjs";
+import { CookieService } from "ngx-cookie-service";
+import { loginObj, signupObj, UserData } from "./felhasznaloAdatObj";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +33,8 @@ export class AuthService {
 
 
 
-  ujFelhasznalo(felhasznalo : signupObj) : Subscription {
-    return this.http.put<signupObj>(this.regisztracioRoute, felhasznalo, ).subscribe((valasz : any) => {
+  ujFelhasznalo(felhasznalo: signupObj): Subscription {
+    return this.http.put<signupObj>(this.regisztracioRoute, felhasznalo,).subscribe((valasz: any) => {
       if (valasz.success) {
         this.router.navigate(['/'])
           .then(() => {
@@ -77,12 +77,14 @@ export class AuthService {
 
   bejelentkezes(felhasznalo: loginObj): Subscription {
     return this.http.post<loginObj>(this.bejelentkezesRoute, felhasznalo).subscribe((valasz: any) => {
-      this.tokenIDjson = {"token": valasz.data.token}
+      this.tokenIDjson = { "token": valasz.data.token };
       if (valasz.success) {
-
-        this.Userinfo =
-          {felhasznalonev: valasz.data.felhasznalonev, felhasznaloID: valasz.data.felhasznaloId,
-          email: valasz.data.email, token: valasz.data.token}
+        this.Userinfo = {
+          felhasznalonev: valasz.data.felhasznalonev,
+          felhasznaloID: valasz.data.felhasznaloId,
+          email: valasz.data.email,
+          token: valasz.data.token
+        }
         localStorage.setItem("access", valasz.data.token)
         this.router.navigate(['/'])
           .then(() => {
@@ -106,10 +108,15 @@ export class AuthService {
   }
 
   kijelentkezes() {
-    return this.http.post(this.kijelentkezesRoute, this.tokenIDjson).subscribe((valasz: any) => {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokenIDjson.token
+    });
+
+    return this.http.post(this.kijelentkezesRoute, {}, { headers }).subscribe((valasz: any) => {
       localStorage.removeItem('access')
       console.log("Sikeres küldés!")
-      if(valasz.success) {
+      if (valasz.success) {
         this.bejelentkezve = false;
         this.router.navigate(['/'])
           .then(() => {
@@ -121,5 +128,4 @@ export class AuthService {
       }
     })
   }
-
 }

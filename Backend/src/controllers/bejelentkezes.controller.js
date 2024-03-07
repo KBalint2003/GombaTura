@@ -79,9 +79,9 @@ async function bejelentkezesPOSTController(req, res) {
 
 async function kijelentkezesPOSTController(req, res) {
 
-    const token =  req.body.token;
-    
-    console.log(token)
+    const token =  req.user.userId;
+    console.log(token);
+
 
         try  {
             kijelentkezettToken = await feketeLista.build({
@@ -91,7 +91,8 @@ async function kijelentkezesPOSTController(req, res) {
             await kijelentkezettToken.save();
 
             res.status(200).json({
-                message: "Sikeres kijelentkezés!"
+                message: "Sikeres kijelentkezés!",
+                token:token
             })
         }
 
@@ -103,9 +104,6 @@ async function kijelentkezesPOSTController(req, res) {
                 message: "Szerver hiba"
             })
         }
-
-    
-
 }
 
 

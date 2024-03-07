@@ -66,12 +66,9 @@ sequelize.authenticate().then(() => {
   sequelize.modelManager.addModel(TuraraJelentkezes);
 sequelize.modelManager.addModel(feketeLista)
 
-  sequelize.sync({force: true}).then(() =>{
+  sequelize.sync({}).then(() =>{
     app.listen(PORT, () => {
       console.log(`A szerver elindult és elérhető a http://localhost:${PORT} URL-en!`)
-
-      console.log(FelhasznaloModel.associations);
-      console.log(TuraModel.associations);
 
       idozitettFLTorles.start()
     });
