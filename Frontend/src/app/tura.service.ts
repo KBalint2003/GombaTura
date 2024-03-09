@@ -23,13 +23,20 @@ export class TuraService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
     });
-    console.log(ujTura)
     return this.http.put<Tura>(this.turaLetrehozasRoute, {ujTura}, {headers}).subscribe((valasz : any) => {
-      console.log(ujTura)
     }, error => {
-      console.log(ujTura)
       console.log(error)
     })
+  }
+
+  jelentkezesTurara() {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
+    });
+    return this.http.post(this.turaJelentkezesRoute, {}, {headers}).subscribe( (valasz : any) => {
+
+    } )
   }
 
 
