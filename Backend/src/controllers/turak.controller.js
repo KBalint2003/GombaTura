@@ -65,7 +65,7 @@ async function osszesTurakGETController(req, res) {
             attributes: {
                 exclude: ["Letrehozo", "createdAt", "updatedAt"],
             },
-            raw: true, // Ezt adhatod hozzá
+            raw: true,
 
         });
 
