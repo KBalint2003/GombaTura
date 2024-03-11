@@ -1,2 +1,44 @@
-<p>home works!</p>
-<app-footer></app-footer>
+@if (images) {
+  <ngb-carousel class="keptar" [pauseOnHover] = true [interval]= 3000>
+    <ng-template ngbSlide>
+      <div class="keptarKep">
+        <a routerLink="/enciklopedia"><img [src]="images[0]" alt="Random first slide" /></a>
+      </div>
+      <div class="carousel-caption">
+        <h1>Enciklopédia</h1>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="keptarKep">
+        <a routerLink="/tura"><img [src]="images[2]" alt="Random third slide" /></a>
+      </div>
+      <div class="carousel-caption">
+        <h1>Túrák</h1>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="keptarKep">
+        <a routerLink="/terkep"><img [src]="images[3]" alt="Random third slide" /></a>
+      </div>
+      <div class="carousel-caption">
+        <h1>Térkép</h1>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="keptarKep">
+        <a routerLink="/forum"><img [src]="images[1]" alt="Random second slide" /></a>
+      </div>
+      <div class="carousel-caption">
+        <h1>Fórum</h1>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide *ngIf="localStorage.getItem('access')">
+      <div class="keptarKep">
+        <a routerLink="/felhasznalo"><img [src]="images[4]" alt="Random third slide" /></a>
+      </div>
+      <div class="carousel-caption">
+        <h1>Profil</h1>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+}<app-footer></app-footer>

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Subscription } from "rxjs";
-import { CookieService } from "ngx-cookie-service";
 import { loginObj, signupObj, UserData } from "./felhasznaloAdatObj";
 import { Router } from "@angular/router";
 
@@ -13,7 +12,7 @@ import { Router } from "@angular/router";
 
 export class AuthService {
 
-  constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   private regisztracioRoute = "http://localhost:3000/regisztracio";
   private bejelentkezesRoute = "http://localhost:3000/login";

@@ -1,5 +1,11 @@
 <!-- Feljegyzett túa -->
-
+<div class="turaCheck">
+  <label for="SajatTura">Saját túrák </label>
+  <input type="checkbox" id="SajatTura">
+  <br>
+  <label for="JelentkezettTura">Jelentkezett túrák</label>
+  <input type="checkbox" id="JelentkezettTura">
+</div>
 <div class="container tura" *ngFor="let tura of turak">
   <!-- A túra megnevezése -->
   <div class="turaNevHelye">
@@ -18,8 +24,8 @@
     </div>
     <div class="col-md">
       <p>Túra nehézsége: {{tura.Utvonal_nehezsege}}</p>
-      <p>Indulási idő: {{tura.Indulas_ido}} (hónap, nap, óra, perc)</p>
-      <p>Érkezési idő: {{tura.Varhato_erkezesi_ido}} (hónap, nap, óra, perc)</p>
+      <p>Indulási idő: {{tura.Indulas_ido}} </p>
+      <p>Érkezési idő: {{tura.Erkezesi_ido}} </p>
       <p *ngIf="this.tura.Tura_dija != 0">Túra díja: {{tura.Tura_dija}}Ft</p>
       <p *ngIf="this.tura.Tura_dija == 0">Túra díja: Ingyenes</p>
     </div>
@@ -53,7 +59,7 @@
           <input type="text" class="turaInput" placeholder="Gombatúra" [(ngModel)]="ujTura.Tura_neve">
           <input type="datetime-local" class="turaInput" placeholder="2024-03-07-15-00" [(ngModel)]="ujTura.Indulas_ido">
           <input type="text" class="turaInput" placeholder="Sátoraljaújhely" [(ngModel)]="ujTura.Indulas_hely">
-          <input type="datetime-local" class="turaInput" placeholder="2024-03-07-19-00" [(ngModel)]="ujTura.Varhato_erkezesi_ido">
+          <input type="datetime-local" class="turaInput" placeholder="2024-03-07-19-00" [(ngModel)]="ujTura.Erkezesi_ido">
           <input type="text" class="turaInput" placeholder="Sátoraljaújhely" [(ngModel)]="ujTura.Erkezesi_hely">
           <input type="text" class="turaInput" placeholder="Könnyű" [(ngModel)]="ujTura.Utvonal_nehezsege">
           <input type="text" class="turaInput" placeholder="06-20-111-5654" [(ngModel)]="ujTura.Szervezo_elerhetosege">

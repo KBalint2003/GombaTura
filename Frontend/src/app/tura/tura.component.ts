@@ -33,7 +33,7 @@ export class TuraComponent implements  OnInit{
     Tura_neve: '',
     Indulas_ido: '',
     Indulas_hely: '',
-    Varhato_erkezesi_ido: '',
+    Erkezesi_ido: '',
     Erkezesi_hely: '',
     Utvonal_nehezsege: '',
     Szervezo_elerhetosege: '',

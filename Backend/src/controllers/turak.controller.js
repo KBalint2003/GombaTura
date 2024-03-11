@@ -30,7 +30,7 @@ async function turakGETController(req, res) {
         const formazottTurak = turak.map(tura => ({
             ...tura,
             Indulas_ido: new Date(tura.Indulas_ido).toLocaleString(),
-            Varhato_erkezesi_ido: new Date(tura.Varhato_erkezesi_ido).toLocaleString(),
+            Erkezesi_ido: new Date(tura.Varhato_erkezesi_ido).toLocaleString(),
         }));
 
         res.status(200).json({
@@ -83,7 +83,7 @@ async function osszesTurakGETController(req, res) {
         const formazottTurak = turak.map(tura => ({
             ...tura,
             Indulas_ido: new Date(tura.Indulas_ido).toLocaleString(),
-            Varhato_erkezesi_ido: new Date(tura.Varhato_erkezesi_ido).toLocaleString(),
+            Erkezesi_ido: new Date(tura.Varhato_erkezesi_ido).toLocaleString(),
         }));
 
         res.status(200).json({

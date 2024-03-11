@@ -1,0 +1,23 @@
+.keptar {
+  margin-top: 5%;
+}
+
+.keptarKep {
+  height: 650px;
+  width: 1000px;
+  opacity: 65%;
+}
+
+ngb-carousel {
+  display: block;
+  margin: 0 auto;
+  width: 1000px;
+}
+
+.carousel-caption {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}
+
+
