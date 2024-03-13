@@ -16,21 +16,19 @@ import {jwtDecode, JwtPayload} from "jwt-decode";
 })
 export class AppComponent implements OnInit{
   title = 'UjGomba';
+
   ngOnInit() {
     const token = localStorage.getItem('access')
-
     if (!token) {
       console.error("Nincs token")
       return
     }
-
     try {
-      const dekodoltToken = jwtDecode(token) as JwtPayload & { felhasznalonev: string, exp : number }
+      const dekodoltToken = jwtDecode(token) as JwtPayload & { exp : number }
       const idoMasodpercben = Math.floor(Date.now() / 1000);
       if (idoMasodpercben > dekodoltToken.exp) {
         localStorage.removeItem('access')
       }
-      console.log(idoMasodpercben)
       return
     } catch (err) {
       console.error('Error decoding token:', err);

@@ -16,7 +16,7 @@ export class TuraService {
   public turaSzerkesztesRoute = "http://localhost:3000/turak"
   public turaTorlesRoute = "http://localhost:3000/turak"
 
-
+  turahiba = ''
 
   turaLetrehozas(ujTura: Tura) {
     const headers = new HttpHeaders({
@@ -24,8 +24,32 @@ export class TuraService {
       'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
     });
     return this.http.put<Tura>(this.turaLetrehozasRoute, {ujTura}, {headers}).subscribe((valasz : any) => {
+      console.log(ujTura)
     }, error => {
-      console.log(error)
+      if (error.error.type === 'Nincsnev') {
+        this.turahiba = 'Nincsnev'
+      }
+      else if (error.error.type === 'NincsIndIdo') {
+        this.turahiba = 'NincsIndIdo'
+      }
+      else if (error.error.type === 'NincsIndHely') {
+        this.turahiba = 'NincsIndHely'
+      }
+      else if (error.error.type === 'NincsErkIdo') {
+        this.turahiba = 'NincsErkIdo'
+      }
+      else if (error.error.type === 'NincsErkHely') {
+        this.turahiba = 'NincsErkHely'
+      }
+      else if (error.error.type === 'NincsNehezseg') {
+        this.turahiba = 'NincsNehezseg'
+      }
+      else if (error.error.type === 'Szerver') {
+        this.turahiba = 'Szerver'
+      }
+      else if (error.error.type === 'Nincsleiras') {
+        this.turahiba = 'Nincsleiras'
+      }
     })
   }
 

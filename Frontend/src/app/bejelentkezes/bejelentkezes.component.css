@@ -12,6 +12,12 @@ a:hover{
   height: 75px;
 }
 
+.alert {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
 .link{
   color: #245639;
 }

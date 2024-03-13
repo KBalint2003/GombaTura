@@ -142,65 +142,80 @@ async function turakPUTController(req, res) {
     try {
         var { Tura_neve, Indulas_ido, Indulas_hely, Erkezesi_ido, Erkezesi_hely, Utvonal_nehezsege, Szervezo_elerhetosege, Tura_dija, Leiras } = req.body.ujTura;
 
-        console.log(Tura_neve)
 
         var Letrehozo = req.user.userId;
     
-        if (Tura_neve === undefined) {
+        if (Tura_neve === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
+                type: "Nincsnev",
                 message: "Hiányzó adat: Túra neve"
             })
             return;
         }
     
-        if (Indulas_ido === undefined) {
+        if (Indulas_ido === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
+                type: "NincsIndIdo",
                 message: "Hiányzó adat: Indulás ideje"
             })
             return;
         }
     
-        if (Indulas_hely === undefined) {
+        if (Indulas_hely === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
+                type: "NincsIndHely",
                 message: "Hiányzó adat: Indulás helye"
             })
             return;
         }
     
-        if (Erkezesi_ido === undefined) {
+        if (Erkezesi_ido === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
+                type: "NincsErkIdo",
                 message: "Hiányzó adat: Várható érkezési idő"
             })
             return;
         }
     
-        if (Erkezesi_hely === undefined) {
+        if (Erkezesi_hely === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
+                type: "NincsErkHely",
                 message: "Hiányzó adat: érkezés helye"
             })
             return;
         }
     
-        if (Utvonal_nehezsege === undefined) {
+        if (Utvonal_nehezsege === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
+                type: "NincsNehezseg",
                 message: "Hiányzó adat: útvonal nehézsége"
             })
             return;
         }
+
+        if (Leiras === "") {
+            res.status(400).json({
+                error:true,
+                status: 400,
+                type: "Nincsleiras",
+                message: "Hiányzó adat: leírás"
+            })
+            return;
+        }
     
-        if (Szervezo_elerhetosege === undefined) {
+        if (Szervezo_elerhetosege === "") {
             Szervezo_elerhetosege = req.user.email;
         }
         else{
@@ -225,6 +240,7 @@ async function turakPUTController(req, res) {
         await tura.save();
         res.status(201).json({
             message: "A túra sikeresen létre lett hozva!"
+
         });
     
     }   
@@ -233,6 +249,7 @@ async function turakPUTController(req, res) {
         res.status(500).json({
             error: true,
             status: 500,
+            type: 'Szerver',
             message: "Szerver hiba"
         })
     }

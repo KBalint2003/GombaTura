@@ -5,7 +5,7 @@
 .keptarKep {
   height: 650px;
   width: 1000px;
-  opacity: 65%;
+  opacity: 70%;
 }
 
 ngb-carousel {
@@ -17,7 +17,11 @@ ngb-carousel {
 .carousel-caption {
   font-size: 24px;
   font-weight: bold;
-  color: black;
+  color: white;
+  background-color: rgba(0, 0, 0, 70%);
+  /*color: black;*/
+  /*background-color: rgba(255,255,255, 70%)*/
 }
+
 
 

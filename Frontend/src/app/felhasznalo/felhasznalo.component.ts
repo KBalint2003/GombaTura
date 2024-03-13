@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {felhasznaloAdatObj} from "../felhasznaloAdatObj";
 import {FelhasznaloService} from "./felhasznalo.service";
 import {signupObj} from "../felhasznaloAdatObj";
+import {jwtDecode, JwtPayload} from "jwt-decode";
 
 @Component({
   selector: 'app-felhasznalo',
@@ -13,7 +14,7 @@ import {signupObj} from "../felhasznaloAdatObj";
   templateUrl: './felhasznalo.component.html',
   styleUrl: './felhasznalo.component.css'
 })
-export class FelhasznaloComponent {
+export class FelhasznaloComponent implements OnInit{
 
   felhasznaloadatok: felhasznaloAdatObj = {
     telSzam: '',
@@ -28,6 +29,22 @@ export class FelhasznaloComponent {
   };
 
   constructor(private felhasznaloService: FelhasznaloService) {
+  }
+
+  ngOnInit() {
+    const token = localStorage.getItem('access')
+    if (!token) {
+      console.error("Nincs token")
+      return
+    }
+    try {
+      const dekodoltToken = jwtDecode(token) as JwtPayload & { felhasznalonev: string, exp : number }
+      this.felhasznalo.felhasznalonev = dekodoltToken.felhasznalonev
+      return
+    } catch (err) {
+      console.error('Error decoding token:', err);
+      return false;
+    }
   }
 
   adatMentesGomb() {

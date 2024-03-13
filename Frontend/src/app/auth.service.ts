@@ -18,7 +18,6 @@ export class AuthService {
   private bejelentkezesRoute = "http://localhost:3000/login";
   private kijelentkezesRoute = "http://localhost:3000/logout"
 
-  bejelentkezve: any
   tokenIDjson: any
   regHiba: string = ''
   bejHiba: string = ''
@@ -115,7 +114,6 @@ export class AuthService {
       localStorage.removeItem('access')
       console.log("Sikeres küldés!")
       if (valasz.success) {
-        this.bejelentkezve = false;
         this.router.navigate(['/'])
           .then(() => {
             console.log("Sikeres navigálás")

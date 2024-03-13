@@ -41,6 +41,32 @@
 		<h4 class="modal-title" id="modal-basic-title">Új túra létrehozása</h4>
 		<button type="button" class="bezaroGomb"  (click)="modal.dismiss('Cross click')">X</button>
 	</div>
+  <div class="tavtarto">
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'Nincsnev'">
+      A túra nevének megadása kötelező!
+    </p>
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'NincsIndIdo'">
+      Az indulási idő megadása kötelező!
+    </p>
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'NincsIndHely'">
+      Az indulási hely megadása kötelező!
+    </p>
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'NincsErkIdo'">
+      Az érkezési idő megadása kötelező!
+    </p>
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'NincsErkHely'">
+      Az érkezési hely megadása kötelező!
+    </p>
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'NincsNehezseg'">
+      A túra nehézségének megadása kötelező!
+    </p>
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'Nincsleiras'">
+      A túra leírásának megadása kötelező!
+    </p>
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'Szerver'">
+      Ooops.. Próbálja újra később!
+    </p>
+  </div>
 	<div class="modal-body lenyilo">
     <div class="container">
       <div class="row">

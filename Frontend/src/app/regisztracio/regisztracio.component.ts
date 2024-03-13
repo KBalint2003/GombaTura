@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {signupObj} from "../felhasznaloAdatObj";
 import { AuthService } from "../auth.service";
 import {NgIf} from "@angular/common";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-regisztracio',
@@ -26,9 +27,11 @@ export class RegisztracioComponent {
 
   constructor(protected regisztracioService: AuthService) {}
 
+
   // A regisztracio.service.ts fájlban deklarált meródus itt kerül meghívásra.
   regisztracioGomb() {
     this.regisztracioService.ujFelhasznalo(this.felhasznalo)
   }
 
+  protected readonly open = open;
 }
