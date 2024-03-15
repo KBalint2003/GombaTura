@@ -9,6 +9,7 @@ turakRouter.get("/turak/osszes", turakController.osszesTurakGETController);
 turakRouter.get("/turak",AuthMiddleware , turakController.turakGETController);
 turakRouter.put("/turak",AuthMiddleware , turakController.turakPUTController);
 turakRouter.post("/turak",AuthMiddleware , turakController.turakPOSTController);
+turakRouter.patch("/turak", AuthMiddleware, turakController.turakPATCHController);
 turakRouter.delete("/turak",AuthMiddleware , turakController.turakDELETEController);
 
 

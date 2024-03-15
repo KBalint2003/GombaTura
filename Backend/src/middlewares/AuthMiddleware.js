@@ -3,7 +3,6 @@ const feketeLista = require('../models/feketeLista.model');
 
 const tokenErvenyesites =async (req, res, next) => {
     var token = req.headers.authorization;
-    console.log(token);
 
     if (!token) {
       res.status(401).json({

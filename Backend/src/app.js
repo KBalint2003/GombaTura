@@ -1,11 +1,11 @@
 const express = require('express');
-
 const jwt = require("jsonwebtoken");
 const sequelize = require('./adatbazisKapcsolat')
-const FelhasznaloModel = require('./models/felhasznalo.model')
-const TuraModel = require('./models/turak.model')
+const FelhasznaloModel = require('./models/felhasznalo.model');
+const TuraModel = require('./models/turak.model');
 const TuraraJelentkezes = require('./models/turaJelentkezes.model');
 const { idozitettFLTorles } = require('./idozitettFeketeListaTorles')
+const {Sequelize, DataTypes}=require("sequelize");
 
 FelhasznaloModel.hasMany(TuraModel, {
   foreignKey: 'Letrehozo',
@@ -16,8 +16,8 @@ TuraModel.belongsTo(FelhasznaloModel, {
   as: 'LetrehozoNeve'
 });
 
-TuraModel.belongsToMany(FelhasznaloModel, { through: TuraraJelentkezes, foreignKey: 'Tura_id'});
-FelhasznaloModel.belongsToMany(TuraModel, { through: TuraraJelentkezes, foreignKey: 'User_id' });
+TuraModel.belongsToMany(FelhasznaloModel, { through: TuraraJelentkezes, as: 'JelentkezoId'});
+FelhasznaloModel.belongsToMany(TuraModel, { through: TuraraJelentkezes, as: 'JelentkezettTuraId'});
 
 const regisztracioRouter = require("./routes/regisztracio.route");
 const bejelentkezesRouter = require("./routes/bejelentkezes.route");
@@ -76,16 +76,3 @@ sequelize.modelManager.addModel(feketeLista)
 }).catch((error) => {
   console.log("Az adatbázissszerverrel való kapcsolat sikertelen")
   console.log(error);})
-
-//A HTTP Szerver indítása a 3000-es porton
-
-
-//USER2: 
-    //"email":"gombamester2@test.com",
-    //"jelszo":"tesztJelszo2",
-
-//USER1: 
-    //id: 0a1db610-92ba-4391-92a3-6a10196f1fbb
-    //"email":"gombamester1@test.com"
-    //"jelszo":"tesztJelszo1",
-    //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYTFkYjYxMC05MmJhLTQzOTEtOTJhMy02YTEwMTk2ZjFmYmIiLCJpYXQiOjE3MDkyODY2MDcsImV4cCI6MTcwOTI5MDIwN30.qPkoEqIClNENQ_asJ3SfnX3s7L3h_NMMTgCSWlw7cEw

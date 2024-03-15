@@ -7,6 +7,10 @@ var idozitettFLTorles= cron.schedule('0 * * * *', async() => {
         
         const osszesFeketeListasToken = await feketeLista.findAll();
 
+        if (!osszesFeketeListasToken) {
+            return;
+        }
+
         for(egyDbListasToken of osszesFeketeListasToken) {
 
             const token = egyDbListasToken.token;

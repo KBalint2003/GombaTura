@@ -64,6 +64,6 @@ const Tura=sequelize.define("Turak",{
 
 });
 
-//
+
 
 module.exports=Tura;

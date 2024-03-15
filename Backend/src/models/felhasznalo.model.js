@@ -46,8 +46,6 @@ const Felhasznalo = sequelize.define('Felhasznalok', {
 
 });
 
-//
-
 
 module.exports = Felhasznalo;
 
