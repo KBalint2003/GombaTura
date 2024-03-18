@@ -16,17 +16,16 @@
 .turaNeve {
   margin: 2% 0 2% 5%;
   font-weight: bold;
-  display: inline;
 }
 
 .jelentkezesGomb {
-  margin-left: 70%;
+  margin-left: 5%;
   border: 2px solid black;
   border-radius: 40px;
 }
 .torlesGomb {
   margin-top: 3px;
-  margin-left: 90%;
+  margin-left: 3%;
   border: 2px solid black;
   border-radius: 40px;
 }

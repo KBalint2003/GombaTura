@@ -9,11 +9,11 @@
 <div class="container tura" *ngFor="let tura of turak">
   <!-- A túra megnevezése -->
   <div class="turaNevHelye">
-    <p style="display:none"> Túra ID: {{tura.Tura_id}} </p>
+    <p style="display:none">{{tura.Tura_id}} </p>
     <p class="turaNeve">Túra neve: {{tura.Tura_neve}}</p>
-    <button class="jelentkezesGomb btn btn-success" *ngIf="tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev" (click)="jelentkezesGomb()">Jelentkezés</button>
-    <button class="jelentkezesGomb btn btn-success" *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="jelentkezesGomb()">Módosítás</button>
-    <button class="torlesGomb btn btn-danger" *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="jelentkezesGomb()">Törlés</button>
+    <button class="jelentkezesGomb btn btn-success" *ngIf="tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev" (click)="jelentkezesGomb(tura.Tura_id)">Jelentkezés</button>
+    <button class="jelentkezesGomb btn btn-success" *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="modositasGomb(tura.Tura_id)">Módosítás</button>
+    <button class="torlesGomb btn btn-danger" *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="torlesgomb(tura.Tura_id)">Törlés</button>
   </div>
   <!-- túra adatai -->
   <div class="row turaAdat">
@@ -22,8 +22,8 @@
       <p>Indulási pont: {{tura.Indulas_hely}}</p>
       <p>Érkezési pont: {{tura.Erkezesi_hely}}</p>
       <p>Szervező elérhetősége: {{tura.Szervezo_elerhetosege}}</p>
-      <p>Leírás: </p>
-      <p>{{tura.Leiras}}</p>
+      <br>
+      <p style="text-align: justify">Leírás: {{tura.Leiras}}</p>
     </div>
     <div class="col-md">
       <p>Túra nehézsége: {{tura.Utvonal_nehezsege}}</p>

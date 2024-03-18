@@ -93,28 +93,16 @@ export class TuraComponent implements  OnInit{
   }
 
 
-  jelentkezesGomb() {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.tokenIDjson.token
-    });
-    for (let tura of this.turak) {
-      return this.http.post(this.turaservice.turaJelentkezesRoute, tura.Tura_id, {headers}).subscribe( (valasz : any) => {
-        console.log(tura.Tura_id)
-        console.log("Sikeres jelentkezés")
-      }, error => {
-        console.log(tura.Tura_id)
-        console.log(error)
-      } )
-    }
-    return
-    // return this.http.post(this.turaservice.turaJelentkezesRoute, this.ujTura.Tura_id, {headers}).subscribe( (valasz : any) => {
-    //   console.log(this.ujTura.Tura_id)
-    //   console.log("Sikeres jelentkezés")
-    // }, error => {
-    //   console.log(this.ujTura.Tura_id)
-    //   console.log(error)
-    // } )
+  jelentkezesGomb(Tura_id: string) {
+    this.turaservice.jelentkezesTurara(Tura_id)
+  }
+
+  modositasGomb(Tura_id: string) {
+    this.turaservice.turaModositas(Tura_id)
+  }
+
+  torlesgomb(Tura_id: string) {
+    this.turaservice.turaTorles(Tura_id)
   }
 
 }
