@@ -23,16 +23,11 @@ export class AppComponent implements OnInit{
       console.error("Nincs token")
       return
     }
-    try {
-      const dekodoltToken = jwtDecode(token) as JwtPayload & { exp : number }
+      const dekodoltToken = jwtDecode(token) as JwtPayload & { exp: number }
       const idoMasodpercben = Math.floor(Date.now() / 1000);
       if (idoMasodpercben > dekodoltToken.exp) {
         localStorage.removeItem('access')
       }
       return
-    } catch (err) {
-      console.error('Error decoding token:', err);
-      return false;
-    }
   }
 }

@@ -104,6 +104,9 @@ async function osszesTurakGETController(req, res) {
             where: {
                 Indulas_ido: {
                     [Op.ne]: new Date().toLocaleDateString(),
+                },
+                Varhato_erkezesi_ido: {
+                    [Op.ne]: new Date().toLocaleDateString(),
                 }
             },
             group: ['Tura_id'],
@@ -287,6 +290,7 @@ async function turakPUTController(req, res) {
     
         await tura.save();
         res.status(201).json({
+            success: true,
             message: "A túra sikeresen létre lett hozva!"
         });
     

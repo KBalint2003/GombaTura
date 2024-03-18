@@ -9,6 +9,7 @@ export interface loginObj {
 }
 
 export interface signupObj {
+  userID: string
   felhasznalonev: string;
   email: string;
   jelszo: string;

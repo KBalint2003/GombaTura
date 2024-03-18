@@ -19,6 +19,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 export class RegisztracioComponent {
   // A regisztáció során megadott adatok itt kerülnek tárolásra.
   felhasznalo: signupObj = {
+    userID: '',
     felhasznalonev: '',
     email: '',
     jelszo: '',
@@ -26,6 +27,7 @@ export class RegisztracioComponent {
   };
 
   constructor(protected regisztracioService: AuthService) {}
+  protected readonly open = open;
 
 
   // A regisztracio.service.ts fájlban deklarált meródus itt kerül meghívásra.
@@ -33,5 +35,4 @@ export class RegisztracioComponent {
     this.regisztracioService.ujFelhasznalo(this.felhasznalo)
   }
 
-  protected readonly open = open;
 }

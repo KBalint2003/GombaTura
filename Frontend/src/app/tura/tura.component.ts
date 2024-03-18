@@ -1,6 +1,6 @@
-import {Component, OnInit, TemplateRef, inject} from '@angular/core';
+import {Component, OnInit, TemplateRef, inject, ViewChild} from '@angular/core';
 import { AuthService } from "../auth.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Tura, Turak} from "./tura";
 import {TuraService} from "../tura.service";
 import { NgForOf, NgIf} from "@angular/common";
@@ -24,35 +24,62 @@ export class TuraComponent implements  OnInit{
 
   private modalService = inject(NgbModal);
 
-  open(content: TemplateRef<any>) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-	}
-
   ujTura: Tura = {
     Tura_id: '',
     Tura_neve: '',
     Indulas_ido: '',
     Indulas_hely: '',
-    Erkezesi_ido: '',
+    Varhato_erkezesi_ido: '',
     Erkezesi_hely: '',
     Utvonal_nehezsege: '',
     Szervezo_elerhetosege: '',
     Tura_dija: 0,
     Elmarad_a_tura: false,
     Leiras: '',
-    // LetrehozoNeve: {
-    //   Felhasznalonev: ''
-    // }
+    Jelentkezok: 0,
+    Felhasznalonev: ''
   }
   turak: Tura[] = []
 
+  tokenIDjson: any
+  sajatTuraJeloles = false
 
-  ngOnInit() {
-    return this.http.get<Turak>(this.turaservice.turaLekeresRoute).subscribe((valasz:any) => {
-      this.turak = valasz.turak
-    });
+
+  open(content: TemplateRef<any>) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
   }
 
 
+
+  @ViewChild('SajatTura') SajatTura: any;
+
+
+  ngOnInit() {
+    this.tokenIDjson = {"token" : localStorage.getItem('access')}
+    return this.http.get<Turak>(this.turaservice.osszesturaLekeresRoute).subscribe((valasz:any) => {
+      this.turak = valasz.turak
+    })
+  }
+
+  onCheckBoxChange() {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokenIDjson.token
+    });
+    this.sajatTuraJeloles = this.SajatTura.nativeElement.checked
+    if (this.sajatTuraJeloles) {
+      return this.http.get<Turak>(this.turaservice.turaLekeresRoute,{headers}).subscribe((valasz: any) => {
+        this.turak = valasz.turak
+      })
+    }
+    return this.http.get<Turak>(this.turaservice.osszesturaLekeresRoute, {headers}).subscribe((valasz:any) => {
+      this.turak = valasz.turak
+    })
+  }
+
+
+  jelentkezesGomb() {
+    this.turaservice.jelentkezesTurara()
+  }
 
 }

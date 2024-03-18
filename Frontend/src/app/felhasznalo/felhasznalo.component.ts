@@ -22,6 +22,7 @@ export class FelhasznaloComponent implements OnInit{
 }
 
   felhasznalo: signupObj = {
+    userID: '',
     felhasznalonev: '',
     email: '',
     jelszo: '',
@@ -37,14 +38,10 @@ export class FelhasznaloComponent implements OnInit{
       console.error("Nincs token")
       return
     }
-    try {
-      const dekodoltToken = jwtDecode(token) as JwtPayload & { felhasznalonev: string, exp : number }
+      const dekodoltToken = jwtDecode(token) as JwtPayload & { felhasznalonev: string, userId: string }
+      this.felhasznalo.userID = dekodoltToken.userId
       this.felhasznalo.felhasznalonev = dekodoltToken.felhasznalonev
-      return
-    } catch (err) {
-      console.error('Error decoding token:', err);
-      return false;
-    }
+    console.log(this.felhasznalo.userID)
   }
 
   adatMentesGomb() {
