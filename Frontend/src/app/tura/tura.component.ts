@@ -6,6 +6,9 @@ import {TuraService} from "../tura.service";
 import { NgForOf, NgIf} from "@angular/common";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from "@angular/forms";
+import {FooterComponent} from "../footer/footer.component";
+import {jwtDecode, JwtPayload} from "jwt-decode";
+import {UserData} from "../felhasznaloAdatObj";
 
 @Component({
   selector: 'app-tura',
@@ -14,6 +17,7 @@ import {FormsModule} from "@angular/forms";
     NgForOf,
     FormsModule,
     NgIf,
+    FooterComponent,
   ],
   templateUrl: './tura.component.html',
   styleUrl: './tura.component.css'
@@ -24,12 +28,19 @@ export class TuraComponent implements  OnInit{
 
   private modalService = inject(NgbModal);
 
+  felhasznalo: UserData = {
+    felhasznalonev: '',
+    felhasznaloID: '',
+    email: '',
+    token: ''
+  }
+
   ujTura: Tura = {
     Tura_id: '',
     Tura_neve: '',
     Indulas_ido: '',
     Indulas_hely: '',
-    Varhato_erkezesi_ido: '',
+    Erkezesi_ido: '',
     Erkezesi_hely: '',
     Utvonal_nehezsege: '',
     Szervezo_elerhetosege: '',
@@ -49,13 +60,17 @@ export class TuraComponent implements  OnInit{
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
   }
 
-
-
   @ViewChild('SajatTura') SajatTura: any;
 
 
   ngOnInit() {
     this.tokenIDjson = {"token" : localStorage.getItem('access')}
+    if (!this.tokenIDjson.token) {
+      console.error("Nincs token")
+      return
+    }
+    const dekodoltToken = jwtDecode(this.tokenIDjson.token) as JwtPayload & { felhasznalonev: string, userId: string }
+    this.felhasznalo.felhasznalonev = dekodoltToken.felhasznalonev
     return this.http.get<Turak>(this.turaservice.osszesturaLekeresRoute).subscribe((valasz:any) => {
       this.turak = valasz.turak
     })
@@ -79,7 +94,27 @@ export class TuraComponent implements  OnInit{
 
 
   jelentkezesGomb() {
-    this.turaservice.jelentkezesTurara()
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.tokenIDjson.token
+    });
+    for (let tura of this.turak) {
+      return this.http.post(this.turaservice.turaJelentkezesRoute, tura.Tura_id, {headers}).subscribe( (valasz : any) => {
+        console.log(tura.Tura_id)
+        console.log("Sikeres jelentkezés")
+      }, error => {
+        console.log(tura.Tura_id)
+        console.log(error)
+      } )
+    }
+    return
+    // return this.http.post(this.turaservice.turaJelentkezesRoute, this.ujTura.Tura_id, {headers}).subscribe( (valasz : any) => {
+    //   console.log(this.ujTura.Tura_id)
+    //   console.log("Sikeres jelentkezés")
+    // }, error => {
+    //   console.log(this.ujTura.Tura_id)
+    //   console.log(error)
+    // } )
   }
 
 }

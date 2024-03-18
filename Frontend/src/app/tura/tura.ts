@@ -3,7 +3,7 @@ export interface Tura {
   Tura_neve: string;
   Indulas_ido: string;
   Indulas_hely: string;
-  Varhato_erkezesi_ido: string;
+  Erkezesi_ido: string;
   Erkezesi_hely: string;
   Utvonal_nehezsege: string;
   Szervezo_elerhetosege: string;

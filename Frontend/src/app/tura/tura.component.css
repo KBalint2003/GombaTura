@@ -24,6 +24,12 @@
   border: 2px solid black;
   border-radius: 40px;
 }
+.torlesGomb {
+  margin-top: 3px;
+  margin-left: 90%;
+  border: 2px solid black;
+  border-radius: 40px;
+}
 
 /* Túra adatainak formázása*/
 

@@ -2,6 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Tura} from "./tura/tura";
 import { AuthService } from "./auth.service";
+import {TuraComponent} from "./tura/tura.component";
 
 
 @Injectable({
@@ -22,7 +23,7 @@ export class TuraService {
   public turaTorlesRoute = "http://localhost:3000/turak"
 
   turahiba = ''
-  userID = 'ce6d556d-0ef2-4b4f-bf8a-527bdc46b761'
+  userID = '0b7b054e-53e2-427f-8d50-8999532dd706'
 
 
   turaLetrehozas(ujTura: Tura) {
@@ -69,7 +70,8 @@ export class TuraService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
     });
-    return this.http.post(this.turaJelentkezesRoute, {"Tura_id": this.userID}, {headers}).subscribe( (valasz : any) => {
+    return this.http.post(this.turaJelentkezesRoute, {}, {headers}).subscribe( (valasz : any) => {
+
       console.log("Sikeres jelentkezés")
     }, error => {
       console.log(error)

@@ -41,7 +41,6 @@ export class FelhasznaloComponent implements OnInit{
       const dekodoltToken = jwtDecode(token) as JwtPayload & { felhasznalonev: string, userId: string }
       this.felhasznalo.userID = dekodoltToken.userId
       this.felhasznalo.felhasznalonev = dekodoltToken.felhasznalonev
-    console.log(this.felhasznalo.userID)
   }
 
   adatMentesGomb() {
