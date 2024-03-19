@@ -154,13 +154,8 @@ async function turakJelentkezettGETController(req, res) {
         const id = req.user.userId;
 
         const turak = await Turak.findAll({
-
-            include: [{
-                model: Felhasznalo,
-                attributes:[],
-                as: 'JelentkezoId',
-                where: {User_id : id}
-            }],
+              
+              
 
             attributes: {
                 include: [[Sequelize.fn("COUNT", Sequelize.col("JelentkezoId.User_id")), "Jelentkezok"]],
@@ -169,7 +164,8 @@ async function turakJelentkezettGETController(req, res) {
                 {
                     model: Felhasznalo,
                     as: "JelentkezoId",
-                    attributes: []
+                    attributes: [],
+                    where: { "User_id": id }
                 },
                 {
                     model: Felhasznalo,
@@ -185,7 +181,7 @@ async function turakJelentkezettGETController(req, res) {
         if (!turak.length) {
             res.status(400).json({
                 status: 400,
-                message: "Ön még nem hozott létre túrát!"
+                message: "Ön még nem jelentkezett egy túrára sem!"
             });
             return;
         }
@@ -296,7 +292,7 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (Varhato_erkezesi_ido === undefined) {
+        if (Erkezesi_ido === undefined) {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -477,3 +473,7 @@ catch(error){
 module.exports = {
     osszesTurakGETController ,turakGETController, turakPOSTController ,turakPUTController, turakPATCHController, jelentkezesDELETEController, turakJelentkezettGETController
 }
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMzUyNGQ0ZC1lMGIwLTQ0NzItYTYyOC0yYTA2MjExZDEwZDAiLCJlbWFpbCI6InRlc3p0MUB0ZXN0LmNvbSIsImZlbGhhc3puYWxvbmV2IjoiVGVzenRVU0VSMSIsImlhdCI6MTcxMDg0MzY5MSwiZXhwIjoxNzEwODQ3MjkxfQ.7ELRu5v1y1PG-VPIfZSq2VFdMbKqICB8VxmgCiOGOv4
+
+
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjYzY4NDQ3MC1jNmIxLTQ0MDQtYjZlOC1kNTE3ZjVhMjI2OTYiLCJlbWFpbCI6InRlc3p0MkB0ZXN0LmNvbSIsImZlbGhhc3puYWxvbmV2IjoiVGVzenRVU0VSMiIsImlhdCI6MTcxMDg0MzU4MiwiZXhwIjoxNzEwODQ3MTgyfQ.6YKemtl0oNN1afJT7XrtTVFuxrHxomCDGGiFVZswPE4
