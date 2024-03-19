@@ -2,8 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Tura} from "./tura/tura";
 import { AuthService } from "./auth.service";
-import {TuraComponent} from "./tura/tura.component";
-import {error} from "@angular/compiler-cli/src/transformers/util";
+
 
 
 @Injectable({
@@ -12,13 +11,16 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 
 export class TuraService {
 
-  constructor(private http: HttpClient, protected authService: AuthService) { }
+  public Tura_idk :string[] = []
 
-
+  constructor(private http: HttpClient, protected authService: AuthService) {
+    this.Tura_idk = []
+  }
 
   public osszesturaLekeresRoute = "http://localhost:3000/turak/osszes"
   public turaLekeresRoute = "http://localhost:3000/turak/"
   public turaJelentkezesRoute = "http://localhost:3000/turak"
+  public turaJelentkezesTorleseRoute = "http://localhost:3000/turak"
   public turaLetrehozasRoute = "http://localhost:3000/turak"
   public turaSzerkesztesRoute = "http://localhost:3000/turak"
   public turaTorlesRoute = "http://localhost:3000/turak/torles"
@@ -72,11 +74,29 @@ export class TuraService {
       'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
     });
     console.log(Tura_id)
-    return this.http.post(this.turaJelentkezesRoute, Tura_id, {headers}).subscribe( (valasz : any) => {
+    return this.http.post(this.turaJelentkezesRoute, {Tura_id}, {headers}).subscribe( (valasz : any) => {
+      console.log(this.Tura_idk)
+      this.Tura_idk.push(valasz.osszekapcsolas.TurakTuraId)
+      localStorage.setItem("Tura", valasz.osszekapcsolas.TurakTuraId)
+      console.log(this.Tura_idk)
       console.log("Sikeres jelentkezés")
     }, error => {
       console.log(error)
     } )
+  }
+
+  jelentkezesTorlese(Tura_id: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token,
+      'Tura_id': Tura_id
+    });
+    return this.http.delete(this.turaJelentkezesTorleseRoute, {headers}).subscribe((valasz: any) => {
+      console.log("Túra jelentkezés törlése sikeres volt!")
+      localStorage.removeItem("Tura")
+    }, error => {
+      console.log(error)
+    })
   }
 
   turaModositas(Tura_id: string) {

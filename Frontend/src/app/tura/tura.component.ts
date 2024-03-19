@@ -1,5 +1,4 @@
 import {Component, OnInit, TemplateRef, inject, ViewChild} from '@angular/core';
-import { AuthService } from "../auth.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Tura, Turak} from "./tura";
 import {TuraService} from "../tura.service";
@@ -24,7 +23,7 @@ import {UserData} from "../felhasznaloAdatObj";
 })
 export class TuraComponent implements  OnInit{
 
-  constructor(protected authservice: AuthService, protected http: HttpClient, protected turaservice: TuraService) {  }
+  constructor(protected http: HttpClient, protected turaservice: TuraService) {  }
 
   private modalService = inject(NgbModal);
 
@@ -71,6 +70,9 @@ export class TuraComponent implements  OnInit{
     }
     const dekodoltToken = jwtDecode(this.tokenIDjson.token) as JwtPayload & { felhasznalonev: string, userId: string }
     this.felhasznalo.felhasznalonev = dekodoltToken.felhasznalonev
+
+
+
     return this.http.get<Turak>(this.turaservice.osszesturaLekeresRoute).subscribe((valasz:any) => {
       this.turak = valasz.turak
     })
@@ -97,6 +99,10 @@ export class TuraComponent implements  OnInit{
     this.turaservice.jelentkezesTurara(Tura_id)
   }
 
+  jelentkezesTorlesGomb(Tura_id: string) {
+    this.turaservice.jelentkezesTorlese(Tura_id)
+  }
+
   modositasGomb(Tura_id: string) {
     this.turaservice.turaModositas(Tura_id)
   }
@@ -105,4 +111,5 @@ export class TuraComponent implements  OnInit{
     this.turaservice.turaTorles(Tura_id)
   }
 
+  protected readonly localStorage = localStorage;
 }

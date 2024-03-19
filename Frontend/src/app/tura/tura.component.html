@@ -11,9 +11,17 @@
   <div class="turaNevHelye">
     <p style="display:none">{{tura.Tura_id}} </p>
     <p class="turaNeve">Túra neve: {{tura.Tura_neve}}</p>
-    <button class="jelentkezesGomb btn btn-success" *ngIf="tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev" (click)="jelentkezesGomb(tura.Tura_id)">Jelentkezés</button>
-    <button class="jelentkezesGomb btn btn-success" *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="modositasGomb(tura.Tura_id)">Módosítás</button>
-    <button class="torlesGomb btn btn-danger" *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="torlesgomb(tura.Tura_id)">Törlés</button>
+    <button class="jelentkezesGomb btn btn-success"
+            *ngIf="(tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev) && localStorage.getItem('Tura') != this.tura.Tura_id" (click)="jelentkezesGomb(tura.Tura_id)">Jelentkezés</button>
+
+    <button class="jelentkezesGomb btn btn-danger"
+            *ngIf="localStorage.getItem('Tura') === this.tura.Tura_id" (click)="jelentkezesTorlesGomb(tura.Tura_id)">Jelentkezés törlése</button>
+
+    <button class="jelentkezesGomb btn btn-success"
+            *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="modositasGomb(tura.Tura_id)">Módosítás</button>
+
+    <button class="torlesGomb btn btn-danger"
+            *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="torlesgomb(tura.Tura_id)">Törlés</button>
   </div>
   <!-- túra adatai -->
   <div class="row turaAdat">

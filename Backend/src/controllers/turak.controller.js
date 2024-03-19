@@ -419,8 +419,10 @@ async function jelentkezesDELETEController(req, res) {
     try{
         const userId = req.user.userId;
 
-        const turaId = req.body.Tura_id;
-        
+        const turaId = req.headers.tura_id;
+
+        console.log(turaId)
+
         if (userId === undefined || turaId === undefined) {
             res.status(400).json({
                 error: true,
