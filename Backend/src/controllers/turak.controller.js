@@ -8,6 +8,73 @@ const { Sequelize, Op } = require('sequelize');
 const sequelize = require('../adatbazisKapcsolat');
 
 
+async function osszesTurakGETController(req, res) {
+    try {
+        const turak = await Turak.findAll({
+            attributes: {
+                include: [[Sequelize.fn("COUNT", Sequelize.col("JelentkezoId.User_id")), "Jelentkezok"]],
+            },
+            include: [
+                {
+                    model: Felhasznalo,
+                    as: "JelentkezoId",
+                    attributes: []
+                },
+                {
+                    model: Felhasznalo,
+                    attributes: ["Felhasznalonev"],
+                    as: "LetrehozoNeve",
+                },
+            ],
+            where: {
+                Indulas_ido: {
+                    [Op.ne]: new Date().toLocaleDateString(),
+                },
+                Elmarad_a_tura: false
+            },
+            group: ['Tura_id'],
+            raw: true,
+        });
+
+        if (!turak.length) {
+            res.status(400).json({
+                status: 400,
+                message: "Nincs túra, amire jelentkezni lehetne"
+            });
+            return;
+        }
+
+        // Manuális dátumformázás és csak a szükséges mezők hozzáadása
+        const formazottTurak = turak.map(tura => ({
+            Tura_id: tura.Tura_id,
+            Tura_neve: tura.Tura_neve,
+            Indulas_ido: new Date(tura.Indulas_ido).toLocaleString(),
+            Indulas_hely: tura.Indulas_hely,
+            Erkezesi_ido: new Date(tura.Varhato_erkezesi_ido).toLocaleString(),
+            Erkezesi_hely: tura.Erkezesi_hely,
+            Utvonal_nehezsege: tura.Utvonal_nehezsege,
+            Szervezo_elerhetosege: tura.Szervezo_elerhetosege,
+            Tura_dija: tura.Tura_dija,
+            Elmarad_a_tura: tura.Elmarad_a_tura,
+            Leiras: tura.Leiras,
+            Jelentkezok: tura.Jelentkezok,
+            Felhasznalonev: tura["LetrehozoNeve.Felhasznalonev"],
+        }));
+
+        res.status(200).json({
+            success: true,
+            turak: formazottTurak,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error: true,
+            status: 500,
+            message: "Szerver hiba"
+        });
+    }
+}
+
 async function turakGETController(req, res) {
 
     try {
@@ -79,13 +146,22 @@ async function turakGETController(req, res) {
             message: "Szerver hiba"
         })
     }
-
-
 }
 
-async function osszesTurakGETController(req, res) {
+async function turakJelentkezettGETController(req, res) {
+     
     try {
+        const id = req.user.userId;
+
         const turak = await Turak.findAll({
+
+            include: [{
+                model: Felhasznalo,
+                attributes:[],
+                as: 'JelentkezoId',
+                where: {User_id : id}
+            }],
+
             attributes: {
                 include: [[Sequelize.fn("COUNT", Sequelize.col("JelentkezoId.User_id")), "Jelentkezok"]],
             },
@@ -101,12 +177,7 @@ async function osszesTurakGETController(req, res) {
                     as: "LetrehozoNeve",
                 },
             ],
-            where: {
-                Indulas_ido: {
-                    [Op.ne]: new Date().toLocaleDateString(),
-                },
-
-            },
+           
             group: ['Tura_id'],
             raw: true,
         });
@@ -114,7 +185,7 @@ async function osszesTurakGETController(req, res) {
         if (!turak.length) {
             res.status(400).json({
                 status: 400,
-                message: "Nincs túra, amire jelentkezni lehetne"
+                message: "Ön még nem hozott létre túrát!"
             });
             return;
         }
@@ -137,15 +208,16 @@ async function osszesTurakGETController(req, res) {
         }));
 
         res.status(200).json({
-            turak: formazottTurak,
+            turak: formazottTurak
         });
-    } catch (error) {
+    }
+     catch (error) {
         console.log(error);
         res.status(500).json({
             error: true,
             status: 500,
             message: "Szerver hiba"
-        });
+        })
     }
 }
 
@@ -193,9 +265,7 @@ async function turakPUTController(req, res) {
         var { Tura_neve, Indulas_ido, Indulas_hely, Erkezesi_ido, Erkezesi_hely, Utvonal_nehezsege, Szervezo_elerhetosege, Tura_dija, Leiras } = req.body.ujTura;
 
         var Letrehozo = req.user.userId;
-
-        console.log(req.body)
-
+    
         if (Tura_neve === undefined) {
             res.status(400).json({
                 error:true,
@@ -226,7 +296,7 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (Erkezesi_ido === undefined) {
+        if (Varhato_erkezesi_ido === undefined) {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -266,7 +336,7 @@ async function turakPUTController(req, res) {
             return;
         }
 
-        if (Szervezo_elerhetosege === "") {
+        if (Szervezo_elerhetosege === undefined) {
             Szervezo_elerhetosege = req.user.email;
         }
         else{
@@ -290,7 +360,6 @@ async function turakPUTController(req, res) {
     
         await tura.save();
         res.status(201).json({
-            success: true,
             message: "A túra sikeresen létre lett hozva!"
         });
     
@@ -350,52 +419,61 @@ async function turakPATCHController(req, res) {
     });
 }
 
-function turakDELETEController(req, res) {
+async function jelentkezesDELETEController(req, res) {
+    try{
+        const userId = req.user.userId;
 
-        
         const turaId = req.body.Tura_id;
-
-        Turak.findByPk(turaId)
-        .then((tura) => {
-            tura.destroy()
-            .then(() => {
-                console.log("Túra törlése sikeres!");
-                res.status(200).json({
-                    message: "Túra törlése sikeres!"
-                });
-            })
-            .catch(() => {
-                console.log("Túra törlése sikertelen!");
-                res.status(500).json({
-                    error: true,
-                    status: 500,
-                    message: "Túra törlése sikertelen!"
-                });
-            })
+        
+        if (userId === undefined || turaId === undefined) {
+            res.status(400).json({
+                error: true,
+                status:400,
+            message: "Hiányzik valamelyik adat!"
         })
-        .catch((error) => {
-            console.log(error);
-            console.log("Nincs ilyen azonosítójú Túra");
+        return;
+        }
+
+        const vanEJelentkezes = await TuraraJelentkezesTabla.findAll({
+            where: {
+                TurakTuraId: turaId,
+                FelhasznalokUserId: userId
+            }
+        })
+
+        console.log(vanEJelentkezes);
+
+        if (!vanEJelentkezes[0]) {
             res.status(404).json({
                 error: true,
                 status: 404,
-                message: "Nincs ilyen aonoítójú Túra!"
+                message: "Ilyen felhasználóiazonosítóval nincs jelentkezés erre a túrára!"
             })
+            return;
+        }
+        await TuraraJelentkezesTabla.destroy({
+            where: {
+                TurakTuraId: turaId,
+                FelhasznalokUserId: userId
+            }
         })
 
+        res.status(200).json({
+            success: true,
+            message: "A jelentkezés visszavonása sikeres!"
+        })
 }
-
-function jelentkezesDELETEController(req, res) {
-    
-const userId = req.user.userId;
-
-const turaId = req.body.Tura_id;
-
-
-
+catch(error){
+    console.log(error);
+    res.status(500).json({
+        error: true,
+        status: 500,
+        message: "Szerver hiba"
+    })
+}
 }
 
 
 module.exports = {
-    osszesTurakGETController ,turakGETController, turakPOSTController ,turakPUTController, turakPATCHController, turakDELETEController
+    osszesTurakGETController ,turakGETController, turakPOSTController ,turakPUTController, turakPATCHController, jelentkezesDELETEController, turakJelentkezettGETController
 }
