@@ -10,6 +10,12 @@ const sequelize = require('../adatbazisKapcsolat');
 
 async function osszesTurakGETController(req, res) {
     try {
+
+        var bejelentkezettUserToken = req.headers.authorization;
+
+        if (!bejelentkezettUserToken) {
+        
+
         const turak = await Turak.findAll({
             attributes: {
                 include: [[Sequelize.fn("COUNT", Sequelize.col("JelentkezoId.User_id")), "Jelentkezok"]],
@@ -65,7 +71,88 @@ async function osszesTurakGETController(req, res) {
             success: true,
             turak: formazottTurak,
         });
-    } catch (error) {
+    }
+
+    else{
+
+        bejelentkezettUserToken=bejelentkezettUserToken.split(' ')[1]
+        const decodedToken = jwt.verify(bejelentkezettUserToken, 'titkositokulcs');
+        req.user = decodedToken;
+
+        const bejelentkezettUserId = req.user.userId
+
+        try{
+            const jelentkezettTuraId = await TuraraJelentkezesTabla.findAll({
+                attributes: ['TurakTuraId'],
+                where: { FelhasznalokUserId: bejelentkezettUserId } 
+            });
+
+            var jelentkezettTuraIdTomb = jelentkezettTuraId.map(jelentkezes => jelentkezes.TurakTuraId);
+
+        console.log(jelentkezettTuraIdTomb);
+    }
+    catch(error){
+        console.log(error);
+    }
+        const turak = await Turak.findAll({
+            attributes: {
+                include: [[Sequelize.fn("COUNT", Sequelize.col("JelentkezoId.User_id")), "Jelentkezok"]],
+            },
+            include: [
+                {
+                    model: Felhasznalo,
+                    as: "JelentkezoId",
+                    attributes: []
+                },
+                {
+                    model: Felhasznalo,
+                    attributes: ["Felhasznalonev"],
+                    as: "LetrehozoNeve",
+                },
+            ],
+            where: {
+                Indulas_ido: {
+                    [Op.ne]: new Date().toLocaleDateString(),
+                },
+                Elmarad_a_tura: false
+            },
+            group: ['Tura_id'],
+            raw: true,
+        });
+
+        if (!turak.length) {
+            res.status(400).json({
+                status: 400,
+                message: "Nincs túra, amire jelentkezni lehetne"
+            });
+            return;
+        }
+
+        // Manuális dátumformázás és csak a szükséges mezők hozzáadása
+        const formazottTurak = turak.map(tura => ({
+            Tura_id: tura.Tura_id,
+            Tura_neve: tura.Tura_neve,
+            Indulas_ido: new Date(tura.Indulas_ido).toLocaleString(),
+            Indulas_hely: tura.Indulas_hely,
+            Erkezesi_ido: new Date(tura.Varhato_erkezesi_ido).toLocaleString(),
+            Erkezesi_hely: tura.Erkezesi_hely,
+            Utvonal_nehezsege: tura.Utvonal_nehezsege,
+            Szervezo_elerhetosege: tura.Szervezo_elerhetosege,
+            Tura_dija: tura.Tura_dija,
+            Elmarad_a_tura: tura.Elmarad_a_tura,
+            Leiras: tura.Leiras,
+            Jelentkezok: tura.Jelentkezok,
+            Felhasznalonev: tura["LetrehozoNeve.Felhasznalonev"],
+        }));
+
+        res.status(200).json({
+            success: true,
+            turak: formazottTurak,
+            jelentkezettTurakId: jelentkezettTuraIdTomb
+        });
+    }
+
+} catch (error) {
         console.log(error);
         res.status(500).json({
             error: true,
@@ -419,10 +506,8 @@ async function jelentkezesDELETEController(req, res) {
     try{
         const userId = req.user.userId;
 
-        const turaId = req.headers.tura_id;
-
-        console.log(turaId)
-
+        const turaId = req.body.Tura_id;
+        
         if (userId === undefined || turaId === undefined) {
             res.status(400).json({
                 error: true,
@@ -475,7 +560,3 @@ catch(error){
 module.exports = {
     osszesTurakGETController ,turakGETController, turakPOSTController ,turakPUTController, turakPATCHController, jelentkezesDELETEController, turakJelentkezettGETController
 }
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMzUyNGQ0ZC1lMGIwLTQ0NzItYTYyOC0yYTA2MjExZDEwZDAiLCJlbWFpbCI6InRlc3p0MUB0ZXN0LmNvbSIsImZlbGhhc3puYWxvbmV2IjoiVGVzenRVU0VSMSIsImlhdCI6MTcxMDg0MzY5MSwiZXhwIjoxNzEwODQ3MjkxfQ.7ELRu5v1y1PG-VPIfZSq2VFdMbKqICB8VxmgCiOGOv4
-
-
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjYzY4NDQ3MC1jNmIxLTQ0MDQtYjZlOC1kNTE3ZjVhMjI2OTYiLCJlbWFpbCI6InRlc3p0MkB0ZXN0LmNvbSIsImZlbGhhc3puYWxvbmV2IjoiVGVzenRVU0VSMiIsImlhdCI6MTcxMDg0MzU4MiwiZXhwIjoxNzEwODQ3MTgyfQ.6YKemtl0oNN1afJT7XrtTVFuxrHxomCDGGiFVZswPE4
