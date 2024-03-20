@@ -1,7 +1,8 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Tura} from "./tura/tura";
+import {FrissitettTura, Tura} from "./tura/tura";
 import { AuthService } from "./auth.service";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 
 
@@ -11,11 +12,10 @@ import { AuthService } from "./auth.service";
 
 export class TuraService {
 
-  public Tura_idk :string[] = []
 
-  constructor(private http: HttpClient, protected authService: AuthService) {
-    this.Tura_idk = []
-  }
+  constructor(private http: HttpClient, protected authService: AuthService) {  }
+
+
 
   public osszesturaLekeresRoute = "http://localhost:3000/turak/osszes"
   public turaLekeresRoute = "http://localhost:3000/turak/"
@@ -24,7 +24,6 @@ export class TuraService {
   public turaJelentkezesTorleseRoute = "http://localhost:3000/turak"
   public turaLetrehozasRoute = "http://localhost:3000/turak"
   public turaSzerkesztesRoute = "http://localhost:3000/turak"
-  public turaTorlesRoute = "http://localhost:3000/turak/torles"
 
   turahiba = ''
   userID = '0b7b054e-53e2-427f-8d50-8999532dd706'
@@ -95,23 +94,19 @@ export class TuraService {
     })
   }
 
-  turaModositas(Tura_id: string) {
+  turaModositas(Frisstura: FrissitettTura, Tura_id: string) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
+      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token,
+      'turaid': Tura_id
     });
-    return this.http.patch(this.turaSzerkesztesRoute, Tura_id, {headers})
-  }
-
-  turaTorles(Tura_id: string) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
-    });
-    return this.http.post(this.turaTorlesRoute, Tura_id).subscribe((valasz: any) => {
+    return this.http.patch(this.turaSzerkesztesRoute, {"Frisstura": Frisstura}, {headers}).subscribe((valasz: any) => {
+      console.log("Sikeres frissítés!")
+      console.log(valasz)
     }, error => {
-      console.log()
+      console.log(error)
     })
   }
+
 
 }

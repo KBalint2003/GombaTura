@@ -1,6 +1,6 @@
 import {Component, OnInit, TemplateRef, inject, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Tura, Turak} from "./tura";
+import {FrissitettTura, Tura, Turak} from "./tura";
 import {TuraService} from "../tura.service";
 import { NgForOf, NgIf} from "@angular/common";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {FooterComponent} from "../footer/footer.component";
 import {jwtDecode, JwtPayload} from "jwt-decode";
 import {UserData} from "../felhasznaloAdatObj";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-tura',
@@ -23,7 +24,7 @@ import {UserData} from "../felhasznaloAdatObj";
 })
 export class TuraComponent implements  OnInit{
 
-  constructor(protected http: HttpClient, protected turaservice: TuraService) {  }
+  constructor(protected http: HttpClient, protected turaservice: TuraService, protected authService: AuthService) {  }
 
   private modalService = inject(NgbModal);
 
@@ -51,16 +52,41 @@ export class TuraComponent implements  OnInit{
   }
   turak: Tura[] = []
 
+  Frisstura: FrissitettTura = {
+    Tura_neve: '',
+    Indulas_ido: '',
+    Indulas_hely: '',
+    Erkezesi_ido: '',
+    Erkezesi_hely: '',
+    Utvonal_nehezsege: '',
+    Szervezo_elerhetosege: '',
+    Tura_dija: 0,
+    Elmarad_a_tura: false,
+    Leiras: '',
+    Jelentkezok: 0,
+    Felhasznalonev: ''
+  }
+
   tokenIDjson: any
   sajatTuraJeloles = false
   jelentkezettTuraJeloles = false
   jelentkezettTuraID: string[] = []
+  elmarad = false
+  ujTuraId = ''
 
 
+  turaLetrehozasModal(turaLetrehozas: TemplateRef<any>) {
+    this.modalService.open(turaLetrehozas, { ariaLabelledBy: 'turaLetrehozasModal' })
+  }
 
-
-  open(content: TemplateRef<any>) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+  turaModositasModal(turaModositas: TemplateRef<any>, Tura_id: string) {
+    this.modalService.open(turaModositas,  { ariaLabelledBy: 'turaModositasModal' })
+    for (let i = 0; i < this.turak.length; i++) {
+      if (this.turak[i].Tura_id == Tura_id) {
+        Tura_id = this.turak[i].Tura_id
+        console.log(Tura_id)
+      }
+    }
   }
 
   @ViewChild('SajatTura') SajatTura: any;
@@ -84,6 +110,7 @@ export class TuraComponent implements  OnInit{
     return this.http.get<Turak>(this.turaservice.osszesturaLekeresRoute, {headers}).subscribe((valasz:any) => {
       this.turak = valasz.turak
       this.jelentkezettTuraID = valasz.jelentkezettTurakId
+      console.log(this.turak.length)
       console.log(this.jelentkezettTuraID)
       for (var i = 0; i < this.jelentkezettTuraID.length; i++) {
         console.log(this.jelentkezettTuraID[0])
@@ -133,12 +160,20 @@ export class TuraComponent implements  OnInit{
     this.turaservice.jelentkezesTorlese(Tura_id)
   }
 
-  modositasGomb(Tura_id: string) {
-    this.turaservice.turaModositas(Tura_id)
-  }
 
   torlesgomb(Tura_id: string) {
-    this.turaservice.turaTorles(Tura_id)
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
+    });
+    for (let i = 0; i < this.turak.length; i++) {
+      if (Tura_id == this.turak[i].Tura_id) {
+        this.elmarad = true
+      }
+    }
+    return this.http.patch(this.turaservice.turaSzerkesztesRoute, {}, {headers}).subscribe((valasz: any) => {
+      console.log("Sikeres törlés")
+    })
   }
 
   protected readonly localStorage = localStorage;
