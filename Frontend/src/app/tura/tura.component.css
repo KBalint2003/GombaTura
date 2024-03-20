@@ -13,6 +13,11 @@
   padding: 1%;
 }
 
+.alertbox{
+  margin-top: 10px;
+  height: 50px;
+}
+
 .turaNeve {
   margin: 2% 0 2% 5%;
   font-weight: bold;

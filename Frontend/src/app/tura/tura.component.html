@@ -1,21 +1,25 @@
 <!-- Feljegyzett túa -->
 <div class="turaCheck">
   <label for="SajatTura">Saját túrák </label>
-  <input type="checkbox" id="SajatTura" #SajatTura (change)="onCheckBoxChange()">
+  <input type="checkbox" id="SajatTura"  #SajatTura (change)="onCheckBoxSajatChange()">
   <br>
   <label for="JelentkezettTura">Jelentkezett túrák</label>
-  <input type="checkbox" id="JelentkezettTura">
+  <input type="checkbox" id="JelentkezettTura"   #JelentkezettTura (change)="onCheckBoxJelentkezettChange()">
+</div>
+<div class="alertbox">
+  <p class="alert alert-danger" *ngIf="this.turaservice.turahiba.length > 2 && JelentkezettTura.checked">Ön még nem jelentkezett egy túrára sem!</p>
 </div>
 <div class="container tura" *ngFor="let tura of turak">
   <!-- A túra megnevezése -->
-  <div class="turaNevHelye">
+  <div class="turaNevHelye" *ngFor="let turaid of jelentkezettTuraID">
     <p style="display:none">{{tura.Tura_id}} </p>
     <p class="turaNeve">Túra neve: {{tura.Tura_neve}}</p>
     <button class="jelentkezesGomb btn btn-success"
-            *ngIf="(tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev) && localStorage.getItem('Tura') != this.tura.Tura_id" (click)="jelentkezesGomb(tura.Tura_id)">Jelentkezés</button>
+            *ngIf="(tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev) && (turaid != this.tura.Tura_id)"
+            (click)="jelentkezesGomb(tura.Tura_id)">Jelentkezés</button>
 
     <button class="jelentkezesGomb btn btn-danger"
-            *ngIf="localStorage.getItem('Tura') === this.tura.Tura_id" (click)="jelentkezesTorlesGomb(tura.Tura_id)">Jelentkezés törlése</button>
+            *ngIf="turaid === this.tura.Tura_id" (click)="jelentkezesTorlesGomb(tura.Tura_id)">Jelentkezés törlése</button>
 
     <button class="jelentkezesGomb btn btn-success"
             *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="modositasGomb(tura.Tura_id)">Módosítás</button>

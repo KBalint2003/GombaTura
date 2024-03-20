@@ -19,6 +19,7 @@ export class TuraService {
 
   public osszesturaLekeresRoute = "http://localhost:3000/turak/osszes"
   public turaLekeresRoute = "http://localhost:3000/turak/"
+  public jelentkezettTuraLekeresRoute = "http://localhost:3000/turak/jelentkezett"
   public turaJelentkezesRoute = "http://localhost:3000/turak"
   public turaJelentkezesTorleseRoute = "http://localhost:3000/turak"
   public turaLetrehozasRoute = "http://localhost:3000/turak"
@@ -73,15 +74,10 @@ export class TuraService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
     });
-    console.log(Tura_id)
     return this.http.post(this.turaJelentkezesRoute, {Tura_id}, {headers}).subscribe( (valasz : any) => {
-      console.log(this.Tura_idk)
-      this.Tura_idk.push(valasz.osszekapcsolas.TurakTuraId)
-      localStorage.setItem("Tura", valasz.osszekapcsolas.TurakTuraId)
-      console.log(this.Tura_idk)
-      console.log("Sikeres jelentkezés")
+      this.turahiba = ""
     }, error => {
-      console.log(error)
+
     } )
   }
 
