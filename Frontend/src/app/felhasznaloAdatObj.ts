@@ -1,7 +1,7 @@
 // A felhasznalo.component.ts ezen  interface alapján határozza meg az objektum paramétereit.
 export interface felhasznaloAdatObj {
-  telSzam: string;
-  szulDatum: string;
+  Telefon_szam: string;
+  Szuletesi_ido: string;
 }
 export interface loginObj {
   email: string;

@@ -512,8 +512,7 @@ async function turakPUTController(req, res) {
 
 async function turakPATCHController(req, res) {
     
-    var {Tura_id} = req.headers.turaid;
-    
+    var Tura_id = req.headers.turaid;
     Turak.update(req.body.ujTura, { where: { Tura_id }, individualHooks: true })
     .then((rowsAffected) => {
       //Nem található túra ilyen id-val
