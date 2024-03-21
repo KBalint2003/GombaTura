@@ -1,6 +1,6 @@
 import {Component, OnInit, TemplateRef, inject, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {FrissitettTura, Tura, Turak} from "./tura";
+import { Tura, Turak} from "./tura";
 import {TuraService} from "../tura.service";
 import { NgForOf, NgIf} from "@angular/common";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -52,20 +52,6 @@ export class TuraComponent implements  OnInit{
   }
   turak: Tura[] = []
 
-  Frisstura: FrissitettTura = {
-    Tura_neve: '',
-    Indulas_ido: '',
-    Indulas_hely: '',
-    Erkezesi_ido: '',
-    Erkezesi_hely: '',
-    Utvonal_nehezsege: '',
-    Szervezo_elerhetosege: '',
-    Tura_dija: 0,
-    Elmarad_a_tura: false,
-    Leiras: '',
-    Jelentkezok: 0,
-    Felhasznalonev: ''
-  }
 
   tokenIDjson: any
   sajatTuraJeloles = false
@@ -84,7 +70,7 @@ export class TuraComponent implements  OnInit{
     for (let i = 0; i < this.turak.length; i++) {
       if (this.turak[i].Tura_id == Tura_id) {
         Tura_id = this.turak[i].Tura_id
-        console.log(Tura_id)
+        this.ujTuraId = this.turak[i].Tura_id
       }
     }
   }
@@ -110,10 +96,7 @@ export class TuraComponent implements  OnInit{
     return this.http.get<Turak>(this.turaservice.osszesturaLekeresRoute, {headers}).subscribe((valasz:any) => {
       this.turak = valasz.turak
       this.jelentkezettTuraID = valasz.jelentkezettTurakId
-      console.log(this.turak.length)
-      console.log(this.jelentkezettTuraID)
       for (var i = 0; i < this.jelentkezettTuraID.length; i++) {
-        console.log(this.jelentkezettTuraID[0])
       }
     })
   }
@@ -164,15 +147,16 @@ export class TuraComponent implements  OnInit{
   torlesgomb(Tura_id: string) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
+      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token,
+      'turaid': Tura_id
     });
     for (let i = 0; i < this.turak.length; i++) {
       if (Tura_id == this.turak[i].Tura_id) {
         this.elmarad = true
       }
     }
-    return this.http.patch(this.turaservice.turaSzerkesztesRoute, {}, {headers}).subscribe((valasz: any) => {
-      console.log("Sikeres törlés")
+    return this.http.patch(this.turaservice.turaSzerkesztesRoute, {"ujTura": {"Elmarad_a_tura": true}}, {headers}).subscribe((valasz: any) => {
+
     })
   }
 
