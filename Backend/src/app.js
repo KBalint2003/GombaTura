@@ -4,6 +4,9 @@ const sequelize = require('./adatbazisKapcsolat')
 const FelhasznaloModel = require('./models/felhasznalo.model');
 const TuraModel = require('./models/turak.model');
 const TuraraJelentkezes = require('./models/turaJelentkezes.model');
+const feketeLista = require('./models/feketeLista.model');
+const GombakModel = require('./models/gomba.model');
+
 const { idozitettFLTorles } = require('./idozitettFeketeListaTorles')
 const {Sequelize, DataTypes}=require("sequelize");
 
@@ -28,7 +31,8 @@ const profilRouter = require('./routes/profil.route');
 const app = express();
 const cors = require('cors');
 const tokenErvenyesites = require('./middlewares/AuthMiddleware');
-const feketeLista = require('./models/feketeLista.model');
+const gombaRouter = require('./routes/gomba.route');
+
 
 //const passport = require('passport');
 //const setupPassport = require('./passport-config');
@@ -45,7 +49,8 @@ app.use("/", fooldalRouter);
 app.use("/",regisztracioRouter);
 app.use("/",bejelentkezesRouter);
 app.use("/", turakRouter);
-app.use("/", profilRouter)
+app.use("/", profilRouter);
+app.use("/", gombaRouter);
 
 
 
@@ -57,7 +62,8 @@ sequelize.authenticate().then(() => {
   sequelize.modelManager.addModel(FelhasznaloModel);
   sequelize.modelManager.addModel(TuraModel);
   sequelize.modelManager.addModel(TuraraJelentkezes);
-  sequelize.modelManager.addModel(feketeLista)
+  sequelize.modelManager.addModel(feketeLista);
+  sequelize.modelManager.addModel(GombakModel);
 
   sequelize.sync({}).then(() =>{
     app.listen(PORT, () => {

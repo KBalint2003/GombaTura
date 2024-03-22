@@ -5,6 +5,7 @@ async function felhasznaloGETController(req, res) {
   
     try{
     const userId = req.user.userId;
+    console.log("Userid:" + req.user.userId)
     const felhasznalo = await Felhasznalo.findByPk(userId);
 
         if (felhasznalo.Szuletesi_ido === null) {
@@ -41,15 +42,7 @@ async function felhasznaloPATCHController(req, res) {
 
     const User_id = req.user.userId;
 
-<<<<<<< Updated upstream
     const felhasznalo = await Felhasznalo.findByPk(User_id);
-=======
-<<<<<<< HEAD
-    const felhasznalo = await Felhasznalo.findByPk(User_id)
-=======
-    const felhasznalo = await Felhasznalo.findByPk(User_id);
->>>>>>> 5253e8408c73981531a8ae83a73633aba8732900
->>>>>>> Stashed changes
 
     if (req.body.felhasznaloadatok.Szuletesi_ido === "") {
         req.body.felhasznaloadatok.Szuletesi_ido = felhasznalo.Szuletesi_ido
@@ -60,7 +53,7 @@ async function felhasznaloPATCHController(req, res) {
       //Nem található felhasználó ilyen id-val
       if (Object.entries(rowsAffected[1]).length === 0) {
           console.log(rowsAffected[0])
-        res.status(404).json({
+        res.status(404).send({
           success: false,
           status: 404,
           message: `Felhasználó ${User_id} id-val nem található. Felhasználó frissítése sikertelen.`,
@@ -71,43 +64,18 @@ async function felhasznaloPATCHController(req, res) {
 
       //if rowsAffected[0] === 1 Van változás
       if (rowsAffected[0] === 1) {
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-          console.log(req.body.felhasznaloadatok.Szuletesi_ido)
-=======
->>>>>>> 5253e8408c73981531a8ae83a73633aba8732900
->>>>>>> Stashed changes
           res.status(200).json({
           success: true,
           Szuletesi_ido: felhasznalo.Szuletesi_ido,
           status: 200,
           message: `Felhasználó adatai frissítve.`,
-<<<<<<< Updated upstream
           id: User_id,
-=======
-<<<<<<< HEAD
-=======
-          id: User_id,
->>>>>>> 5253e8408c73981531a8ae83a73633aba8732900
->>>>>>> Stashed changes
         });
       } else {
-          console.log(req.body.felhasznaloadatok.Szuletesi_ido)
           // if rowsAffected[0] !== 1 Nincs változás az elküldött adatok és a túrának a letárolt adatai között.
-<<<<<<< Updated upstream
 
         res.status(200).json({
           Szuletesi_ido: felhasznalo.Szuletesi_ido,
-=======
-<<<<<<< HEAD
-        res.status(200).json({
-=======
-
-        res.status(200).json({
-          Szuletesi_ido: felhasznalo.Szuletesi_ido,
->>>>>>> 5253e8408c73981531a8ae83a73633aba8732900
->>>>>>> Stashed changes
           success: false,
           status: 200,
           message: `Nincs változás az elküldött adatok és a Felhasználó letárolt adatai között.`,
@@ -115,14 +83,7 @@ async function felhasznaloPATCHController(req, res) {
       }
     })
     .catch((err) => {
-<<<<<<< Updated upstream
         console.log(err);
-=======
-<<<<<<< HEAD
-=======
-        console.log(err);
->>>>>>> 5253e8408c73981531a8ae83a73633aba8732900
->>>>>>> Stashed changes
         res.status(500).json({
         success: false,
         status: 500,
