@@ -1,4 +1,5 @@
 const Felhasznalo = require("../models/felhasznalo.model");
+const Tura = require("../models/turak.model");
 
 async function felhasznaloGETController(req, res) {
   
@@ -38,8 +39,15 @@ async function felhasznaloGETController(req, res) {
 };
 
 async function felhasznaloPATCHController(req, res) {
-    
+
     const User_id = req.user.userId;
+
+    const felhasznalo = await Felhasznalo.findByPk(User_id);
+
+    if (req.body.felhasznaloadatok.Szuletesi_ido === "") {
+        req.body.felhasznaloadatok.Szuletesi_ido = felhasznalo.Szuletesi_ido
+    }
+
     Felhasznalo.update(req.body.felhasznaloadatok, { where: { User_id }, individualHooks: true })
     .then((rowsAffected) => {
       //Nem található felhasználó ilyen id-val
@@ -56,24 +64,27 @@ async function felhasznaloPATCHController(req, res) {
 
       //if rowsAffected[0] === 1 Van változás
       if (rowsAffected[0] === 1) {
-          res.status(200).send({
+          res.status(200).json({
           success: true,
+          Szuletesi_ido: felhasznalo.Szuletesi_ido,
           status: 200,
           message: `Felhasználó adatai frissítve.`,
-          id: userId,
-          payload: req.body,
+          id: User_id,
         });
       } else {
           // if rowsAffected[0] !== 1 Nincs változás az elküldött adatok és a túrának a letárolt adatai között.
-        res.status(200).send({
+
+        res.status(200).json({
+          Szuletesi_ido: felhasznalo.Szuletesi_ido,
           success: false,
-          status: 200, //Not Modified
+          status: 200,
           message: `Nincs változás az elküldött adatok és a Felhasználó letárolt adatai között.`,
         });
       }
     })
     .catch((err) => {
-        res.status(500).send({
+        console.log(err);
+        res.status(500).json({
         success: false,
         status: 500,
         message:"Szerver hiba"
@@ -95,6 +106,8 @@ async function felhasznaloDELETEController(req, res) {
         })
         return;
         }
+
+        await Tura.update({Elmarad_a_tura: true}, {where: {Letrehozo: userId}})
 
         await Felhasznalo.destroy({
             where: {

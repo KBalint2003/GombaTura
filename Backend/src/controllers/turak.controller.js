@@ -380,6 +380,16 @@ async function turakPUTController(req, res) {
             return;
         }
 
+        const tizennyolcE = ((new Date())-(new Date(felhasznalo.Szuletesi_ido)))/1000/60/60/24/365.25
+
+        if (tizennyolcE < 18) {
+            res.status(403).json({
+                error: true,
+                status: 403,
+                message: "Legalább 18 évesnek kell lenni, hogy túrát hozhass létre!"
+            })
+            return;
+        }
 
         if (Tura_neve === "") {
             res.status(400).json({
