@@ -15,7 +15,7 @@
           <input type="text" name="telszam" id="telszam2" [placeholder]="telszam" *ngIf="telszam.length > 1" [(ngModel)]="felhasznaloadatok.Telefon_szam">
           <label for="szulEv">Születési idő:</label><br>
           <p *ngIf="szulido.length > 1">{{szulido}}</p>
-          <input type="date" name="szulEv" id="szulEv" placeholder="" *ngIf="(szulido.length < 1) " [(ngModel)]="felhasznaloadatok.Szuletesi_ido">
+          <input type="date" name="szulEv" id="szulEv" *ngIf="(szulido.length < 1) " [(ngModel)]="felhasznaloadatok.Szuletesi_ido">
           <button type="button" id="adatMentes"  (click)="adatMentesGomb()">Adatok mentése</button>
         </div>
       </div>

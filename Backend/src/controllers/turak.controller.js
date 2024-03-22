@@ -505,6 +505,7 @@ async function turakPUTController(req, res) {
     
         await tura.save();
         res.status(201).json({
+            success: true,
             message: "A túra sikeresen létre lett hozva!",
         });
     

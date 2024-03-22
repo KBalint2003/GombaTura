@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {felhasznaloAdatObj} from "./felhasznaloAdatObj";
-import {Observable, tap} from "rxjs";
-import {signupObj} from "./felhasznaloAdatObj";
 import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
 
@@ -23,6 +21,9 @@ export class FelhasznaloService {
       'Authorization': 'Bearer ' + this.authservice.tokenIDjson.token
     });
     return this.http.patch(this.profilModositas, {"felhasznaloadatok": felhasznaloadatok}, {headers}).subscribe((valasz: any) => {
+      if (valasz.success) {
+        window.location.reload()
+      }
     })
   }
 

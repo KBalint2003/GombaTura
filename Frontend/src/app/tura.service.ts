@@ -20,6 +20,7 @@ export class TuraService {
   public turaSzerkesztesRoute = "http://localhost:3000/turak"
 
   turahiba = ''
+  turaModosistasHiba = ''
   userID = '0b7b054e-53e2-427f-8d50-8999532dd706'
 
 
@@ -31,6 +32,7 @@ export class TuraService {
     return this.http.put<Tura>(this.turaLetrehozasRoute, {ujTura}, {headers}).subscribe((valasz : any) => {
       if (valasz.success) {
         this.turahiba = 'Siker'
+          window.location.reload()
       }
     }, error => {
       if (error.error.type === 'Nincsnev') {
@@ -60,6 +62,22 @@ export class TuraService {
     })
   }
 
+  turaModositas(ujTura: Tura, Tura_id: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token,
+      'turaid': Tura_id
+    });
+    return this.http.patch(this.turaSzerkesztesRoute, {"ujTura": ujTura}, {headers}).subscribe((valasz: any) => {
+      if (valasz.success) {
+        this.turaModosistasHiba = 'Siker'
+        window.location.reload()
+      }
+    }, error => {
+      console.log(error)
+    })
+  }
+
   jelentkezesTurara(Tura_id: string) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -79,24 +97,9 @@ export class TuraService {
       'Tura_id': Tura_id
     });
     return this.http.delete(this.turaJelentkezesTorleseRoute, {headers}).subscribe((valasz: any) => {
-      localStorage.removeItem("Tura")
-    }, error => {
-      console.log(error)
-    })
-  }
-
-  turaModositas(ujTura: Tura, Tura_id: string) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token,
-      'turaid': Tura_id
-    });
-    return this.http.patch(this.turaSzerkesztesRoute, {"ujTura": ujTura}, {headers}).subscribe((valasz: any) => {
 
     }, error => {
       console.log(error)
     })
   }
-
-
 }

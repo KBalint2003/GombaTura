@@ -67,12 +67,7 @@ export class TuraComponent implements  OnInit{
 
   turaModositasModal(turaModositas: TemplateRef<any>, Tura_id: string) {
     this.modalService.open(turaModositas,  { ariaLabelledBy: 'turaModositasModal' })
-    for (let i = 0; i < this.turak.length; i++) {
-      if (this.turak[i].Tura_id == Tura_id) {
-        Tura_id = this.turak[i].Tura_id
-        this.ujTuraId = this.turak[i].Tura_id
-      }
-    }
+
   }
 
   @ViewChild('SajatTura') SajatTura: any;
@@ -96,8 +91,6 @@ export class TuraComponent implements  OnInit{
     return this.http.get<Turak>(this.turaservice.osszesturaLekeresRoute, {headers}).subscribe((valasz:any) => {
       this.turak = valasz.turak
       this.jelentkezettTuraID = valasz.jelentkezettTurakId
-      for (var i = 0; i < this.jelentkezettTuraID.length; i++) {
-      }
     })
   }
 
@@ -125,13 +118,12 @@ export class TuraComponent implements  OnInit{
     this.jelentkezettTuraJeloles = this.JelentkezettTura.nativeElement.checked
     if (this.jelentkezettTuraJeloles) {
       return this.http.get<Turak>(this.turaservice.jelentkezettTuraLekeresRoute, {headers}).subscribe((valasz: any) => {
-        this.turak = valasz.turak
+        this.turak = valasz.formazottTurak
       }, error => {
         this.turaservice.turahiba = "Ön még nem jelentkezett egy túrára sem!"
       })
     }
       return this.http.get<Turak>(this.turaservice.osszesturaLekeresRoute, {headers}).subscribe((valasz: any) => {
-        this.turak = valasz.turak
     })
   }
 
@@ -156,7 +148,9 @@ export class TuraComponent implements  OnInit{
       }
     }
     return this.http.patch(this.turaservice.turaSzerkesztesRoute, {"ujTura": {"Elmarad_a_tura": true}}, {headers}).subscribe((valasz: any) => {
-
+      if (valasz.success) {
+        window.location.reload()
+      }
     })
   }
 
