@@ -1,10 +1,7 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {FrissitettTura, Tura} from "./tura/tura";
+import { Tura} from "./tura/tura";
 import { AuthService } from "./auth.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +9,7 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 
 export class TuraService {
 
-
   constructor(private http: HttpClient, protected authService: AuthService) {  }
-
-
 
   public osszesturaLekeresRoute = "http://localhost:3000/turak/osszes"
   public turaLekeresRoute = "http://localhost:3000/turak/"
@@ -38,9 +32,7 @@ export class TuraService {
       if (valasz.success) {
         this.turahiba = 'Siker'
       }
-      console.log(ujTura)
     }, error => {
-      console.log(ujTura)
       if (error.error.type === 'Nincsnev') {
         this.turahiba = 'Nincsnev'
       }
@@ -76,7 +68,7 @@ export class TuraService {
     return this.http.post(this.turaJelentkezesRoute, {Tura_id}, {headers}).subscribe( (valasz : any) => {
       this.turahiba = ""
     }, error => {
-
+      console.log(error)
     } )
   }
 
@@ -87,22 +79,20 @@ export class TuraService {
       'Tura_id': Tura_id
     });
     return this.http.delete(this.turaJelentkezesTorleseRoute, {headers}).subscribe((valasz: any) => {
-      console.log("Túra jelentkezés törlése sikeres volt!")
       localStorage.removeItem("Tura")
     }, error => {
       console.log(error)
     })
   }
 
-  turaModositas(Frisstura: FrissitettTura, Tura_id: string) {
+  turaModositas(ujTura: Tura, Tura_id: string) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.authService.tokenIDjson.token,
       'turaid': Tura_id
     });
-    return this.http.patch(this.turaSzerkesztesRoute, {"Frisstura": Frisstura}, {headers}).subscribe((valasz: any) => {
-      console.log("Sikeres frissítés!")
-      console.log(valasz)
+    return this.http.patch(this.turaSzerkesztesRoute, {"ujTura": ujTura}, {headers}).subscribe((valasz: any) => {
+
     }, error => {
       console.log(error)
     })

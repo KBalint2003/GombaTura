@@ -9,43 +9,45 @@
 <div class="alertbox">
   <p class="alert alert-danger" *ngIf="this.turaservice.turahiba.length > 2 && JelentkezettTura.checked">Ön még nem jelentkezett egy túrára sem!</p>
 </div>
-<div class="container tura" *ngFor="let tura of turak">
-  <!-- A túra megnevezése -->
-  <div class="turaNevHelye" >
-    <p style="display: none">{{tura.Tura_id}}</p>
-    <p class="turaNeve">Túra neve: {{tura.Tura_neve}}</p>
-    <button class="jelentkezesGomb btn btn-success"
-            *ngIf="(tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev) "
-            (click)="jelentkezesGomb(tura.Tura_id)">Jelentkezés</button>
-
-    <button class="jelentkezesGomb btn btn-danger"
-            *ngIf="(tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev) "
-             (click)="jelentkezesTorlesGomb(tura.Tura_id)">Jelentkezés törlése</button>
-
-    <button class="jelentkezesGomb btn btn-success"
-            *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="turaModositasModal(turaModositas, tura.Tura_id)">Módosítás</button>
-
-    <button class="torlesGomb btn btn-danger"
-            *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="torlesgomb(tura.Tura_id)">Törlés</button>
-  </div>
-  <!-- túra adatai -->
-  <div class="row turaAdat">
-    <div class="col-md">
-<!--      <p>Létrehozó: {{tura.LetrehozoNeve.Felhasznalonev}}</p>-->
-      <p>Indulási pont: {{tura.Indulas_hely}}</p>
-      <p>Érkezési pont: {{tura.Erkezesi_hely}}</p>
-      <p>Szervező elérhetősége: {{tura.Szervezo_elerhetosege}}</p>
-      <br>
-      <p style="text-align: justify">Leírás: {{tura.Leiras}}</p>
+  <div class="container tura" *ngFor="let tura of turak">
+    <div *ngFor="let turaid of jelentkezettTuraID">
     </div>
-    <div class="col-md">
-      <p>Túra nehézsége: {{tura.Utvonal_nehezsege}}</p>
-      <p>Indulási idő: {{tura.Indulas_ido}} </p>
-      <p>Érkezési idő: {{tura.Erkezesi_ido}} </p>
-      <p *ngIf="this.tura.Tura_dija != 0">Túra díja: {{tura.Tura_dija}}Ft</p>
-      <p *ngIf="this.tura.Tura_dija == 0">Túra díja: Ingyenes</p>
-      <p>Jelentkezők száma: {{tura.Jelentkezok}}</p>
-      <p>Létrehozó: {{tura.Felhasznalonev}}</p>
+    <!-- A túra megnevezése -->
+    <div class="turaNevHelye">
+      <p style="display: none">{{tura.Tura_id}}</p>
+      <p class="turaNeve">Túra neve: {{tura.Tura_neve}}</p>
+      <button class="jelentkezesGomb btn btn-success"
+              *ngIf="(tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev)"
+              (click)="jelentkezesGomb(tura.Tura_id)">Jelentkezés</button>
+
+      <button class="jelentkezesGomb btn btn-danger"
+              *ngIf="(tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev) && tura.Tura_id == this.ujTuraId"
+               (click)="jelentkezesTorlesGomb(tura.Tura_id)">Jelentkezés törlése</button>
+
+      <button class="jelentkezesGomb btn btn-success"
+              *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="turaModositasModal(turaModositas, tura.Tura_id)">Módosítás</button>
+
+      <button class="torlesGomb btn btn-danger"
+              *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="torlesgomb(tura.Tura_id)">Törlés</button>
+    </div>
+    <!-- túra adatai -->
+    <div class="row turaAdat">
+      <div class="col-md">
+  <!--      <p>Létrehozó: {{tura.LetrehozoNeve.Felhasznalonev}}</p>-->
+        <p>Indulási pont: {{tura.Indulas_hely}}</p>
+        <p>Érkezési pont: {{tura.Erkezesi_hely}}</p>
+        <p>Szervező elérhetősége: {{tura.Szervezo_elerhetosege}}</p>
+        <br>
+        <p style="text-align: justify">Leírás: {{tura.Leiras}}</p>
+      </div>
+      <div class="col-md">
+        <p>Túra nehézsége: {{tura.Utvonal_nehezsege}}</p>
+        <p>Indulási idő: {{tura.Indulas_ido}} </p>
+        <p>Érkezési idő: {{tura.Erkezesi_ido}} </p>
+        <p *ngIf="this.tura.Tura_dija != 0">Túra díja: {{tura.Tura_dija}}Ft</p>
+        <p *ngIf="this.tura.Tura_dija == 0">Túra díja: Ingyenes</p>
+        <p>Jelentkezők száma: {{tura.Jelentkezok}}</p>
+        <p>Létrehozó: {{tura.Felhasznalonev}}</p>
     </div>
   </div>
   <ng-template #turaModositas let-modal class="lenyilo">
@@ -71,21 +73,21 @@
             <p class="turaLetrehozasAdat">Leírás:</p>
           </div>
           <div class="col-md">
-            <input type="text" class="turaInput" placeholder="Gombatúra" [(ngModel)]="Frisstura.Tura_neve">
-            <input type="datetime-local" class="turaInput" placeholder="2024-03-07-15-00" [(ngModel)]="Frisstura.Indulas_ido">
-            <input type="text" class="turaInput" placeholder="Sátoraljaújhely" [(ngModel)]="Frisstura.Indulas_hely">
-            <input type="datetime-local" class="turaInput" placeholder="2024-03-07-19-00" [(ngModel)]="Frisstura.Erkezesi_ido">
-            <input type="text" class="turaInput" placeholder="Sátoraljaújhely" [(ngModel)]="Frisstura.Erkezesi_hely">
-            <input type="text" class="turaInput" placeholder="Könnyű" [(ngModel)]="Frisstura.Utvonal_nehezsege">
-            <input type="text" class="turaInput" placeholder="06-20-111-5654" [(ngModel)]="Frisstura.Szervezo_elerhetosege">
-            <input type="text" class="turaInput" placeholder="1000Ft" [(ngModel)]="Frisstura.Tura_dija">
-            <input type="text" class="turaInput" placeholder="Leírás" [(ngModel)]="Frisstura.Leiras">
+            <input type="text" class="turaInput" placeholder="Gombatúra" [(ngModel)]="ujTura.Tura_neve">
+            <input type="datetime-local" class="turaInput" placeholder="2024-03-07-15-00" [(ngModel)]="ujTura.Indulas_ido">
+            <input type="text" class="turaInput" placeholder="Sátoraljaújhely" [(ngModel)]="ujTura.Indulas_hely">
+            <input type="datetime-local" class="turaInput" placeholder="2024-03-07-19-00" [(ngModel)]="ujTura.Erkezesi_ido">
+            <input type="text" class="turaInput" placeholder="Sátoraljaújhely" [(ngModel)]="ujTura.Erkezesi_hely">
+            <input type="text" class="turaInput" placeholder="Könnyű" [(ngModel)]="ujTura.Utvonal_nehezsege">
+            <input type="text" class="turaInput" placeholder="06-20-111-5654" [(ngModel)]="ujTura.Szervezo_elerhetosege">
+            <input type="text" class="turaInput" placeholder="1000Ft" [(ngModel)]="ujTura.Tura_dija">
+            <input type="text" class="turaInput" placeholder="Leírás" [(ngModel)]="ujTura.Leiras">
           </div>
         </div>
       </div>
     </div>
     <div class="modal-footer lenyilo">
-      <button type="button" class="btn btn-outline-dark mentesGomb" (click)="turaservice.turaModositas(Frisstura, tura.Tura_id)" >Mentés</button>
+      <button type="button" class="btn btn-outline-dark mentesGomb" (click)="turaservice.turaModositas(ujTura, tura.Tura_id)" >Mentés</button>
     </div>
   </ng-template>
 </div>

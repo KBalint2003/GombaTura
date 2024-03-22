@@ -1,15 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {felhasznaloAdatObj} from "../felhasznaloAdatObj";
-import {FelhasznaloService} from "./felhasznalo.service";
+import {FelhasznaloService} from "../felhasznalo.service";
 import {signupObj} from "../felhasznaloAdatObj";
 import {jwtDecode, JwtPayload} from "jwt-decode";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {AuthService} from "../auth.service";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-felhasznalo',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './felhasznalo.component.html',
   styleUrl: './felhasznalo.component.css'
@@ -17,9 +21,9 @@ import {jwtDecode, JwtPayload} from "jwt-decode";
 export class FelhasznaloComponent implements OnInit{
 
   felhasznaloadatok: felhasznaloAdatObj = {
-    telSzam: '',
-    szulDatum: ''
-}
+    Telefon_szam: '',
+    Szuletesi_ido: ''
+  }
 
   felhasznalo: signupObj = {
     userID: '',
@@ -29,7 +33,10 @@ export class FelhasznaloComponent implements OnInit{
     jelszoUjra: ''
   };
 
-  constructor(private felhasznaloService: FelhasznaloService) {
+    telszam = ''
+    szulido = ''
+
+  constructor(protected http: HttpClient,private felhasznaloService: FelhasznaloService, protected authservice: AuthService) {
   }
 
   ngOnInit() {
@@ -41,6 +48,18 @@ export class FelhasznaloComponent implements OnInit{
       const dekodoltToken = jwtDecode(token) as JwtPayload & { felhasznalonev: string, userId: string }
       this.felhasznalo.userID = dekodoltToken.userId
       this.felhasznalo.felhasznalonev = dekodoltToken.felhasznalonev
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.authservice.tokenIDjson.token
+    });
+      return this.http.get(this.felhasznaloService.profilAdatLekeres, {headers}).subscribe((valasz: any) => {
+        this.telszam = valasz.user.Telefon_szam
+        this.szulido = valasz.user.Szuletesi_ido
+      })
+
+
+
   }
 
   adatMentesGomb() {
@@ -48,7 +67,7 @@ export class FelhasznaloComponent implements OnInit{
   }
 
   profilTorlesGomb() {
-    this.felhasznaloService.profiltorles(this.felhasznalo)
+    this.felhasznaloService.profiltorles()
     console.log("Törlés")
   }
 

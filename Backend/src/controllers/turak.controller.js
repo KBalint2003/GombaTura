@@ -1,24 +1,24 @@
+//package és model importok
+
 const Turak = require('../models/turak.model');
-const TuraraJelentkezesTabla = require('../models/turaJelentkezes.model')
-const passport = require("passport");
+const TuraraJelentkezesTabla = require('../models/turaJelentkezes.model');
 const { v4: uuidv4 } = require('uuid');
 const jwt = require('jsonwebtoken');
 const Felhasznalo = require('../models/felhasznalo.model');
 const { Sequelize, Op } = require('sequelize');
-const sequelize = require('../adatbazisKapcsolat');
 
-
+//Az Összes túrának a lekérdezése
 async function osszesTurakGETController(req, res) {
     try {
 
-        var bejelentkezettUserToken = req.headers.authorization;
+        var bejelentkezettUserToken = req.headers.authorization; 
 
-        if (!bejelentkezettUserToken) {
+        if (!bejelentkezettUserToken) { //Bejelentkezés ellenőrzése 
         
 
         const turak = await Turak.findAll({
             attributes: {
-                include: [[Sequelize.fn("COUNT", Sequelize.col("JelentkezoId.User_id")), "Jelentkezok"]],
+                include: [[Sequelize.fn("COUNT", Sequelize.col("JelentkezoId.User_id")), "Jelentkezok"]],//jelentkezők megszámlálása
             },
             include: [
                 {
@@ -32,6 +32,8 @@ async function osszesTurakGETController(req, res) {
                     as: "LetrehozoNeve",
                 },
             ],
+
+            //Azokat kéri le, ahol a dátum nem kisebb, mint az aktuális, és nem fog elmaradni a túra
             where: {
                 Indulas_ido: {
                     [Op.ne]: new Date().toLocaleDateString(),
@@ -95,6 +97,7 @@ async function osszesTurakGETController(req, res) {
         console.log(error);
     }
         const turak = await Turak.findAll({
+            
             attributes: {
                 include: [[Sequelize.fn("COUNT", Sequelize.col("JelentkezoId.User_id")), "Jelentkezok"]],
             },
@@ -145,11 +148,21 @@ async function osszesTurakGETController(req, res) {
             Felhasznalonev: tura["LetrehozoNeve.Felhasznalonev"],
         }));
 
+        if (jelentkezettTuraIdTomb[0] === undefined) {
+            res.status(200).json({
+                success: true,
+                turak: formazottTurak,
+            });
+            return;
+        }
+
+        else{
         res.status(200).json({
             success: true,
             turak: formazottTurak,
             jelentkezettTurakId: jelentkezettTuraIdTomb
         });
+    }
     }
 
 } catch (error) {
@@ -242,7 +255,12 @@ async function turakJelentkezettGETController(req, res) {
 
         const turak = await Turak.findAll({
               
-              
+            where: {
+                Letrehozo:  id ,
+                Indulas_ido: {
+                    [Op.ne]: new Date().toLocaleDateString(),
+                }
+            },
 
             attributes: {
                 include: [[Sequelize.fn("COUNT", Sequelize.col("JelentkezoId.User_id")), "Jelentkezok"]],
@@ -345,11 +363,25 @@ async function turakPOSTController(req, res) {
 async function turakPUTController(req, res) {
     
     try {
+
         var { Tura_neve, Indulas_ido, Indulas_hely, Erkezesi_ido, Erkezesi_hely, Utvonal_nehezsege, Szervezo_elerhetosege, Tura_dija, Leiras } = req.body.ujTura;
 
         var Letrehozo = req.user.userId;
     
-        if (Tura_neve === '') {
+        const felhasznalo = await Felhasznalo.findByPk(Letrehozo);
+
+        if (felhasznalo.Szuletesi_ido === null) {
+            res.status(400).json({
+                error: true,
+                type: "nincsSzulEv",
+                status: 400,
+                message: "Nem lett életkor megadva! Túrát csak olyan hozhat létre, aki betöltötte a 18. életévét!"
+            });
+            return;
+        }
+
+
+        if (Tura_neve === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -359,7 +391,7 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (Indulas_ido === '') {
+        if (Indulas_ido === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -369,7 +401,17 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (Indulas_hely === '') {
+        if (Indulas_ido <= Date.now()) {
+            res.status(400).json({
+                error: true,
+                status: 400,
+                type: "RosszIndIdo",
+                message: "Az indulási idő nem lehet kisebb vagy egyenlő a jelenlegi idővel!"
+            })
+            return;
+        }
+
+        if (Indulas_hely === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -379,7 +421,7 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (Erkezesi_ido === '') {
+        if (Erkezesi_ido === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -388,8 +430,18 @@ async function turakPUTController(req, res) {
             })
             return;
         }
+
+        if (Erkezesi_ido <= Indulas_ido) {
+            res.status(400).json({
+                error: true,
+                status: 400,
+                type: "RosszErkIdo",
+                message: "Az érkezési idő nem lehet kisebb vagy egyenlő az indulási idővel!"
+            })
+            return;
+        }
     
-        if (Erkezesi_hely === '') {
+        if (Erkezesi_hely === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -399,7 +451,7 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (Utvonal_nehezsege === '') {
+        if (Utvonal_nehezsege === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -409,7 +461,7 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (Leiras === '') {
+        if (Leiras === "") {
             res.status(400).json({
                 error:true,
                 status: 400,
@@ -419,7 +471,7 @@ async function turakPUTController(req, res) {
             return;
         }
 
-        if (Szervezo_elerhetosege === '') {
+        if (Szervezo_elerhetosege === "" ||Szervezo_elerhetosege ===  undefined) {
             Szervezo_elerhetosege = req.user.email;
         }
         else{
@@ -443,7 +495,7 @@ async function turakPUTController(req, res) {
     
         await tura.save();
         res.status(201).json({
-            message: "A túra sikeresen létre lett hozva!"
+            message: "A túra sikeresen létre lett hozva!",
         });
     
     }   
@@ -461,9 +513,7 @@ async function turakPUTController(req, res) {
 async function turakPATCHController(req, res) {
     
     var Tura_id = req.headers.turaid;
-    console.log(req.headers)
-    console.log(req.body)
-    Turak.update(req.body, { where: { Tura_id }, individualHooks: true })
+    Turak.update(req.body.ujTura, { where: { Tura_id }, individualHooks: true })
     .then((rowsAffected) => {
       //Nem található túra ilyen id-val
       if (Object.entries(rowsAffected[1]).length === 0) {
@@ -477,7 +527,6 @@ async function turakPATCHController(req, res) {
       }
 
       //if rowsAffected[0] === 1 Van változás
-        console.log(rowsAffected[0])
       if (rowsAffected[0] === 1) {
         res.status(200).send({
           success: true,
@@ -508,8 +557,8 @@ async function jelentkezesDELETEController(req, res) {
     try{
         const userId = req.user.userId;
 
-        const turaId = req.headers.tura_id;
-
+        const turaId = req.body.Tura_id;
+        
         if (userId === undefined || turaId === undefined) {
             res.status(400).json({
                 error: true,
