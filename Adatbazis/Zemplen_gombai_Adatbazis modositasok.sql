@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Már 05. 12:31
+-- Létrehozás ideje: 2024. Már 07. 08:33
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -72,10 +72,10 @@ INSERT INTO `jelentkezok_turara` (`User_id`, `Tura_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `post_databse`
+-- Tábla szerkezet ehhez a táblához `post_table`
 --
 
-CREATE TABLE `post_databse` (
+CREATE TABLE `post_table` (
   `Id` int(10) NOT NULL,
   `Postolo_neve` varchar(20) COLLATE utf8_hungarian_ci NOT NULL,
   `Kep_id` varchar(20) COLLATE utf8_hungarian_ci NOT NULL,
@@ -85,10 +85,10 @@ CREATE TABLE `post_databse` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
--- A tábla adatainak kiíratása `post_databse`
+-- A tábla adatainak kiíratása `post_table`
 --
 
-INSERT INTO `post_databse` (`Id`, `Postolo_neve`, `Kep_id`, `Comment`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `post_table` (`Id`, `Postolo_neve`, `Kep_id`, `Comment`, `createdAt`, `updatedAt`) VALUES
 (1, 'Gombamester21', 'Csaszar_galoca', 'Ez egy védett gomba!', '0000-00-00', '0000-00-00'),
 (2, 'Papsapka', 'Kucsma_gomba', 'Ez egy finom gomba.', '0000-00-00', '0000-00-00');
 
@@ -100,6 +100,7 @@ INSERT INTO `post_databse` (`Id`, `Postolo_neve`, `Kep_id`, `Comment`, `createdA
 
 CREATE TABLE `tervezet_turak` (
   `Tura_id` int(11) NOT NULL,
+  `Tura_neve` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
   `Letrehozo` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
   `Indulas_ido` datetime NOT NULL,
   `Indulas_hely` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
@@ -118,9 +119,9 @@ CREATE TABLE `tervezet_turak` (
 -- A tábla adatainak kiíratása `tervezet_turak`
 --
 
-INSERT INTO `tervezet_turak` (`Tura_id`, `Letrehozo`, `Indulas_ido`, `Indulas_hely`, `Varhato_erkezési_ido`, `Erkezesi_hely`, `Utvolan_nehezsege`, `Leiras`, `Szervezo_elerhetosege`, `Tura_dija`, `Elmarad_a_tura`, `createdAt`, `updatedAt`) VALUES
-(1, 'Szerkesztőség', '2023-10-01 08:00:00', 'Rudabányácska Smaragdvölgy', '2023-10-01 12:00:00', 'Rudabányácska Smaragdvölgy', 'Könnyű/Közepes/Nehéz', 'A kirándulást: Dr. Nagy Béla biológus egyesületünk szakmai vezetője fogja vezetni. A vezetett útvonalon lehetőség szerint elhozzuk a holnapi reggelit. Találhatunk: \r\nCseh Kucsmát és Májusi Pereszkét is. \r\n', '+36301234567', 2000, 1, '0000-00-00', '0000-00-00'),
-(2, 'Kucsmavadász', '2023-09-14 09:00:00', 'Sátoraljaújhely Aldi parkoló', '2023-09-14 12:00:00', 'Sátoraljaújhely Tesco parkoló', 'Könnyű', 'Egy könnyed sétát szervezünk a csoport tagjainak mivel a múlt heti sikeres vadászat után reméljük, megint szerencsések leszünk.', 'Szervezo@gmail.com', 0, 0, '0000-00-00', '0000-00-00');
+INSERT INTO `tervezet_turak` (`Tura_id`, `Tura_neve`, `Letrehozo`, `Indulas_ido`, `Indulas_hely`, `Varhato_erkezési_ido`, `Erkezesi_hely`, `Utvolan_nehezsege`, `Leiras`, `Szervezo_elerhetosege`, `Tura_dija`, `Elmarad_a_tura`, `createdAt`, `updatedAt`) VALUES
+(1, 'Kazincy Ferenc emlék túra', 'Szerkesztőség', '2023-10-01 08:00:00', 'Rudabányácska Smaragdvölgy', '2023-10-01 12:00:00', 'Rudabányácska Smaragdvölgy', 'Könnyű/Közepes/Nehéz', 'A kirándulást: Dr. Nagy Béla biológus egyesületünk szakmai vezetője fogja vezetni. A vezetett útvonalon lehetőség szerint elhozzuk a holnapi reggelit. Találhatunk: \r\nCseh Kucsmát és Májusi Pereszkét is. \r\n', '+36301234567', 2000, 1, '0000-00-00', '0000-00-00'),
+(2, 'Csiperke túra', 'Kucsmavadász', '2023-09-14 09:00:00', 'Sátoraljaújhely Aldi parkoló', '2023-09-14 12:00:00', 'Sátoraljaújhely Tesco parkoló', 'Könnyű', 'Egy könnyed sétát szervezünk a csoport tagjainak mivel a múlt heti sikeres vadászat után reméljük, megint szerencsések leszünk.', 'Szervezo@gmail.com', 0, 0, '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -156,7 +157,7 @@ CREATE TABLE `zemplen_gombai` (
   `Ize` varchar(20) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `Illata` varchar(20) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `Ara_HUF` int(10) DEFAULT 0,
-  `Kep_keszeto_neve` varchar(30) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Kep_keszito_neve` varchar(30) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `Kep_neve` varchar(35) COLLATE utf8_hungarian_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
@@ -164,7 +165,7 @@ CREATE TABLE `zemplen_gombai` (
 -- A tábla adatainak kiíratása `zemplen_gombai`
 --
 
-INSERT INTO `zemplen_gombai` (`ID`, `Latin_nev`, `Magyar_nev`, `Nemzetseg`, `Etkezes_ertek`, `Feltetel`, `Leiras`, `Bocskora`, `Galler`, `Szezon_eleje`, `Szezon_vege`, `Novenyzet`, `Termotest_tipus`, `Termoretegtarto_tipusok`, `Kalap_forma`, `Kalap_felszin`, `Kalap_perem`, `Lemezallas`, `Lemez_el`, `Burok_maradvany`, `Tonk_alak`, `Tonk_felulet`, `Hus`, `Hus_elszinezodes`, `Ize`, `Illata`, `Ara_HUF`, `Kep_keszeto_neve`, `Kep_neve`) VALUES
+INSERT INTO `zemplen_gombai` (`ID`, `Latin_nev`, `Magyar_nev`, `Nemzetseg`, `Etkezes_ertek`, `Feltetel`, `Leiras`, `Bocskora`, `Galler`, `Szezon_eleje`, `Szezon_vege`, `Novenyzet`, `Termotest_tipus`, `Termoretegtarto_tipusok`, `Kalap_forma`, `Kalap_felszin`, `Kalap_perem`, `Lemezallas`, `Lemez_el`, `Burok_maradvany`, `Tonk_alak`, `Tonk_felulet`, `Hus`, `Hus_elszinezodes`, `Ize`, `Illata`, `Ara_HUF`, `Kep_keszito_neve`, `Kep_neve`) VALUES
 (1, 'Agaricus arvensis', 'Erdőszéli csiperke', 'Csiperke', 0, NULL, 'Májustól novemberig erdő szélén, füves helyen növő gyakori faj.', 1, 1, 5, 11, ' Erdő szélén, füves helyen', 'Kalapos', 'Lemezes', 'Félgömb', 'Pikkelyes', 'Sima', 'Sűrű', 'Sima', 'Fogaskerékszerű az alja', 'Bunkó', 'Sima', 'Vastag', 'Sárgul', 'Dió', 'Keserümandula', 0, 'Varju Sándor', 'Csiperke_erdoszeli'),
 (2, 'Agaricus augustus', 'Óriás csiperke', 'Csiperke', 0, NULL, 'Júniustól októberig lomb- és fenyőerdőben, erdőszélen, erdei utakon fordul elő. Hazánkban elég ritka faj.', 0, 1, 6, 10, 'Lomb- és fenyőerdőben', 'Kalapos', 'Lemezes', 'Szögletes', 'Pikkelyes', 'Sima', 'Sűrű', 'Sima', 'Gallér', 'Karcsú', 'Pelyhes', 'Vékony', 'Nincs', 'Jó ízű', 'Keserümandula', 0, 'Szűcs Béla', 'Csiperke_orias'),
 (3, 'Agaricus benesii ', 'Ligeti csiperke', 'Csiperke', 0, NULL, 'Júniustól novemberig ligetes lomb- és fenyőerdőben, réten, legelőn növő elég gyakori faj.', 0, 1, 6, 11, 'Ligetes lomb- és fenyőerdőben', 'Kalapos', 'Lemezes', 'Szögletes', 'Pikkelyes', 'Sima', 'Sűrű', 'Sima', 'Gallér', 'Hengeres', 'Pikkelyes', 'Vastag', 'Vörös', 'Nincs', 'Csiperkeillat', 0, 'Borsi Valéria', 'Csiperke_ligeti'),
@@ -282,9 +283,9 @@ ALTER TABLE `jelentkezok_turara`
   ADD KEY `Tura_id` (`Tura_id`);
 
 --
--- A tábla indexei `post_databse`
+-- A tábla indexei `post_table`
 --
-ALTER TABLE `post_databse`
+ALTER TABLE `post_table`
   ADD PRIMARY KEY (`Id`),
   ADD UNIQUE KEY `Postolo_neve` (`Postolo_neve`),
   ADD KEY `Id` (`Id`);
@@ -314,10 +315,10 @@ ALTER TABLE `jelentkezok_turara`
   ADD CONSTRAINT `Jelentkezok_turara_ibfk_2` FOREIGN KEY (`Tura_id`) REFERENCES `tervezet_turak` (`Tura_id`);
 
 --
--- Megkötések a táblához `post_databse`
+-- Megkötések a táblához `post_table`
 --
-ALTER TABLE `post_databse`
-  ADD CONSTRAINT `post_databse_ibfk_1` FOREIGN KEY (`Postolo_neve`) REFERENCES `felhasznalo` (`Felhasznalonev`);
+ALTER TABLE `post_table`
+  ADD CONSTRAINT `post_table_ibfk_1` FOREIGN KEY (`Postolo_neve`) REFERENCES `felhasznalo` (`Felhasznalonev`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
