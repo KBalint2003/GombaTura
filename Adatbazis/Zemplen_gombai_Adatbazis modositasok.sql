@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Már 07. 08:33
+-- Létrehozás ideje: 2024. Már 05. 12:57
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -100,7 +100,6 @@ INSERT INTO `post_table` (`Id`, `Postolo_neve`, `Kep_id`, `Comment`, `createdAt`
 
 CREATE TABLE `tervezet_turak` (
   `Tura_id` int(11) NOT NULL,
-  `Tura_neve` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
   `Letrehozo` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
   `Indulas_ido` datetime NOT NULL,
   `Indulas_hely` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
@@ -119,9 +118,9 @@ CREATE TABLE `tervezet_turak` (
 -- A tábla adatainak kiíratása `tervezet_turak`
 --
 
-INSERT INTO `tervezet_turak` (`Tura_id`, `Tura_neve`, `Letrehozo`, `Indulas_ido`, `Indulas_hely`, `Varhato_erkezési_ido`, `Erkezesi_hely`, `Utvolan_nehezsege`, `Leiras`, `Szervezo_elerhetosege`, `Tura_dija`, `Elmarad_a_tura`, `createdAt`, `updatedAt`) VALUES
-(1, 'Kazincy Ferenc emlék túra', 'Szerkesztőség', '2023-10-01 08:00:00', 'Rudabányácska Smaragdvölgy', '2023-10-01 12:00:00', 'Rudabányácska Smaragdvölgy', 'Könnyű/Közepes/Nehéz', 'A kirándulást: Dr. Nagy Béla biológus egyesületünk szakmai vezetője fogja vezetni. A vezetett útvonalon lehetőség szerint elhozzuk a holnapi reggelit. Találhatunk: \r\nCseh Kucsmát és Májusi Pereszkét is. \r\n', '+36301234567', 2000, 1, '0000-00-00', '0000-00-00'),
-(2, 'Csiperke túra', 'Kucsmavadász', '2023-09-14 09:00:00', 'Sátoraljaújhely Aldi parkoló', '2023-09-14 12:00:00', 'Sátoraljaújhely Tesco parkoló', 'Könnyű', 'Egy könnyed sétát szervezünk a csoport tagjainak mivel a múlt heti sikeres vadászat után reméljük, megint szerencsések leszünk.', 'Szervezo@gmail.com', 0, 0, '0000-00-00', '0000-00-00');
+INSERT INTO `tervezet_turak` (`Tura_id`, `Letrehozo`, `Indulas_ido`, `Indulas_hely`, `Varhato_erkezési_ido`, `Erkezesi_hely`, `Utvolan_nehezsege`, `Leiras`, `Szervezo_elerhetosege`, `Tura_dija`, `Elmarad_a_tura`, `createdAt`, `updatedAt`) VALUES
+(1, 'Szerkesztőség', '2023-10-01 08:00:00', 'Rudabányácska Smaragdvölgy', '2023-10-01 12:00:00', 'Rudabányácska Smaragdvölgy', 'Könnyű/Közepes/Nehéz', 'A kirándulást: Dr. Nagy Béla biológus egyesületünk szakmai vezetője fogja vezetni. A vezetett útvonalon lehetőség szerint elhozzuk a holnapi reggelit. Találhatunk: \r\nCseh Kucsmát és Májusi Pereszkét is. \r\n', '+36301234567', 2000, 1, '0000-00-00', '0000-00-00'),
+(2, 'Kucsmavadász', '2023-09-14 09:00:00', 'Sátoraljaújhely Aldi parkoló', '2023-09-14 12:00:00', 'Sátoraljaújhely Tesco parkoló', 'Könnyű', 'Egy könnyed sétát szervezünk a csoport tagjainak mivel a múlt heti sikeres vadászat után reméljük, megint szerencsések leszünk.', 'Szervezo@gmail.com', 0, 0, '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
