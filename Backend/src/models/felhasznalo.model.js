@@ -1,4 +1,4 @@
-const {Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require("../adatbazisKapcsolat");
 const Felhasznalo = sequelize.define('Felhasznalok', {
 
@@ -31,7 +31,8 @@ const Felhasznalo = sequelize.define('Felhasznalok', {
 
     Telefon_szam: {
         type: DataTypes.STRING(12),
-        allowNull: true
+        allowNull: true,
+        defaultValue: ""
     },
 
     FelhasznaloProfilKep: {

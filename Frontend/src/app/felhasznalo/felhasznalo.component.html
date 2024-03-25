@@ -10,11 +10,13 @@
       <div class="profiladat">
         <img src="/assets/img/profilepic.jpg" alt="Profilkép" id="profilkep">
         <div class="adatmezo">
-          <label for="telszam">Telefonszám:</label>
-          <input type="text" name="telszam" id="telszam" placeholder="06201234567" [(ngModel)]="felhasznaloadatok.telSzam">
-          <label for="szulEv">Születési év:</label><br>
-          <input type="date" name="szulEv" id="szulEv" placeholder="" [(ngModel)]="felhasznaloadatok.szulDatum">
-          <button type="button" id="adatMentes" (click)="adatMentesGomb()">Adatok mentése</button>
+          <label for="telszam1">Telefonszám:</label>
+          <input type="text" name="telszam" id="telszam1" placeholder="06205478964" *ngIf="telszam.length < 2" [(ngModel)]="felhasznaloadatok.Telefon_szam">
+          <input type="text" name="telszam" id="telszam2" [placeholder]="telszam" *ngIf="telszam.length > 1" [(ngModel)]="felhasznaloadatok.Telefon_szam">
+          <label for="szulEv">Születési idő:</label><br>
+          <p *ngIf="szulido.length > 1">{{szulido}}</p>
+          <input type="date" name="szulEv" id="szulEv" *ngIf="(szulido.length < 1) " [(ngModel)]="felhasznaloadatok.Szuletesi_ido">
+          <button type="button" id="adatMentes"  (click)="adatMentesGomb()">Adatok mentése</button>
         </div>
       </div>
     </div>
@@ -33,7 +35,7 @@
     </div>
     <div class="col-2">
       <!-- Profil törlésére szolgáló gomb -->
-      <button type="button" id="profdelete" (click)="profilTorlesGomb">Profil törlése</button>
+      <button type="button" id="profdelete" (click)="profilTorlesGomb()">Profil törlése</button>
     </div>
   </div>
 </div>
