@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Már 04. 10:23
+-- Létrehozás ideje: 2024. Már 05. 12:31
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -30,21 +30,23 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `felhasznalo` (
   `User_id` int(11) NOT NULL,
-  `Felhasznalonev` varchar(20) COLLATE utf8_hungarian_ci NOT NULL,
+  `Felhasznalonev` varchar(32) COLLATE utf8_hungarian_ci NOT NULL,
   `Jelszo` varchar(20) COLLATE utf8_hungarian_ci NOT NULL,
   `Email` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
   `Szuletesi_ido` date NOT NULL,
   `Telefon_szam` varchar(12) COLLATE utf8_hungarian_ci NOT NULL,
-  `FelhasznaloProfilKep` varchar(50) COLLATE utf8_hungarian_ci NOT NULL DEFAULT 'alap_profilkep'
+  `FelhasznaloProfilKep` varchar(50) COLLATE utf8_hungarian_ci NOT NULL DEFAULT 'alap_profilkep',
+  `createdAt` date NOT NULL,
+  `updatedAt` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `felhasznalo`
 --
 
-INSERT INTO `felhasznalo` (`User_id`, `Felhasznalonev`, `Jelszo`, `Email`, `Szuletesi_ido`, `Telefon_szam`, `FelhasznaloProfilKep`) VALUES
-(1, 'Gombamester21', 'Laskagomba', 'Gombamester01@gmail.com', '2000-01-01', '+36301234567', 'Gombamester21_profil_kép'),
-(2, 'Papsapka', 'Papsapkagomba21', 'Laskagomba01@gmail.com', '2013-11-01', '+36302547787', 'Papsapka_profil_kép');
+INSERT INTO `felhasznalo` (`User_id`, `Felhasznalonev`, `Jelszo`, `Email`, `Szuletesi_ido`, `Telefon_szam`, `FelhasznaloProfilKep`, `createdAt`, `updatedAt`) VALUES
+(1, 'Gombamester21', 'Laskagomba', 'Gombamester01@gmail.com', '2000-01-01', '+36301234567', 'Gombamester21_profil_kép', '0000-00-00', '0000-00-00'),
+(2, 'Papsapka', 'Papsapkagomba21', 'Laskagomba01@gmail.com', '2013-11-01', '+36302547787', 'Papsapka_profil_kép', '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -77,16 +79,18 @@ CREATE TABLE `post_databse` (
   `Id` int(10) NOT NULL,
   `Postolo_neve` varchar(20) COLLATE utf8_hungarian_ci NOT NULL,
   `Kep_id` varchar(20) COLLATE utf8_hungarian_ci NOT NULL,
-  `Comment` varchar(255) COLLATE utf8_hungarian_ci NOT NULL
+  `Comment` varchar(255) COLLATE utf8_hungarian_ci NOT NULL,
+  `createdAt` date NOT NULL,
+  `updatedAt` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `post_databse`
 --
 
-INSERT INTO `post_databse` (`Id`, `Postolo_neve`, `Kep_id`, `Comment`) VALUES
-(1, 'Gombamester21', 'Csaszar_galoca', 'Ez egy védett gomba!'),
-(2, 'Papsapka', 'Kucsma_gomba', 'Ez egy finom gomba.');
+INSERT INTO `post_databse` (`Id`, `Postolo_neve`, `Kep_id`, `Comment`, `createdAt`, `updatedAt`) VALUES
+(1, 'Gombamester21', 'Csaszar_galoca', 'Ez egy védett gomba!', '0000-00-00', '0000-00-00'),
+(2, 'Papsapka', 'Kucsma_gomba', 'Ez egy finom gomba.', '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -102,18 +106,21 @@ CREATE TABLE `tervezet_turak` (
   `Varhato_erkezési_ido` datetime NOT NULL,
   `Erkezesi_hely` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
   `Utvolan_nehezsege` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
+  `Leiras` text COLLATE utf8_hungarian_ci NOT NULL,
   `Szervezo_elerhetosege` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
   `Tura_dija` int(11) NOT NULL DEFAULT 0,
-  `Elmarad_a_tura` tinyint(1) NOT NULL DEFAULT 0
+  `Elmarad_a_tura` tinyint(1) NOT NULL DEFAULT 0,
+  `createdAt` date NOT NULL,
+  `updatedAt` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `tervezet_turak`
 --
 
-INSERT INTO `tervezet_turak` (`Tura_id`, `Letrehozo`, `Indulas_ido`, `Indulas_hely`, `Varhato_erkezési_ido`, `Erkezesi_hely`, `Utvolan_nehezsege`, `Szervezo_elerhetosege`, `Tura_dija`, `Elmarad_a_tura`) VALUES
-(1, 'Szerkesztőség', '2023-10-01 08:00:00', 'Rudabányácska Smaragdvölgy', '2023-10-01 12:00:00', 'Rudabányácska Smaragdvölgy', 'Könnyű/Közepes/Nehéz', '+36301234567', 2000, 1),
-(2, 'Kucsmavadász', '2023-09-14 09:00:00', 'Sátoraljaújhely Aldi parkoló', '2023-09-14 12:00:00', 'Sátoraljaújhely Tesco parkoló', 'Könnyű', 'Szervezö@gmail.com', 0, 0);
+INSERT INTO `tervezet_turak` (`Tura_id`, `Letrehozo`, `Indulas_ido`, `Indulas_hely`, `Varhato_erkezési_ido`, `Erkezesi_hely`, `Utvolan_nehezsege`, `Leiras`, `Szervezo_elerhetosege`, `Tura_dija`, `Elmarad_a_tura`, `createdAt`, `updatedAt`) VALUES
+(1, 'Szerkesztőség', '2023-10-01 08:00:00', 'Rudabányácska Smaragdvölgy', '2023-10-01 12:00:00', 'Rudabányácska Smaragdvölgy', 'Könnyű/Közepes/Nehéz', 'A kirándulást: Dr. Nagy Béla biológus egyesületünk szakmai vezetője fogja vezetni. A vezetett útvonalon lehetőség szerint elhozzuk a holnapi reggelit. Találhatunk: \r\nCseh Kucsmát és Májusi Pereszkét is. \r\n', '+36301234567', 2000, 1, '0000-00-00', '0000-00-00'),
+(2, 'Kucsmavadász', '2023-09-14 09:00:00', 'Sátoraljaújhely Aldi parkoló', '2023-09-14 12:00:00', 'Sátoraljaújhely Tesco parkoló', 'Könnyű', 'Egy könnyed sétát szervezünk a csoport tagjainak mivel a múlt heti sikeres vadászat után reméljük, megint szerencsések leszünk.', 'Szervezo@gmail.com', 0, 0, '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
