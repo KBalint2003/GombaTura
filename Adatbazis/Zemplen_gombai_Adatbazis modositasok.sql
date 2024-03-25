@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Jan 31. 09:40
+-- Létrehozás ideje: 2023. Dec 13. 11:12
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -34,17 +34,16 @@ CREATE TABLE `belepes` (
   `Jelszo` varchar(20) COLLATE utf8_hungarian_ci NOT NULL,
   `Email` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
   `Születesi_ido` date NOT NULL,
-  `Telefon_szam` varchar(12) COLLATE utf8_hungarian_ci NOT NULL,
-  `FelhasznaloProflKep` varchar(50) COLLATE utf8_hungarian_ci NOT NULL
+  `Telefon_szam` varchar(12) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `belepes`
 --
 
-INSERT INTO `belepes` (`User_id`, `Felhasznalonev`, `Jelszo`, `Email`, `Születesi_ido`, `Telefon_szam`, `FelhasznaloProflKep`) VALUES
-(1, 'Gombamester21', 'Laskagomba', 'Gombamester01@gmail.com', '2000-01-01', '+36301234567', '0'),
-(2, 'Papsapka', 'Papsapkagomba21', 'Laskagomba01@gmail.com', '2013-11-01', '+36302547787', '0');
+INSERT INTO `belepes` (`User_id`, `Felhasznalonev`, `Jelszo`, `Email`, `Születesi_ido`, `Telefon_szam`) VALUES
+(1, 'Gombamester21', 'Laskagomba', 'Gombamester01@gmail.com', '2000-01-01', '+36301234567'),
+(2, 'Papsapka', 'Papsapkagomba21', 'Laskagomba01@gmail.com', '2013-11-01', '+36302547787');
 
 -- --------------------------------------------------------
 
@@ -114,35 +113,35 @@ INSERT INTO `tervezet_turak` (`Tura_id`, `Letrehozo`, `Indulas_ido`, `Indulas_he
 --
 
 CREATE TABLE `zemplen_eheto_gombai_gomba_adatbazis` (
-  `ID` int(10) NOT NULL,
-  `Latin_nev` varchar(35) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Magyar_nev` varchar(35) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Nemzetseg` varchar(20) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `ID` int(4) NOT NULL,
+  `Latin_nev` varchar(28) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Magyar_nev` varchar(27) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Nemzetseg` varchar(13) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `Etkezes_ertek` tinyint(1) DEFAULT NULL,
-  `Feltetel` varchar(50) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Leiras` varchar(160) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Feltetel` varchar(44) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Leiras` varchar(146) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `Bocskora` tinyint(1) DEFAULT NULL,
   `Galler` tinyint(1) DEFAULT NULL,
   `Szezon_eleje` tinyint(2) DEFAULT NULL,
   `Szezon_vege` tinyint(2) DEFAULT NULL,
-  `Novenyzet` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Termotest_tipus` varchar(30) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Termoretegtarto_tipusok` varchar(25) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Kalap_forma` varchar(30) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Kalap_felszin` varchar(35) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Kalap_perem` varchar(30) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Lemezallas` varchar(40) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Lemez_el` varchar(25) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Burok_maradvany` varchar(30) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Novenyzet` varchar(90) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Termotest_tipus` varchar(18) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Termoretegtarto_tipusok` varchar(18) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Kalap_forma` varchar(23) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Kalap_felszin` varchar(29) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Kalap_perem` varchar(24) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Lemezallas` varchar(33) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Lemez_el` varchar(19) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Burok_maradvany` varchar(23) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `Tonk_alak` varchar(35) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Tonk_felulet` varchar(35) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Hus` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Hus_elszinezodes` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Ize` varchar(20) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Tonk_felulet` varchar(28) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Hus` varchar(39) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Hus_elszinezodes` varchar(38) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Ize` varchar(13) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `Illata` varchar(20) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Ara_HUF` int(10) DEFAULT NULL,
-  `Kep_keszeto_neve` varchar(30) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Kep_neve` varchar(35) COLLATE utf8_hungarian_ci DEFAULT NULL
+  `Ara_HUF` int(6) DEFAULT NULL,
+  `Kep_keszeto_neve` varchar(20) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Kep_neve` varchar(27) COLLATE utf8_hungarian_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
@@ -198,7 +197,7 @@ INSERT INTO `zemplen_eheto_gombai_gomba_adatbazis` (`ID`, `Latin_nev`, `Magyar_n
 (46, 'Lycoperdon rupicola', 'Sziklai pöfeteg', 'Pöfeteg', 0, 'Fiatalon ehető', 'Andezit, gránit és homokkövön tenyésző meganám fedezhetjük fel.', 0, 0, 9, 11, 'Fenyveserdőkben mindig moha között', 'Pöfeteg', 'Zárt ternőtest', 'Kicsi körte', 'Tüskés', 'Nincs', 'Nincs', 'Nincs', 'Nincs', 'Egybenött', 'Tüskés', 'Szivacsos', 'Nincs', 'Nincs', 'Nincs', 0, 'Boros Lajos', 'Pofeteg_sziklai'),
 (47, 'Langermannia gigantea', 'Óriás pöfeteg', 'Pöfeteg', 0, 'Fiatalon ehető', 'Többé kevésbé gömbölyü, nagytermetű talajlakó gombafaj, fél méteres étmérőjűre és 10 kg-osra is megnőhet', 0, 0, 6, 10, 'Erdő,mező', 'Pöfeteg', 'Zárt ternőtest', 'Gömbölyű', 'Ráncos', 'Nincs', 'Nincs', 'Nincs', 'Nincs', 'Egybenött', 'Ráncosodó', 'Rugalmas', 'Nincs', 'Nincs', 'Nincs', 0, 'Szajkó Attila', 'Pofeteg_orias'),
 (48, 'Bovista plumbea', 'Szürke pöfeteg', 'Pöfeteg', 0, 'Fiatalon ehető', 'Fehér felületesima kissé táblásan felrepedező,felső burok tojáshéjszerűen leválik.', 0, 0, 3, 8, 'Legelök', 'Pöfeteg', 'Zárt ternőtest', 'Golyó', 'Sima', 'Nincs', 'Nincs', 'Nincs', 'Nincs', 'Egybenött', 'Sima', 'Szivacsos', 'Nincs', 'Nincs', 'Nincs', 0, 'Nagy Angéla', 'Pofeteg_szurke'),
-(49, 'Melanogaster variegatus', 'Vörösbarna kocsonyáspöfeteg', 'Pöfeteg', 0, NULL, 'Májustól szeptemberig, lomb-, ritkábban fenyőerdőben, kertekben; hazánkban nem ritka, mikorrhizás.', 0, 0, 5, 9, 'Lomb és fenyőerdőkben megtalálható', 'Pöfeteg', 'Zárt ternőtest', 'Hosszukásan Gombolyded ', 'Sima vagy eres', 'Nincs', 'Nincs', 'Nincs', 'Nincs', 'Egybenött', 'Sima vagy eres', 'Kocsonyas', 'Nincs', 'Alma vagy rum', 'Aromás', 0, 'Szajkó Attila', 'Konyonyaspofeteg_vorosbarna'),
+(49, 'Melanogaster variegatus', 'Vörösbarna kocsonyáspöfeteg', 'Pöfeteg', 0, '                                            ', 'Májustól szeptemberig, lomb-, ritkábban fenyőerdőben, kertekben; hazánkban nem ritka, mikorrhizás.', 0, 0, 5, 9, 'Lomb és fenyőerdőkben megtalálható', 'Pöfeteg', 'Zárt ternőtest', 'Hosszukásan Gombolyded ', 'Sima vagy eres', 'Nincs', 'Nincs', 'Nincs', 'Nincs', 'Egybenött', 'Sima vagy eres', 'Kocsonyas', 'Nincs', 'Alma vagy rum', 'Aromás', 0, 'Szajkó Attila', 'Konyonyaspofeteg_vorosbarna'),
 (50, 'Cantharellus cibarius', 'Sárga rókagomba', 'Rókagomba', 0, NULL, 'Lombos és fenyőerdőben, savanyú preferenciával, júniustól októberig terem, ritka faj.', 0, 0, 6, 11, 'Lombos és fenyőerdőben, savanyú preferenciával', 'Kalapos', 'Lemezes', 'Tölcséres', 'Begöngyölt', 'Hullámos ', 'Sűrű', 'Tönkig lefuto', 'Nincs', 'Lefelé vékonyodó', 'Vastag, tömör', 'Fehéres, a kalapbőr alatt világossárga,', 'Nincs', 'Csípős', 'Kajszibarack', 0, 'Molnár Renátó', 'Rokagomba_sarga'),
 (51, 'Cantharellus ferruginascens', 'Rozsdásodó rókagomba', 'Rókagomba', 0, NULL, 'Júniustól novemberig főleg savanyú talajú lomb- és fenyőerdőben növő gyakori faj.', 0, 0, 6, 11, 'Savanyú talajú lomb- és fenyőerdőben', 'Kalapos', 'Lemezes', 'Tölcséres', 'Selymesen sima', 'Hullámos', 'Sűrű', 'Sima', 'Nincs', 'Lefelé vékonyodó', 'Pikkelyes-bordás', 'Vékony', 'Nincs', 'Enyhe', 'Nincs', 0, 'Nagy Angéla', 'Rokagomba_rozsdasodo'),
 (52, 'Cantharellus friesii', 'Narancsvörös rókagomba', 'Rókagomba', 0, NULL, 'Nyártól őszig lomb- és olykor tűlevelű erdők avarján, gyakran kis csoportokban, seregesen vagy csomókban. Magyarországon nem ritka.', 0, 0, 6, 11, 'Lomb- és olykor tűlevelű erdők avarján, gyakran kis csoportokban, seregesen vagy csomókban', 'Kalapos', 'Lemezes', 'Tölcséres', 'Szélén hullámos', 'Hullámos', 'Tompa élűek és villásan elágazók', 'Sima', 'Nincs', 'Lefelé vékonyodó', 'Sima', 'Vékony', 'Nincs', 'Savanykás', 'Gyümölcsös', 0, 'Kőszeginé Tóth Judit', 'Rokagomba_narancsvoros'),
