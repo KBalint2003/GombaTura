@@ -3,11 +3,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const feketeLista = require('../models/feketeLista.model');
 
-
-function bejelentkezesGETController(req, res) {
-    res.status(200).send("Login Page");
-}
-
 async function bejelentkezesPOSTController(req, res) {
     let {email, jelszo} = req.body;
 
@@ -76,10 +71,9 @@ async function bejelentkezesPOSTController(req, res) {
     
 }
 
-
 async function kijelentkezesPOSTController(req, res) {
 
-    const token =  req.user.userId;
+    const token =  req.headers.authorization.split(' ')[1];
     console.log(token);
 
 
@@ -108,5 +102,5 @@ async function kijelentkezesPOSTController(req, res) {
 
 
 module.exports = {
-    bejelentkezesGETController,bejelentkezesPOSTController, kijelentkezesPOSTController
+    bejelentkezesPOSTController, kijelentkezesPOSTController
 }

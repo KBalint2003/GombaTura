@@ -1,9 +1,12 @@
+//Package-ek importálása
 const jwt = require('jsonwebtoken')
 const feketeLista = require('../models/feketeLista.model');
 
+//middleware elkészítése
 const tokenErvenyesites =async (req, res, next) => {
-    var token = req.headers.authorization;
+    var token = req.headers.authorization; //A header authorization részéből a token kiszedése
 
+  //Eshetőség: Nincs token
     if (!token) {
       res.status(401).json({
         error: true,
@@ -13,6 +16,7 @@ const tokenErvenyesites =async (req, res, next) => {
       return;
     };
       
+    //Ellenőrzés, hogy a token nem szerepel-e a feketelistában
     token = token.split(' ')[1]
     const listaEleme = await feketeLista.findOne({ where: { token: token } } )
 

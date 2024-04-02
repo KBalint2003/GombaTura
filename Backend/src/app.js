@@ -1,61 +1,64 @@
+//Package-ek importálása
 const express = require('express');
-const jwt = require("jsonwebtoken");
+
+const cors = require('cors');
+const { idozitettFLTorles } = require('./idozitettFeketeListaTorles')
+
+//Adatbázis kapcsolat importálása
 const sequelize = require('./adatbazisKapcsolat')
+
+//Modellek importálása
 const FelhasznaloModel = require('./models/felhasznalo.model');
 const TuraModel = require('./models/turak.model');
 const TuraraJelentkezes = require('./models/turaJelentkezes.model');
 const feketeLista = require('./models/feketeLista.model');
 const GombakModel = require('./models/gomba.model');
+const PosztModel = require('./models/Poszt.model');
+const KommentModel = require('./models/komment.model');
 
-const { idozitettFLTorles } = require('./idozitettFeketeListaTorles')
-const {Sequelize, DataTypes}=require("sequelize");
+//Táblák közötti kapcsolatok
 
-FelhasznaloModel.hasMany(TuraModel, {
-  foreignKey: 'Letrehozo',
-  as: 'TuraLetrehozasok'
-});
-TuraModel.belongsTo(FelhasznaloModel, {
-  foreignKey: 'Letrehozo',
-  as: 'LetrehozoNeve'
-});
+FelhasznaloModel.hasMany(PosztModel, {foreignKey: "Posztolo",as: "PosztLetrehozasok"})
+PosztModel.belongsTo(FelhasznaloModel, {foreignKey:"Posztolo", as: "PosztoloNeve"})
 
+PosztModel.hasMany(KommentModel, {foreignKey: "Poszt"});
+KommentModel.belongsTo(PosztModel, {foreignKey:"Poszt", as: "EredetiPoszt"})
+
+FelhasznaloModel.hasMany(KommentModel, {foreignKey: "Kommentelo",as: "KommentLetrehozasok"})
+KommentModel.belongsTo(FelhasznaloModel, {foreignKey:"Kommentelo", as: "KommenteloNeve"})
+
+FelhasznaloModel.hasMany(TuraModel, { foreignKey: 'Letrehozo', as: 'TuraLetrehozasok'});
+TuraModel.belongsTo(FelhasznaloModel, { foreignKey: 'Letrehozo', as: 'LetrehozoNeve'});
+ 
 TuraModel.belongsToMany(FelhasznaloModel, { through: TuraraJelentkezes, as: 'JelentkezoId'});
 FelhasznaloModel.belongsToMany(TuraModel, { through: TuraraJelentkezes, as: 'JelentkezettTuraId'});
 
+//route-ok importálása
 const regisztracioRouter = require("./routes/regisztracio.route");
 const bejelentkezesRouter = require("./routes/bejelentkezes.route");
 const fooldalRouter = require('./routes/fooldal.routes');
 const turakRouter = require('./routes/turak.route');
 const profilRouter = require('./routes/profil.route');
+const gombaRouter = require('./routes/gomba.route');
+const forumRouter = require('./routes/forum.route');
+
 //Az express Szerver konfigurálása
 const app = express();
-const cors = require('cors');
-const tokenErvenyesites = require('./middlewares/AuthMiddleware');
-const gombaRouter = require('./routes/gomba.route');
-
-
-//const passport = require('passport');
-//const setupPassport = require('./passport-config');
-
 app.use(express.json());
+
 app.use(cors({ origin: 'http://localhost:4200', credentials: true }));
-//setupPassport(passport)
-//app.use(passport.initialize());
-//app.use(passport.session());
 const PORT = 3000;
 
-
+//route-ok definiálása
 app.use("/", fooldalRouter);
 app.use("/",regisztracioRouter);
 app.use("/",bejelentkezesRouter);
 app.use("/", turakRouter);
 app.use("/", profilRouter);
 app.use("/", gombaRouter);
+app.use("/", forumRouter);
 
-
-
-//kapcsolat function, segítségével csatlakoztatni tudjuk az adatbázist a backend szerverrel, a backend csak akkor indul el, ha a bach-db közötti kapcsolat sikeres.
-
+//Szerver indítása és az adatbázissal való kapcsolatfelvétel. Ha sikertelen a kapcsolat létrehozása az adatbázissal, a szerver nem indul el. Ha sikeres a kapcsolat, az időzített Feketelista törlés is elindul.
 sequelize.authenticate().then(() => {
   console.log('Sikeres kapcsolat az adatbázissal!');
 
@@ -64,6 +67,8 @@ sequelize.authenticate().then(() => {
   sequelize.modelManager.addModel(TuraraJelentkezes);
   sequelize.modelManager.addModel(feketeLista);
   sequelize.modelManager.addModel(GombakModel);
+  sequelize.modelManager.addModel(PosztModel);
+  sequelize.modelManager.addModel(KommentModel);
 
   sequelize.sync({}).then(() =>{
     app.listen(PORT, () => {

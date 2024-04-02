@@ -1,19 +1,16 @@
-const {DataTypes}=require("sequelize");
-
+//db importálása importálása
 const sequelize=require("../adatbazisKapcsolat");
-const Tura = require("./turak.model");
-const Felhasznalo = require("./felhasznalo.model");
 
+//Model (kapcsolótábla) definiálása
 const TuraraJelentkezes=sequelize.define("TuraraJelentkezesTabla",
 {
     
 },
 
-    {
-        timestamps: false,
-    });
+{
+    timestamps: false,
+});
 
     TuraraJelentkezes.removeAttribute('id');
 
- 
-;  module.exports=TuraraJelentkezes
+module.exports=TuraraJelentkezes

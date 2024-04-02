@@ -411,7 +411,7 @@ async function turakPUTController(req, res) {
             return;
         }
     
-        if (Indulas_ido <= Date.now()) {
+        if (new Date(Indulas_ido) <= Date.now()) {
             res.status(400).json({
                 error: true,
                 status: 400,

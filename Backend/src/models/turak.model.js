@@ -1,5 +1,8 @@
-const {Sequelize, DataTypes}=require("sequelize");
+//Package és db importálása
+const { DataTypes }=require("sequelize");
 const sequelize=require('../adatbazisKapcsolat');
+
+//Model definiálása
 const Tura=sequelize.define("Turak",{
 
     Tura_id:{

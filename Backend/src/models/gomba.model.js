@@ -1,6 +1,8 @@
+//Package és db importálása
 const {DataTypes}=require("sequelize");
 const sequelize = require("../adatbazisKapcsolat");
 
+//Model definiálása
 const Gombak=sequelize.define("Gombak",{
 
     Gomba_Id:{

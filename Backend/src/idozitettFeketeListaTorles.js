@@ -1,7 +1,9 @@
+//Package-k importálása
 const cron = require('node-cron');
 const feketeLista = require('./models/feketeLista.model');
 const jwt = require('jsonwebtoken');
 
+//node-cron beállítása. Óránként ellenőrzi a feketelistát
 var idozitettFLTorles= cron.schedule('0 * * * *', async() => {
     try {
         
@@ -11,13 +13,14 @@ var idozitettFLTorles= cron.schedule('0 * * * *', async() => {
             return;
         }
 
+        //minden egyes letárolt token ellenőrzése. Ha a lejárati ideje kisebb, mint a jelenlegi dátum, vagyis a token lejárt így pedig használhatatlan, törli a táblából. 
         for(egyDbListasToken of osszesFeketeListasToken) {
 
             const token = egyDbListasToken.token;
 
             try {
                 
-                const decodedToken = jwt.verify(token, 'titkositokulcs')
+                const decodedToken = jwt.decode(token)
 
                 if(decodedToken.exp *1000 < Date.now()) {
                    await egyDbListasToken.destroy();

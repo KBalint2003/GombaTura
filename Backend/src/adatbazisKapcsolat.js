@@ -1,5 +1,7 @@
+//sequelize importálása
 const { Sequelize } = require('sequelize');
 
+//Kapcsolat definiálása a sequelize-nak
 const sequelize = new Sequelize('gombaproba','root','',{
     host: 'localhost',
     dialect: 'mariadb',

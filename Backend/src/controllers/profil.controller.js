@@ -1,11 +1,11 @@
 const Felhasznalo = require("../models/felhasznalo.model");
+const TuraraJelentkezes = require("../models/turaJelentkezes.model");
 const Tura = require("../models/turak.model");
 
 async function felhasznaloGETController(req, res) {
   
     try{
     const userId = req.user.userId;
-    console.log("Userid:" + req.user.userId)
     const felhasznalo = await Felhasznalo.findByPk(userId);
 
         if (felhasznalo.Szuletesi_ido === null) {
@@ -64,18 +64,16 @@ async function felhasznaloPATCHController(req, res) {
 
       //if rowsAffected[0] === 1 Van változás
       if (rowsAffected[0] === 1) {
+
           res.status(200).json({
           success: true,
-          Szuletesi_ido: felhasznalo.Szuletesi_ido,
           status: 200,
           message: `Felhasználó adatai frissítve.`,
-          id: User_id,
         });
       } else {
           // if rowsAffected[0] !== 1 Nincs változás az elküldött adatok és a túrának a letárolt adatai között.
 
         res.status(200).json({
-          Szuletesi_ido: felhasznalo.Szuletesi_ido,
           success: false,
           status: 200,
           message: `Nincs változás az elküldött adatok és a Felhasználó letárolt adatai között.`,
@@ -84,6 +82,7 @@ async function felhasznaloPATCHController(req, res) {
     })
     .catch((err) => {
         console.log(err);
+        
         res.status(500).json({
         success: false,
         status: 500,
@@ -107,7 +106,9 @@ async function felhasznaloDELETEController(req, res) {
         return;
         }
 
-        await Tura.update({Elmarad_a_tura: true}, {where: {Letrehozo: userId}})
+        await Tura.update({Elmarad_a_tura: true}, {where: {Letrehozo: userId}});
+
+        await TuraraJelentkezes.destroy({where: {FelhasznalokUserId: userId}})
 
         await Felhasznalo.destroy({
             where: {
