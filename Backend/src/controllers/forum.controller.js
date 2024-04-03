@@ -118,7 +118,8 @@ async function posztKommentekkelGETController(req, res) {
 
 async function posztPUTController(req, res) {
 
-    const {Cim, Szoveg} = req.body
+    console.log(req.body.Poszt)
+    const {Cim, Szoveg} = req.body.ujPoszt
     const Posztolo = req.user.userId
 
     if (Cim === "" || Cim ===  undefined) {

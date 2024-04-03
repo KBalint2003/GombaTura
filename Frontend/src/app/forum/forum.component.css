@@ -11,15 +11,21 @@
 
 .forumFelhasznaloNev {
   padding: 2%;
-  border-bottom: 2px solid black;
+  margin-left: 3%;
   margin-top: 1.5%;
+  font-size: 20px;
+  font-weight: bolder;
 }
 
 /* A bejegyzés témája */
 
-.forumKerdes {
+.forumCim {
+  border-top: 2px solid black;
   margin-top: 1.5%;
+  padding: 1%;
   text-align: center;
+  text-decoration: underline;
+  color: blue;
 }
 
 /* A reakciógombok a bejegyzéshez */
@@ -40,5 +46,60 @@
   width: 50px;
   position: sticky;
 }
+
+.lenyilo {
+  width: 750px;
+  background-color: white;
+  align-self: center;
+}
+
+.PosztLenyilo {
+  width: 750px;
+  height: 400px;
+  background-color: white;
+  align-self: center;
+}
+
+.bezaroGomb {
+  color: red;
+  font-weight: bold;
+}
+
+.PosztInput{
+  border: 1px solid black;
+  margin-bottom: 8px;
+  width: 70%;
+}
+
+.PosztBody {
+  width: 5px;
+  text-align: justify;
+}
+
+.PosztLetrehozasAdatLetrehozasAdat {
+  margin-bottom: 11px;
+}
+
+.mentesGomb {
+  background-color: #198754;
+  color: white;
+}
+
+input {
+  margin-left: 1%;
+}
+
+.tavtarto {
+  height: 65px;
+  width: 750px;
+  background-color: white;
+  align-self: center;
+}
+
+.alert {
+  text-align: center;
+  font-weight: bold;
+}
+
 
 

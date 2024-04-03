@@ -58,7 +58,6 @@ export class TuraComponent implements  OnInit{
   jelentkezettTuraJeloles = false
   jelentkezettTuraID: string[] = []
   elmarad = false
-  ujTuraId = ''
 
 
   turaLetrehozasModal(turaLetrehozas: TemplateRef<any>) {
