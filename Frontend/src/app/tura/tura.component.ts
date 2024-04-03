@@ -102,6 +102,8 @@ export class TuraComponent implements  OnInit{
     if (this.sajatTuraJeloles) {
       return this.http.get<Turak>(this.turaservice.turaLekeresRoute,{headers}).subscribe((valasz: any) => {
         this.turak = valasz.turak
+      }, error => {
+        this.turaservice.turahiba = "Ön még nem hozott létre egy túrát sem."
       })
     }
     return this.http.get<Turak>(this.turaservice.osszesturaLekeresRoute, {headers}).subscribe((valasz:any) => {
@@ -117,12 +119,14 @@ export class TuraComponent implements  OnInit{
     this.jelentkezettTuraJeloles = this.JelentkezettTura.nativeElement.checked
     if (this.jelentkezettTuraJeloles) {
       return this.http.get<Turak>(this.turaservice.jelentkezettTuraLekeresRoute, {headers}).subscribe((valasz: any) => {
-        this.turak = valasz.formazottTurak
+        this.turak = valasz.turak
+        console.log(valasz.turak)
       }, error => {
         this.turaservice.turahiba = "Ön még nem jelentkezett egy túrára sem!"
       })
     }
-      return this.http.get<Turak>(this.turaservice.osszesturaLekeresRoute, {headers}).subscribe((valasz: any) => {
+    return this.http.get<Turak>(this.turaservice.osszesturaLekeresRoute, {headers}).subscribe((valasz: any) => {
+      this.turak = valasz.turak
     })
   }
 

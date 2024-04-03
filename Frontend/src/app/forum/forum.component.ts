@@ -2,9 +2,10 @@ import {Component, inject, OnInit, TemplateRef} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
-import {Poszt} from "./poszt";
+import {PosztKommenttel, Poszt, Komment} from "./forum";
 import {ForumService} from "../forum.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-forum',
@@ -19,7 +20,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ForumComponent implements OnInit{
 
-  constructor(protected forumService: ForumService, protected http: HttpClient) { }
+  constructor(protected forumService: ForumService, protected http: HttpClient, protected authService: AuthService) { }
 
   private modalService = inject(NgbModal);
 
@@ -31,16 +32,47 @@ export class ForumComponent implements OnInit{
   }
   Posztok : Poszt[] = []
 
+  ujKomment: Komment = {
+    Komment_id: '',
+    Komment: '',
+    Kommentelo: ''
+  }
+
+  Kommentek : Komment[] = []
+
+  ujPosztKommenttel: PosztKommenttel = {
+    Poszt_id: '',
+    Cim : '',
+    Szoveg: '',
+    PosztoloNeve: '',
+    Komment: '',
+    Kommentelo: ''
+  }
+
+  PosztokKommenttel : PosztKommenttel[] = []
+
   ngOnInit() {
 
     return this.http.get<Poszt>(this.forumService.posztLekeresRoute).subscribe((valasz: any) => {
       this.Posztok = valasz.posztok
     })
-
   }
 
-  PosztMegniytasModal(PosztMegnyitas: TemplateRef<any>) {
+
+
+  PosztMegniytasModal(PosztMegnyitas: TemplateRef<any>, Poszt: string) {
     this.modalService.open(PosztMegnyitas, {ariaLabelledBy: 'PosztMegnyitasModal'})
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token,
+      'posztId': Poszt
+    });
+    return this.http.get<PosztKommenttel>(this.forumService.posztKommenttelLekeresRoute, {headers}).subscribe((valasz : any) => {
+      this.Posztok = valasz.poszt
+      console.log(this.Posztok)
+      this.Kommentek = valasz.kommentek
+      console.log(this.Kommentek)
+    })
   }
 
   PosztLetrehozasModal(PosztLetrehozas: TemplateRef<any>) {

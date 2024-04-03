@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import {AuthService} from "./auth.service";
-import {Poszt} from "./forum/poszt";
+import {Komment, Poszt} from "./forum/forum";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,19 @@ export class ForumService {
     }, error => {
       console.log(ujPoszt.Cim)
       console.log(ujPoszt.Szoveg)
+    })
+  }
+
+  kommentLetrehozas(ujKomment: Komment, Poszt: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
+    });
+    return this.http.put<Komment>(this.kommentLetrehozasRoute, {ujKomment, Poszt}, {headers}).subscribe((valasz: any) => {
+
+    }, error => {
+      console.log(ujKomment)
+      console.log(Poszt)
     })
   }
 

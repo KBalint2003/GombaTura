@@ -35,7 +35,14 @@ export class TuraService {
           window.location.reload()
       }
     }, error => {
-      if (error.error.type === 'Nincsnev') {
+      console.log(error.error.type)
+      if (error.error.type === 'NincsSzulEv') {
+        this.turahiba = 'NincsSzulEv'
+      }
+      else if (error.error.type === 'Nem18') {
+        this.turahiba = 'Nem18'
+      }
+      else if (error.error.type === 'Nincsnev') {
         this.turahiba = 'Nincsnev'
       }
       else if (error.error.type === 'NincsIndIdo') {

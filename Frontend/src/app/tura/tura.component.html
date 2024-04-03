@@ -8,6 +8,7 @@
 </div>
 <div class="alertbox">
   <p class="alert alert-danger" *ngIf="this.turaservice.turahiba.length > 2 && JelentkezettTura.checked">Ön még nem jelentkezett egy túrára sem!</p>
+  <p class="alert alert-danger" *ngIf="this.turaservice.turahiba == 'Ön még nem hozott létre egy túrát sem.' && SajatTura.checked">Ön még nem hozott létre egy túrát sem!</p>
 </div>
   <div class="container tura" *ngFor="let tura of turak">
     <!-- A túra megnevezése -->
@@ -15,18 +16,18 @@
       <p style="display: none">{{tura.Tura_id}}</p>
       <p class="turaNeve">Túra neve: {{tura.Tura_neve}}</p>
       <button class="jelentkezesGomb btn btn-success"
-              *ngIf="(tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev)"
+              *ngIf="(tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev) && (localStorage.getItem('access'))"
               (click)="jelentkezesGomb(tura.Tura_id)">Jelentkezés</button>
 
       <button class="jelentkezesGomb btn btn-danger"
-              *ngIf="(tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev)"
+              *ngIf="(tura.Felhasznalonev !=  this.felhasznalo.felhasznalonev) &&  (localStorage.getItem('access'))"
                (click)="jelentkezesTorlesGomb(tura.Tura_id)">Jelentkezés törlése</button>
 
       <button class="jelentkezesGomb btn btn-success"
-              *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="turaModositasModal(turaModositas, tura.Tura_id)">Módosítás</button>
+              *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev && (localStorage.getItem('access'))" (click)="turaModositasModal(turaModositas, tura.Tura_id)">Módosítás</button>
 
       <button class="torlesGomb btn btn-danger"
-              *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev" (click)="torlesgomb(tura.Tura_id)">Törlés</button>
+              *ngIf="tura.Felhasznalonev ==  this.felhasznalo.felhasznalonev && (localStorage.getItem('access'))" (click)="torlesgomb(tura.Tura_id)">Törlés</button>
     </div>
     <!-- túra adatai -->
     <div class="row turaAdat">
@@ -36,7 +37,8 @@
         <p>Érkezési pont: {{tura.Erkezesi_hely}}</p>
         <p>Szervező elérhetősége: {{tura.Szervezo_elerhetosege}}</p>
         <br>
-        <p style="text-align: justify">Leírás: {{tura.Leiras}}</p>
+        <p>Leírás:</p>
+        <p style="text-align: justify">{{tura.Leiras}}</p>
       </div>
       <div class="col-md">
         <p>Túra nehézsége: {{tura.Utvonal_nehezsege}}</p>
@@ -102,6 +104,12 @@
   <div class="tavtarto">
     <p class="alert alert-success" *ngIf="turaservice.turahiba === 'Siker'">
       A túra létrehozása sikeresen megtörtént
+    </p>
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'NincsSzulEv'">
+      Kérem, először adja meg a születési dátumát a Profil menüben.
+    </p>
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'Nem18'">
+      Az ön életkora nem felel meg a követelményeknek (18+)
     </p>
     <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'Nincsnev'">
       A túra nevének megadása kötelező!

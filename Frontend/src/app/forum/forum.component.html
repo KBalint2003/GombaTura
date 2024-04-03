@@ -2,22 +2,27 @@
 <div class="forum" *ngFor="let poszt of Posztok">
   <!-- Bejegyzés létrehozójának neve -->
   <p class="forumFelhasznaloNev">{{poszt.Cim}}</p>
-  <p class="forumCim" (click)="PosztMegniytasModal(PosztMegnyitas)"><button>Részletek</button></p>
-  <ng-template #PosztMegnyitas let-modal class="lenyilo">
-    <div class="modal-body centered PosztLenyilo">
+  <p class="forumCim" (click)="PosztMegniytasModal(PosztMegnyitas, poszt.Poszt_id)"><button>Részletek</button></p>
+  <ng-template #PosztMegnyitas let-modal class="megnyitasModal">
+    <div class="modal-header centered megnyitasModal">
+      <p class="posztModalCím">{{poszt.Cim}}</p>
+      <p class="posztModalCím">{{poszt.PosztoloNeve}}</p>
+    </div>
+    <div class="modal-body centered megnyitasModal">
       <div class="container">
         <div class="row">
-          <div class="col-md">
-            <p>Poszt neve:</p>
-            <p>Poszt témája:</p>
-          </div>
-          <div class="col-md">
-            <p>{{poszt.Cim}}</p>
-            <br>
-            <p class="PosztBody">{{poszt.Szoveg}}</p>
+          <div>
+            <p class="postModalSzoveg">{{poszt.Szoveg}}</p>
           </div>
         </div>
       </div>
+    </div>
+    <div class="modal-footer d-flex justify-content-start megnyitasModal">
+     <div class="modal-footer-container">
+       <p>Hozzászólások</p>
+       <input type="text" name="komment" id="komment" placeholder="Írjon hozzászólást"
+              [(ngModel)]="ujKomment.Komment"  (keydown.enter)="forumService.kommentLetrehozas(ujKomment, poszt.Poszt_id)">
+     </div>
     </div>
   </ng-template>
 </div>
@@ -28,20 +33,20 @@
 <button class="forumHozzaadas"><img src="/assets/img/add.png" (click)="PosztLetrehozasModal(PosztLetrehozas)"></button>
 
 
-<ng-template #PosztLetrehozas let-modal class="lenyilo">
-  <div class="modal-header centered lenyilo">
-    <h4 class="modal-title" id="PosztLetrehozasModal">Új túra létrehozása</h4>
+<ng-template #PosztLetrehozas let-modal class="letrehozasModal">
+  <div class="modal-header centered letrehozasModal">
+    <h4 class="modal-title" id="PosztLetrehozasModal">Új poszt létrehozása</h4>
     <button type="button" class="bezaroGomb"  (click)="modal.dismiss('Cross click')">X</button>
   </div>
   <div class="tavtarto">
 
   </div>
-  <div class="modal-body lenyilo">
+  <div class="modal-body letrehozasModal">
     <div class="container">
       <div class="row">
         <div class="col-md">
-          <p class="PosztLetrehozasAdatLetrehozasAdat"> Poszt címe:</p>
-          <p class="PosztLetrehozasAdatLetrehozasAdat">Poszt szövege:</p>
+          <p class="PosztLetrehozasAdat"> Forum címe:</p>
+          <p class="PosztLetrehozasAdat">Forum szövege:</p>
 <!--          <p class="turaLetrehozasAdat">Túra neve:  </p>-->
 <!--          <p class="turaLetrehozasAdat">Indulási idő:  (év, hónap, nap, óra, perc)</p>-->
 <!--          <p class="turaLetrehozasAdat">Indulási pont: </p>-->
@@ -54,7 +59,7 @@
       </div>
     </div>
   </div>
-  <div class="modal-footer lenyilo">
+  <div class="modal-footer letrehozasModal">
     <button type="button" class="btn btn-outline-dark mentesGomb" (click)="forumService.posztLetrehozas(ujPoszt)" >Mentés</button>
   </div>
 </ng-template>

@@ -1,5 +1,4 @@
 /* A fórum kártyája */
-
 .forum {
   background-color: #FBF9F1;
   border: 2px  solid black;
@@ -10,9 +9,9 @@
 /* A téma létrehozójának a neve */
 
 .forumFelhasznaloNev {
-  padding: 2%;
+  padding: 1%;
   margin-left: 3%;
-  margin-top: 1.5%;
+  margin-top: 1%;
   font-size: 20px;
   font-weight: bolder;
 }
@@ -28,12 +27,6 @@
   color: blue;
 }
 
-/* A reakciógombok a bejegyzéshez */
-
-.like, .dislike{
-  margin-left: 10px;
-  width: 30px;
-}
 
 /* Új bejegyzés létrehozása */
 
@@ -47,15 +40,14 @@
   position: sticky;
 }
 
-.lenyilo {
+.letrehozasModal {
   width: 750px;
   background-color: white;
   align-self: center;
 }
 
-.PosztLenyilo {
+.megnyitasModal {
   width: 750px;
-  height: 400px;
   background-color: white;
   align-self: center;
 }
@@ -76,7 +68,7 @@
   text-align: justify;
 }
 
-.PosztLetrehozasAdatLetrehozasAdat {
+.PosztLetrehozasAdat {
   margin-bottom: 11px;
 }
 
@@ -101,5 +93,20 @@ input {
   font-weight: bold;
 }
 
+.postModalSzoveg {
+  margin-left: 1%;
+  text-align: justify;
+}
 
+.posztModalCím {
+  font-size: 24px;
+  font-weight: bolder;
+  margin: 1% 0 0 2%;
+}
+
+#komment {
+  margin-top: 3%;
+  width: 700px;
+  padding-left: 3px;
+}
 

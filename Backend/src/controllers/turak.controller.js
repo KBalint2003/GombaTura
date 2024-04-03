@@ -393,7 +393,7 @@ async function turakPUTController(req, res) {
         if (felhasznalo.Szuletesi_ido === null) {
             res.status(400).json({
                 error: true,
-                type: "nincsSzulEv",
+                type: "NincsSzulEv",
                 status: 400,
                 message: "Nem lett életkor megadva! Túrát csak olyan hozhat létre, aki betöltötte a 18. életévét!"
             });
@@ -406,6 +406,7 @@ async function turakPUTController(req, res) {
             res.status(403).json({
                 error: true,
                 status: 403,
+                type: "Nem18",
                 message: "Legalább 18 évesnek kell lenni, hogy túrát hozhass létre!"
             })
             return;
@@ -659,7 +660,7 @@ async function jelentkezesDELETEController(req, res) {
     try{
         const userId = req.user.userId;
 
-        const turaId = req.body.Tura_id;
+        const turaId = req.headers.tura_id;
         
         if (userId === undefined || turaId === undefined) {
             res.status(400).json({

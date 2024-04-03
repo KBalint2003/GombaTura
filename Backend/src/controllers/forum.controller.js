@@ -30,6 +30,7 @@ async function posztokGETController(req, res) {
         const formazottPosztok = posztok.map(poszt =>({
             Poszt_id: poszt.Poszt_id,
             Cim: poszt.Cim,
+            Szoveg: poszt.Szoveg,
             PosztoloNeve: poszt["PosztoloNeve.Felhasznalonev"],
 
         }));
@@ -51,7 +52,9 @@ async function posztokGETController(req, res) {
 async function posztKommentekkelGETController(req, res) {
     try{
 
-        const posztId = req.body.posztId;
+        console.log(req.headers)
+
+        const posztId = req.headers.posztid;
 
         const kommentek = await KommentModel.findAll({
             where: {Poszt: posztId},
@@ -249,8 +252,8 @@ async function kommentPUTController(req, res) {
 try {
 
     const Kommentelo = req.user.userId;
-    const Poszt = req.body.posztId;
-    const {Komment} = req.body;
+    const Poszt = req.body.Poszt;
+    const {Komment} = req.body.ujKomment;
 
     if (Komment === "") {
         res.status(400).json({
