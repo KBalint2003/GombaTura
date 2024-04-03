@@ -30,7 +30,6 @@ async function posztokGETController(req, res) {
         const formazottPosztok = posztok.map(poszt =>({
             Poszt_id: poszt.Poszt_id,
             Cim: poszt.Cim,
-            Szoveg: poszt.Szoveg,
             PosztoloNeve: poszt["PosztoloNeve.Felhasznalonev"],
 
         }));
@@ -132,7 +131,7 @@ async function posztPUTController(req, res) {
         return;
     }
 
-    if (Szoveg === "" || Cim ===  undefined) {
+    if (Szoveg === "" || Szoveg ===  undefined) {
         res.status(400).json({
             error:true,
             status: 400,

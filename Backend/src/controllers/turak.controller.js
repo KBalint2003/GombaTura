@@ -256,7 +256,6 @@ async function turakJelentkezettGETController(req, res) {
         const turak = await Turak.findAll({
               
             where: {
-                Letrehozo:  id ,
                 Indulas_ido: {
                     [Op.ne]: new Date().toLocaleDateString(),
                 }
@@ -337,7 +336,28 @@ async function turakPOSTController(req, res) {
             })
             return;
         }
+        const felhasznalo = await Felhasznalo.findByPk(Letrehozo);
 
+        if (felhasznalo.Szuletesi_ido === null) {
+            res.status(400).json({
+                error: true,
+                type: "nincsSzulEv",
+                status: 400,
+                message: "Nem lett életkor megadva! Túrára csak olyan jelentkezhet, aki betöltötte a 18. életévét!"
+            });
+            return;
+        }
+
+        const tizennyolcE = ((new Date())-(new Date(felhasznalo.Szuletesi_ido)))/1000/60/60/24/365.25
+
+        if (tizennyolcE < 18) {
+            res.status(403).json({
+                error: true,
+                status: 403,
+                message: "Legalább 18 évesnek kell lenni, hogy túrára tudjon jelentkezni!"
+            })
+            return;
+        }
             osszekapcsolas = await TuraraJelentkezesTabla.build({
                 TurakTuraId: turaId,
                 FelhasznalokUserId: felhasznaloId
@@ -524,6 +544,77 @@ async function turakPUTController(req, res) {
 async function turakPATCHController(req, res) {
     
     var Tura_id = req.headers.turaid;
+
+    const letaroltTura = await Turak.findByPk(Tura_id);
+
+    if (req.body.ujTura.Tura_neve === "") {
+        req.body.ujTura.Tura_neve = letaroltTura.Tura_neve;
+    }
+
+    if (req.body.ujTura.Indulas_ido === "") {
+        req.body.ujTura.Indulas_ido = letaroltTura.Indulas_ido;
+    }
+
+    if (req.body.ujTura.Indulas_hely === "") {
+        req.body.ujTura.Indulas_hely = letaroltTura.Indulas_hely;
+    }
+
+    if (req.body.ujTura.Tura_neve === "") {
+        req.body.ujTura.Tura_neve = letaroltTura.Tura_neve;
+    }
+
+    if (req.body.ujTura.Tura_neve === "") {
+        req.body.ujTura.Tura_neve = letaroltTura.Tura_neve;
+    }
+
+    if (req.body.ujTura.Erkezesi_ido === "") {
+        req.body.ujTura.Erkezesi_ido = letaroltTura.Varhato_erkezesi_ido;
+    }
+
+    if (req.body.ujTura.Erkezesi_hely === "") {
+        req.body.ujTura.Erkezesi_hely = letaroltTura.Erkezesi_hely;
+    }
+
+    if (req.body.ujTura.Utvonal_nehezsege === "") {
+        req.body.ujTura.Utvonal_nehezsege = letaroltTura.Utvonal_nehezsege;
+    }
+
+    if (req.body.ujTura.Szervezo_elerhetosege === "") {
+        req.body.ujTura.Szervezo_elerhetosege = letaroltTura.Szervezo_elerhetosege;
+    }
+
+    if (req.body.ujTura.Tura_dija === "") {
+        req.body.ujTura.Tura_dija = letaroltTura.Tura_dija;
+    }
+
+    if (req.body.ujTura.Elmarad_a_tura === "") {
+        req.body.ujTura.Elmarad_a_tura = letaroltTura.Elmarad_a_tura;
+    }
+
+    if (req.body.ujTura.Leiras === "") {
+        req.body.ujTura.Leiras = letaroltTura.Leiras;
+    }
+
+    if (new Date(req.body.ujTura.Indulas_ido) <= Date.now()) {
+        res.status(400).json({
+            error: true,
+            status: 400,
+            type: "RosszIndIdo",
+            message: "Az indulási idő nem lehet kisebb vagy egyenlő a jelenlegi idővel!"
+        })
+        return;
+    }
+
+    if (req.body.ujTura.Erkezesi_ido <= req.body.ujTura.Indulas_ido) {
+        res.status(400).json({
+            error: true,
+            status: 400,
+            type: "RosszErkIdo",
+            message: "Az érkezési idő nem lehet kisebb vagy egyenlő az indulási idővel!"
+        })
+        return;
+    }
+
     Turak.update(req.body.ujTura, { where: { Tura_id }, individualHooks: true })
     .then((rowsAffected) => {
       //Nem található túra ilyen id-val
@@ -585,8 +676,6 @@ async function jelentkezesDELETEController(req, res) {
                 FelhasznalokUserId: userId
             }
         })
-
-        console.log(vanEJelentkezes);
 
         if (!vanEJelentkezes[0]) {
             res.status(404).json({

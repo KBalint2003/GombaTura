@@ -9,6 +9,7 @@ const turakRouter = express.Router();
 //Route-ok létrehozása, ahol szükséges, a route elérési útja és a megfelelő controller közé az AuthMiddleware elhelyezése
 turakRouter.get("/turak/osszes", turakController.osszesTurakGETController);
 turakRouter.get("/turak/jelentkezett",AuthMiddleware, turakController.turakJelentkezettGETController);
+turakRouter.delete("/turak/jelentkezett",AuthMiddleware, turakController.jelentkezesDELETEController);
 turakRouter.get("/turak",AuthMiddleware , turakController.turakGETController);
 turakRouter.put("/turak",AuthMiddleware , turakController.turakPUTController);
 turakRouter.post("/turak",AuthMiddleware , turakController.turakPOSTController);
