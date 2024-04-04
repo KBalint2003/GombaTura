@@ -145,11 +145,7 @@ export class TuraComponent implements  OnInit{
       'Authorization': 'Bearer ' + this.authService.tokenIDjson.token,
       'turaid': Tura_id
     });
-    for (let i = 0; i < this.turak.length; i++) {
-      if (Tura_id == this.turak[i].Tura_id) {
-        this.elmarad = true
-      }
-    }
+
     return this.http.patch(this.turaservice.turaSzerkesztesRoute, {"ujTura": {"Elmarad_a_tura": true}}, {headers}).subscribe((valasz: any) => {
       if (valasz.success) {
         window.location.reload()

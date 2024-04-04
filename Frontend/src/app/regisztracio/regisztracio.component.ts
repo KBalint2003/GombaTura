@@ -1,9 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {signupObj} from "../felhasznaloAdatObj";
 import { AuthService } from "../auth.service";
 import {NgIf} from "@angular/common";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-regisztracio',
@@ -26,9 +25,16 @@ export class RegisztracioComponent {
     jelszoUjra: ''
   };
 
+  szabalyCheck = false
+
   constructor(protected regisztracioService: AuthService) {}
   protected readonly open = open;
 
+  @ViewChild('Szabaly') Szabaly: any;
+
+  onCheckBoxSzabalyChange() {
+    this.szabalyCheck = this.Szabaly.nativeElement.checked
+  }
 
   // A regisztracio.service.ts fájlban deklarált meródus itt kerül meghívásra.
   regisztracioGomb() {

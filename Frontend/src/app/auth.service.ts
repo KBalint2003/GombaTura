@@ -112,7 +112,6 @@ export class AuthService {
     });
     return this.http.post(this.kijelentkezesRoute, {}, { headers }).subscribe((valasz: any) => {
       localStorage.removeItem('access')
-      console.log("Sikeres küldés!")
       if (valasz.success) {
         this.router.navigate(['/'])
           .then(() => {

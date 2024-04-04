@@ -2,6 +2,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import {AuthService} from "./auth.service";
 import {Komment, Poszt} from "./forum/forum";
+import {delay} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +18,28 @@ export class ForumService {
 
   constructor(protected http: HttpClient, protected authService: AuthService) { }
 
+  posztHiba : any
+  kommentHiba : any
+
   posztLetrehozas(ujPoszt: Poszt) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
     });
     return this.http.put<Poszt>(this.poszLetrehozasRoute, {ujPoszt}, {headers}).subscribe((valasz: any) => {
-      console.log("Sikeres létrehozás")
+      if (valasz.success) {
+        this.posztHiba = 'Siker'
+        window.location.reload()
+      }
     }, error => {
-      console.log(ujPoszt.Cim)
-      console.log(ujPoszt.Szoveg)
+
+      if (error.error.type === 'NincsCim') {
+        this.posztHiba = 'NincsCim'
+      }
+      else if (error.error.type === 'NincsSzoveg') {
+        this.posztHiba = 'NincsSzoveg'
+      }
+
     })
   }
 
@@ -36,10 +49,14 @@ export class ForumService {
       'Authorization': 'Bearer ' + this.authService.tokenIDjson.token
     });
     return this.http.put<Komment>(this.kommentLetrehozasRoute, {ujKomment, Poszt}, {headers}).subscribe((valasz: any) => {
-
+      if (valasz.success) {
+        this.kommentHiba = 'Siker'
+        window.location.reload()
+      }
     }, error => {
-      console.log(ujKomment)
-      console.log(Poszt)
+      if (error.error.type === 'NincsKomment') {
+        this.kommentHiba = 'NincsKomment'
+      }
     })
   }
 

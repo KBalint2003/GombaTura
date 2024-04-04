@@ -59,10 +59,16 @@
                       <input type="password" class="form-style" name="jelszoEllenorzes" placeholder="Jelszó ismét: "[(ngModel)]="felhasznalo.jelszoUjra">
                       <i class="input-icon uil uil-lock-alt"></i>
                     </div>
-
+                    <br>
+                    <div>
+                      <input type="checkbox" id="Szabaly" #Szabaly (click)="onCheckBoxSzabalyChange()"> Elfogadom a gombászat <a href="../../assets/file/szabaly.pdf" target="_blank">szabályait</a> és
+                      <a href="../../assets/file/etika.pdf" target="_blank">etikáját</a>.
+                    </div>
                     <!-- A metódust végrehajtó gomb. -->
 
-                    <button type="submit" value="Regisztráció" class="btn mt-4" (click)="regisztracioGomb()">Regisztráció</button>
+                    <button type="submit" value="Regisztráció" class="btn mt-4" *ngIf="!szabalyCheck" (click)="regisztracioGomb()" disabled>Regisztráció</button>
+                    <button type="submit" value="Regisztráció" class="btn mt-4" *ngIf="szabalyCheck" (click)="regisztracioGomb()">Regisztráció</button>
+
                   </div>
                 </div>
               </div>

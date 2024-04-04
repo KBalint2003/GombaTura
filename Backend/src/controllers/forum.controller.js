@@ -50,8 +50,8 @@ async function posztokGETController(req, res) {
 }
 
 async function posztKommentekkelGETController(req, res) {
-    try{
 
+    try{
 
         const posztId = req.headers.posztid;
 

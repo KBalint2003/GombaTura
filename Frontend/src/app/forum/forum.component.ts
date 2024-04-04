@@ -67,9 +67,7 @@ export class ForumComponent implements OnInit{
     });
     return this.http.get<PosztKommenttel>(this.forumService.posztKommenttelLekeresRoute, {headers}).subscribe((valasz : any) => {
       this.PosztokKommenttel = valasz.poszt
-      console.log(this.PosztokKommenttel)
       this.Kommentek = valasz.kommentek
-      console.log(this.Kommentek)
     })
   }
 
