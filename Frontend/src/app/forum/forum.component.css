@@ -50,6 +50,7 @@
   width: 750px;
   background-color: white;
   align-self: center;
+  padding: 4%;
 }
 
 .bezaroGomb {
@@ -104,9 +105,13 @@ input {
   margin: 1% 0 0 2%;
 }
 
-#komment {
+#kommentInput {
   margin-top: 3%;
   width: 700px;
   padding-left: 3px;
+}
+
+.komment {
+  display: block;
 }
 

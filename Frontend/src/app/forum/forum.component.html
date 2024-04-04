@@ -4,15 +4,16 @@
   <p class="forumFelhasznaloNev">{{poszt.Cim}}</p>
   <p class="forumCim" (click)="PosztMegniytasModal(PosztMegnyitas, poszt.Poszt_id)"><button>Részletek</button></p>
   <ng-template #PosztMegnyitas let-modal class="megnyitasModal">
+    <div class="container" *ngFor="let posztkommenttel of PosztokKommenttel">
     <div class="modal-header centered megnyitasModal">
-      <p class="posztModalCím">{{poszt.Cim}}</p>
-      <p class="posztModalCím">{{poszt.PosztoloNeve}}</p>
+      <p class="posztModalCím">{{posztkommenttel.Cim}}</p>
+      <p class="posztModalCím">{{posztkommenttel.PosztoloNeve}}</p>
     </div>
     <div class="modal-body centered megnyitasModal">
       <div class="container">
         <div class="row">
           <div>
-            <p class="postModalSzoveg">{{poszt.Szoveg}}</p>
+            <p class="postModalSzoveg">{{posztkommenttel.Szoveg}}</p>
           </div>
         </div>
       </div>
@@ -20,9 +21,16 @@
     <div class="modal-footer d-flex justify-content-start megnyitasModal">
      <div class="modal-footer-container">
        <p>Hozzászólások</p>
-       <input type="text" name="komment" id="komment" placeholder="Írjon hozzászólást"
+       <input type="text" name="komment" id="kommentInput" placeholder="Írjon hozzászólást"
               [(ngModel)]="ujKomment.Komment"  (keydown.enter)="forumService.kommentLetrehozas(ujKomment, poszt.Poszt_id)">
      </div>
+      <div class="modal-footer-container" >
+        <div *ngFor="let komment of Kommentek">
+        <p class="komment">{{komment.Kommentelo}}</p>
+        <p class="komment">{{komment.Komment}}</p>
+        </div>
+      </div>
+    </div>
     </div>
   </ng-template>
 </div>

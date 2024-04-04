@@ -10,8 +10,6 @@ export interface PosztKommenttel {
   Cim: string
   Szoveg: string
   PosztoloNeve: string
-  Komment: string
-  Kommentelo: string
 }
 
 export interface  Komment {

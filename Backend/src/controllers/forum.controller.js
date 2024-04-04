@@ -52,7 +52,6 @@ async function posztokGETController(req, res) {
 async function posztKommentekkelGETController(req, res) {
     try{
 
-        console.log(req.headers)
 
         const posztId = req.headers.posztid;
 
@@ -84,7 +83,8 @@ async function posztKommentekkelGETController(req, res) {
                 }
             ],
             group: 'Poszt_id',
-            raw: true
+            raw: true,
+            where: {Poszt_id: posztId}
         });
 
         if (!poszt.length) {

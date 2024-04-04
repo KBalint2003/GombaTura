@@ -45,8 +45,6 @@ export class ForumComponent implements OnInit{
     Cim : '',
     Szoveg: '',
     PosztoloNeve: '',
-    Komment: '',
-    Kommentelo: ''
   }
 
   PosztokKommenttel : PosztKommenttel[] = []
@@ -68,8 +66,8 @@ export class ForumComponent implements OnInit{
       'posztId': Poszt
     });
     return this.http.get<PosztKommenttel>(this.forumService.posztKommenttelLekeresRoute, {headers}).subscribe((valasz : any) => {
-      this.Posztok = valasz.poszt
-      console.log(this.Posztok)
+      this.PosztokKommenttel = valasz.poszt
+      console.log(this.PosztokKommenttel)
       this.Kommentek = valasz.kommentek
       console.log(this.Kommentek)
     })
