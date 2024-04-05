@@ -6,6 +6,10 @@ import {PosztKommenttel, Poszt, Komment} from "./forum";
 import {ForumService} from "../forum.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "../auth.service";
+import {MatIconModule} from '@angular/material/icon'
+import {jwtDecode, JwtPayload} from "jwt-decode";
+
+
 
 @Component({
   selector: 'app-forum',
@@ -13,7 +17,8 @@ import {AuthService} from "../auth.service";
   imports: [
     FormsModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    MatIconModule
   ],
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.css'
@@ -49,7 +54,22 @@ export class ForumComponent implements OnInit{
 
   PosztokKommenttel : PosztKommenttel[] = []
 
+  felhasznalonev = ''
+
   ngOnInit() {
+
+    const token = localStorage.getItem('access')
+    if (!token) {
+      console.error("Nincs token")
+
+      return this.http.get<Poszt>(this.forumService.posztLekeresRoute).subscribe((valasz: any) => {
+        this.Posztok = valasz.posztok
+
+      })
+    }
+    const dekodoltToken = jwtDecode(token) as JwtPayload & { felhasznalonev: string }
+
+      this.felhasznalonev = dekodoltToken.felhasznalonev
 
     return this.http.get<Poszt>(this.forumService.posztLekeresRoute).subscribe((valasz: any) => {
       this.Posztok = valasz.posztok
@@ -75,7 +95,10 @@ export class ForumComponent implements OnInit{
     this.modalService.open(PosztLetrehozas, { ariaLabelledBy: 'PosztLetrehozasModal' })
   }
 
+  PosztModositasModal(PosztModositas: TemplateRef<any>) {
+    this.modalService.open(PosztModositas, { ariaLabelledBy: 'PosztModositasModal' })
+  }
 
-  protected readonly console = console;
+
   protected readonly localStorage = localStorage;
 }

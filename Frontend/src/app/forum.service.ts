@@ -41,9 +41,20 @@ export class ForumService {
       else if  (!localStorage.getItem('access')) {
         this.posztHiba = 'NincsBejelentkezve'
       }
-
     })
   }
+
+  posztModositas(ujPoszt: Poszt, PosztID: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token,
+      'posztId': PosztID
+    });
+    return this.http.patch(this.posztModositasRoute, {"poszt": ujPoszt}, {headers}).subscribe((valasz: any) => {
+      console.log(valasz.message)
+    })
+  }
+
 
   kommentLetrehozas(ujKomment: Komment, Poszt: string) {
     const headers = new HttpHeaders({

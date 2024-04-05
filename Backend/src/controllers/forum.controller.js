@@ -161,9 +161,10 @@ async function posztPUTController(req, res) {
 }
 
 function posztPATCHController(req, res) {
-    const posztId = req.headers.posztId;
+    console.log(req.body)
+    const posztId = req.headers.posztid;
 
-    Poszt.update(req.body.poszt, { where: { posztId }, individualHooks: true })
+    Poszt.update(req.body.poszt, { where: { Poszt_id: posztId }, individualHooks: true })
     .then((rowsAffected) => {
       //Nem található poszt ilyen id-val
       if (Object.entries(rowsAffected[1]).length === 0) {

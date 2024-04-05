@@ -1,8 +1,13 @@
 <!-- Fórum bejegyzés -->
 <div class="forum" *ngFor="let poszt of Posztok">
-  <!-- Bejegyzés létrehozójának neve -->
-  <p class="forumFelhasznaloNev">{{poszt.Cim}}</p>
+  <p class="forumFelhasznaloNev" style="display: inline-block">{{poszt.Cim}}</p>
+  <p *ngIf="poszt.PosztoloNeve === felhasznalonev" style="margin-left: 90%; display: inline-block">
+    <button (click)="PosztModositasModal(PosztModositas)"><mat-icon style="font-size: 28px">edit</mat-icon></button>
+    <button><mat-icon style="color: red; font-size: 28px">delete</mat-icon></button>
+  </p>
   <p class="forumCim" (click)="PosztMegniytasModal(PosztMegnyitas, poszt.Poszt_id)"><button>Részletek</button></p>
+
+      <!-- POSZT MEGNYITÁSA -->
   <ng-template #PosztMegnyitas let-modal class="megnyitasModal">
     <div class="container" *ngFor="let posztkommenttel of PosztokKommenttel">
     <div class="modal-header centered megnyitasModal">
@@ -22,6 +27,9 @@
      <div class="modal-footer-container">
        <p class="alert alert-success" *ngIf="forumService.kommentHiba === 'Siker'">Komment közzétéve</p>
          <p class="alert alert-danger" *ngIf="forumService.kommentHiba === 'NincsKomment'">Kérem, gépelje be a közzétenni kívánt kommentet</p>
+
+        <!--  KOMMENTEK  -->
+
        <p style="font-size: larger; font-weight: bolder">Hozzászólások</p>
        <input type="text" name="komment" id="kommentInputLogged" placeholder="Írjon hozzászólást"
               *ngIf="localStorage.getItem('access')"
@@ -34,19 +42,52 @@
         <div *ngFor="let komment of Kommentek" style="margin: 3% 0 5% 0">
         <p class="komment" style="font-style: italic; font-weight: bold">{{komment.Kommentelo}}</p>
         <p class="komment">{{komment.Komment}}</p>
+          <p *ngIf="komment.Kommentelo === felhasznalonev">
+            <mat-icon>edit</mat-icon><mat-icon style="color: red">delete</mat-icon>
+          </p>
+          <p class="vonal"></p>
         </div>
       </div>
     </div>
     </div>
   </ng-template>
+
+  <!--  POSZT SZERKESZTÉSE   -->
+
+  <ng-template #PosztModositas let-modal class="szerkesztesModal">
+    <div class="modal-header centered szerkesztesModal" >
+      <p>Poszt szerkesztése</p>
+      <button type="button" class="bezaroGomb"  (click)="modal.dismiss('Cross click')">X</button>
+    </div>
+    <div class="modal-body centered szerkesztesModal">
+      <div class="container">
+        <div class="row">
+          <div class="col-md">
+            <p>Poszt címe:</p>
+            <p>Poszt szövege:</p>
+          </div>
+          <div class="col-md">
+            <input type="text" class="PosztInput" [(ngModel)]="ujPoszt.Cim">
+            <input type="text" class="PosztInput" [(ngModel)]="ujPoszt.Szoveg">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer centered szerkesztesModal">
+      <button type="button" class="btn btn-outline-dark mentesGomb" (click)="forumService.posztModositas(poszt, poszt.Poszt_id)">Mentés</button>
+    </div>
+
+  </ng-template>
+
 </div>
 
-<!-- Új bejegyzés létrehozása -->
 <button class="forumHozzaadas"><img src="/assets/img/add.png" (click)="PosztLetrehozasModal(PosztLetrehozas)"></button>
+
+  <!--  POSZT LÉTREHOZÁSA  -->
 
 <ng-template #PosztLetrehozas let-modal class="letrehozasModal">
   <div class="modal-header centered letrehozasModal">
-    <h4 class="modal-title" id="PosztLetrehozasModal">Új poszt létrehozása</h4>
+    <p>Új poszt létrehozása</p>
     <button type="button" class="bezaroGomb"  (click)="modal.dismiss('Cross click')">X</button>
   </div>
   <div class="tavtarto">
@@ -59,8 +100,8 @@
     <div class="container">
       <div class="row">
         <div class="col-md">
-          <p class="PosztLetrehozasAdat"> Forum címe:</p>
-          <p class="PosztLetrehozasAdat">Forum szövege:</p>
+          <p class="PosztLetrehozasAdat"> Poszt címe:</p>
+          <p class="PosztLetrehozasAdat">Poszt szövege:</p>
         </div>
         <div class="col-md">
           <input type="text" class="PosztInput" [(ngModel)]="ujPoszt.Cim">
