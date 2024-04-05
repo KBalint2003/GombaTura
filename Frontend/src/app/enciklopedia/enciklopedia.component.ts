@@ -1,7 +1,7 @@
 import {Component, OnInit, } from '@angular/core';
 import {NgForOf, SlicePipe} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
-import {Gomba, Gombak} from "./gomba";
+import {Gomba} from "./gomba";
 import {EnciklopediaService} from "../enciklopedia.service";
 import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { DecimalPipe } from '@angular/common';
@@ -27,7 +27,6 @@ import {NgbPaginationConfig, NgbPaginationModule, NgbTypeaheadModule} from '@ng-
 export class EnciklopediaComponent implements OnInit{
 
   constructor(protected http: HttpClient, protected enciklopediaService: EnciklopediaService, config: NgbPaginationConfig, ) {
-    this.refreshCountries();
   }
 
 
@@ -68,25 +67,27 @@ export class EnciklopediaComponent implements OnInit{
   gombakSlice: Gomba[] = []
 
   page = 0;
-  pageSize = 5;
+  pageSize = 2;
 
 
   ngOnInit() {
+    this.refreshCountries()
     return this.http.get<Gomba>(this.enciklopediaService.gombaLekeres).subscribe((valasz: any) => {
       this.gombak = valasz.gombak
       this.gombakSlice = this.gombak.slice(
         (this.page - 1) * this.pageSize,
         (this.page - 1) * this.pageSize + this.pageSize
       )
-      console.log(this.gombakSlice)
     })
   }
 
   refreshCountries() {
-    this.gombakSlice = this.gombak.map((gomba, i) => ({id: i +1, ...gomba})).slice(
-      (this.page - 1) * this.pageSize,
-      (this.page - 1) * this.pageSize + this.pageSize,
+    console.log(this.page)
+    this.gombakSlice = this.gombak.slice(
+      (this.page) * this.pageSize,
+      (this.page) * this.pageSize + this.pageSize,
     );
+    console.log(this.gombakSlice)
   }
 
 

@@ -103,13 +103,16 @@
 	</div>
   <div class="tavtarto">
     <p class="alert alert-success" *ngIf="turaservice.turahiba === 'Siker'">
-      A túra létrehozása sikeresen megtörtént
+      A túra létrehozása sikeresen megtörtént.
+    </p>
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'NotLogged'">
+      Először be kell jelentkezni!
     </p>
     <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'NincsSzulEv'">
-      Kérem, először adja meg a születési dátumát a Profil menüben.
+      Kérem, először adja meg a születési dátumát a Profil menüben!
     </p>
     <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'Nem18'">
-      Az ön életkora nem felel meg a követelményeknek (18+)
+      Az ön életkora nem felel meg a követelményeknek! (18+)
     </p>
     <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'Nincsnev'">
       A túra nevének megadása kötelező!
@@ -117,11 +120,17 @@
     <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'NincsIndIdo'">
       Az indulási idő megadása kötelező!
     </p>
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'RosszIndIdo'">
+      Az indulási idő nem lehet régebbi mint a jelenlegi dátum!
+    </p>
     <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'NincsIndHely'">
       Az indulási hely megadása kötelező!
     </p>
     <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'NincsErkIdo'">
       Az érkezési idő megadása kötelező!
+    </p>
+    <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'RosszErkIdo'">
+      Az érkezési idő nem lehet régebbi mint az indulás dátuma!
     </p>
     <p class="alert alert-danger" *ngIf="turaservice.turahiba === 'NincsErkHely'">
       Az érkezési hely megadása kötelező!

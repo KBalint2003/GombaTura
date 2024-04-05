@@ -23,7 +23,11 @@
        <p class="alert alert-success" *ngIf="forumService.kommentHiba === 'Siker'">Komment közzétéve</p>
          <p class="alert alert-danger" *ngIf="forumService.kommentHiba === 'NincsKomment'">Kérem, gépelje be a közzétenni kívánt kommentet</p>
        <p style="font-size: larger; font-weight: bolder">Hozzászólások</p>
-       <input type="text" name="komment" id="kommentInput" placeholder="Írjon hozzászólást"
+       <input type="text" name="komment" id="kommentInputLogged" placeholder="Írjon hozzászólást"
+              *ngIf="localStorage.getItem('access')"
+              [(ngModel)]="ujKomment.Komment"  (keydown.enter)="forumService.kommentLetrehozas(ujKomment, poszt.Poszt_id)">
+       <input type="text" name="komment" [disabled]="true" id="kommentInputNotLoggged" placeholder="Írjon hozzászólást"
+              *ngIf="!localStorage.getItem('access')"
               [(ngModel)]="ujKomment.Komment"  (keydown.enter)="forumService.kommentLetrehozas(ujKomment, poszt.Poszt_id)">
      </div>
       <div class="modal-footer-container" >
@@ -47,6 +51,7 @@
   </div>
   <div class="tavtarto">
     <p class="alert alert-success" *ngIf="forumService.posztHiba === 'Siker'">Poszt létrehozása sikeresen megtörtént!</p>
+    <p class="alert alert-danger" *ngIf="forumService.posztHiba === 'NincsBejelentkezve'">Először be kell jelentkezni</p>
     <p class="alert alert-danger" *ngIf="forumService.posztHiba === 'NincsCim'"> Kérem adja meg a poszt címét!</p>
     <p class="alert alert-danger" *ngIf="forumService.posztHiba === 'NincsSzoveg'"> Kérem adja meg a poszt szövegét!</p>
   </div>

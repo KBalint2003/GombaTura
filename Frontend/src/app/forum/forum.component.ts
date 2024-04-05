@@ -77,4 +77,5 @@ export class ForumComponent implements OnInit{
 
 
   protected readonly console = console;
+  protected readonly localStorage = localStorage;
 }

@@ -1,113 +1,113 @@
-<table class="table ">
-  <thead>
-    <tr>
-    </tr>
-  </thead>
-  <tbody *ngFor="let gomba of gombak ">
-      <tr>
-          <th>{{gomba.Magyar_nev}}</th>
-          <th>{{gomba.Latin_nev}}</th>
-      </tr>
-
-  </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<table class="table table-striped">-->
+<!--<table class="table ">-->
 <!--  <thead>-->
-<!--  <tr>-->
-<!--    <th scope="col">#</th>-->
-<!--    <th scope="col">Magyar név</th>-->
-<!--    <th scope="col">Latin név</th>-->
-<!--    <th scope="col">Nemzetség</th>-->
-<!--    <th scope="col">Étkezés értéke</th>-->
-<!--    <th scope="col">Feltétel</th>-->
-<!--    <th scope="col">Leírás</th>-->
-<!--    <th scope="col">Bocskor</th>-->
-<!--    <th scope="col">Gallér</th>-->
-<!--    <th scope="col">Szezon eleje</th>-->
-<!--    <th scope="col">Szezon vége</th>-->
-<!--    <th scope="col">Növényzet</th>-->
-<!--    <th scope="col">Termőtest típus</th>-->
-<!--    <th scope="col">Termőrétegtartó típusok</th>-->
-<!--    <th scope="col">Kalap forma</th>-->
-<!--    <th scope="col">Kalap felszín</th>-->
-<!--    <th scope="col">Kalap perem</th>-->
-<!--    <th scope="col">Lemezállás</th>-->
-<!--    <th scope="col">Lemez él</th>-->
-<!--    <th scope="col">Burok maradvány</th>-->
-<!--    <th scope="col">Tönk alak</th>-->
-<!--    <th scope="col">Tönk Felület</th>-->
-<!--    <th scope="col">Hús</th>-->
-<!--    <th scope="col">Hús elszíneződés</th>-->
-<!--    <th scope="col">Íz</th>-->
-<!--    <th scope="col">Illat</th>-->
-<!--    <th scope="col">Ára</th>-->
-<!--    <th scope="col">Kép készítő neve</th>-->
-<!--    <th scope="col">Kép neve</th>-->
-<!--  </tr>-->
+<!--    <tr>-->
+<!--    </tr>-->
 <!--  </thead>-->
-<!--  <tbody>-->
-<!--  @for (gomba of gombakSlice; track gomba.Gomba_Id)  {-->
-<!--  <tr>-->
-<!--    <th scope="row">{{gomba.Gomba_Id}}</th>-->
-<!--        <td>{{ gomba.Magyar_nev }}</td>-->
-<!--        <td>{{gomba.Latin_nev }}</td>-->
-<!--        <td>{{ gomba.Nemzetseg }}</td>-->
-<!--        <td>{{gomba.Etkezes_ertek}}</td>-->
-<!--        <td>{{gomba.Feltetel}}</td>-->
-<!--        <td>{{gomba.Leiras}}</td>-->
-<!--        <td>{{gomba.Bocskora}}</td>-->
-<!--        <td>{{gomba.Galler}}</td>-->
-<!--        <td>{{gomba.Szezon_eleje}}</td>-->
-<!--        <td>{{gomba.Szezon_vege}}</td>-->
-<!--        <td>{{gomba.Novenyzet}}</td>-->
-<!--        <td>{{gomba.Termotest_tipus}}</td>-->
-<!--        <td>{{gomba.Termoretegtarto_tipusok}}</td>-->
-<!--        <td>{{gomba.Kalap_forma}}</td>-->
-<!--        <td>{{gomba.Kalap_felszin}}</td>-->
-<!--        <td>{{gomba.Kalap_perem}}</td>-->
-<!--        <td>{{gomba.Lemezallas}}</td>-->
-<!--        <td>{{gomba.Lemez_el}}</td>-->
-<!--        <td>{{gomba.Burok_maradvany}}</td>-->
-<!--        <td>{{gomba.Tonk_alak}}</td>-->
-<!--        <td>{{gomba.Tonk_felulet}}</td>-->
-<!--        <td>{{gomba.Hus}}</td>-->
-<!--        <td>{{gomba.Hus_elszinezodes}}</td>-->
-<!--        <td>{{gomba.Ize}}</td>-->
-<!--        <td>{{gomba.Illata}}</td>-->
-<!--        <td>{{gomba.Ara_HUF}}</td>-->
-<!--        <td>{{gomba.Kep_keszito_neve}}</td>-->
-<!--        <td>{{gomba.Kep_neve}}</td>-->
+<!--  <tbody *ngFor="let gomba of gombak ">-->
+<!--      <tr>-->
+<!--          <th>{{gomba.Magyar_nev}}</th>-->
+<!--          <th>{{gomba.Latin_nev}}</th>-->
 <!--      </tr>-->
-<!--    }-->
+
 <!--  </tbody>-->
 <!--</table>-->
 
-<!--<div class="d-flex justify-content-between p-2">-->
-<!--  <ngb-pagination-->
-<!--    (pageChange)="refreshCountries()"-->
-<!--    [(page)]="page"-->
-<!--    [collectionSize]="gombak.length"-->
-<!--    [pageSize]="pageSize"-->
-<!--  >-->
-<!--  </ngb-pagination>-->
 
-<!--  <select (ngModelChange)="refreshCountries()" [(ngModel)]="pageSize" class="form-select" style="width: auto">-->
-<!--    <option [ngValue]="10">5 items per page</option>-->
-<!--    <option [ngValue]="15">10 items per page</option>-->
-<!--    <option [ngValue]="25">15 items per page</option>-->
-<!--  </select>-->
-<!--</div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Magyar név</th>
+    <th scope="col">Latin név</th>
+    <th scope="col">Nemzetség</th>
+    <th scope="col">Étkezés értéke</th>
+    <th scope="col">Feltétel</th>
+    <th scope="col">Leírás</th>
+    <th scope="col">Bocskor</th>
+    <th scope="col">Gallér</th>
+    <th scope="col">Szezon eleje</th>
+    <th scope="col">Szezon vége</th>
+    <th scope="col">Növényzet</th>
+    <th scope="col">Termőtest típus</th>
+    <th scope="col">Termőrétegtartó típusok</th>
+    <th scope="col">Kalap forma</th>
+    <th scope="col">Kalap felszín</th>
+    <th scope="col">Kalap perem</th>
+    <th scope="col">Lemezállás</th>
+    <th scope="col">Lemez él</th>
+    <th scope="col">Burok maradvány</th>
+    <th scope="col">Tönk alak</th>
+    <th scope="col">Tönk Felület</th>
+    <th scope="col">Hús</th>
+    <th scope="col">Hús elszíneződés</th>
+    <th scope="col">Íz</th>
+    <th scope="col">Illat</th>
+    <th scope="col">Ára</th>
+    <th scope="col">Kép készítő neve</th>
+    <th scope="col">Kép neve</th>
+  </tr>
+  </thead>
+  <tbody>
+  @for (gomba of gombakSlice; track gomba.Gomba_Id)  {
+  <tr>
+    <th scope="row">{{gomba.Gomba_Id}}</th>
+        <td>{{ gomba.Magyar_nev }}</td>
+        <td>{{gomba.Latin_nev }}</td>
+        <td>{{ gomba.Nemzetseg }}</td>
+        <td>{{gomba.Etkezes_ertek}}</td>
+        <td>{{gomba.Feltetel}}</td>
+        <td>{{gomba.Leiras}}</td>
+        <td>{{gomba.Bocskora}}</td>
+        <td>{{gomba.Galler}}</td>
+        <td>{{gomba.Szezon_eleje}}</td>
+        <td>{{gomba.Szezon_vege}}</td>
+        <td>{{gomba.Novenyzet}}</td>
+        <td>{{gomba.Termotest_tipus}}</td>
+        <td>{{gomba.Termoretegtarto_tipusok}}</td>
+        <td>{{gomba.Kalap_forma}}</td>
+        <td>{{gomba.Kalap_felszin}}</td>
+        <td>{{gomba.Kalap_perem}}</td>
+        <td>{{gomba.Lemezallas}}</td>
+        <td>{{gomba.Lemez_el}}</td>
+        <td>{{gomba.Burok_maradvany}}</td>
+        <td>{{gomba.Tonk_alak}}</td>
+        <td>{{gomba.Tonk_felulet}}</td>
+        <td>{{gomba.Hus}}</td>
+        <td>{{gomba.Hus_elszinezodes}}</td>
+        <td>{{gomba.Ize}}</td>
+        <td>{{gomba.Illata}}</td>
+        <td>{{gomba.Ara_HUF}}</td>
+        <td>{{gomba.Kep_keszito_neve}}</td>
+        <td>{{gomba.Kep_neve}}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination
+    (pageChange)="refreshCountries()"
+    [(page)]="page"
+    [collectionSize]="gombak.length"
+    [pageSize]="pageSize"
+  >
+  </ngb-pagination>
+
+  <select (ngModelChange)="refreshCountries()" [(ngModel)]="pageSize" class="form-select" style="width: auto">
+    <option [ngValue]="10">5 items per page</option>
+    <option [ngValue]="15">10 items per page</option>
+    <option [ngValue]="25">15 items per page</option>
+  </select>
+</div>

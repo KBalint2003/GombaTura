@@ -123,6 +123,7 @@ export class TuraComponent implements  OnInit{
         console.log(valasz.turak)
       }, error => {
         this.turaservice.turahiba = "Ön még nem jelentkezett egy túrára sem!"
+        console.log(this.turak)
       })
     }
     return this.http.get<Turak>(this.turaservice.osszesturaLekeresRoute, {headers}).subscribe((valasz: any) => {

@@ -32,12 +32,14 @@ export class ForumService {
         window.location.reload()
       }
     }, error => {
-
       if (error.error.type === 'NincsCim') {
         this.posztHiba = 'NincsCim'
       }
       else if (error.error.type === 'NincsSzoveg') {
         this.posztHiba = 'NincsSzoveg'
+      }
+      else if  (!localStorage.getItem('access')) {
+        this.posztHiba = 'NincsBejelentkezve'
       }
 
     })

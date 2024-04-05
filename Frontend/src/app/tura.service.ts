@@ -48,11 +48,17 @@ export class TuraService {
       else if (error.error.type === 'NincsIndIdo') {
         this.turahiba = 'NincsIndIdo'
       }
+      else if (error.error.type === 'RosszIndIdo') {
+        this.turahiba = 'RosszIndIdo'
+      }
       else if (error.error.type === 'NincsIndHely') {
         this.turahiba = 'NincsIndHely'
       }
       else if (error.error.type === 'NincsErkIdo') {
         this.turahiba = 'NincsErkIdo'
+      }
+      else if (error.error.type === 'RosszErkIdo') {
+        this.turahiba = 'RosszErkIdo'
       }
       else if (error.error.type === 'NincsErkHely') {
         this.turahiba = 'NincsErkHely'
@@ -65,6 +71,9 @@ export class TuraService {
       }
       else if (error.error.type === 'Nincsleiras') {
         this.turahiba = 'Nincsleiras'
+      }
+      else if (!localStorage.getItem('access')) {
+        this.turahiba = 'NotLogged'
       }
     })
   }
@@ -92,6 +101,9 @@ export class TuraService {
     });
     return this.http.post(this.turaJelentkezesRoute, {Tura_id}, {headers}).subscribe( (valasz : any) => {
       this.turahiba = ""
+      if (valasz.success) {
+        window.location.reload()
+      }
     }, error => {
       console.log(error)
     } )
@@ -104,7 +116,9 @@ export class TuraService {
       'Tura_id': Tura_id
     });
     return this.http.delete(this.turaJelentkezesTorleseRoute, {headers}).subscribe((valasz: any) => {
-
+      if (valasz.success) {
+        window.location.reload()
+      }
     }, error => {
       console.log(error)
     })

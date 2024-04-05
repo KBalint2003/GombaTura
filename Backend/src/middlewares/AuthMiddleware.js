@@ -6,6 +6,8 @@ const feketeLista = require('../models/feketeLista.model');
 const tokenErvenyesites =async (req, res, next) => {
     var token = req.headers.authorization; //A header authorization részéből a token kiszedése
 
+    console.log(req.headers)
+
   //Eshetőség: Nincs token
     if (!token) {
       res.status(401).json({

@@ -325,6 +325,9 @@ async function turakPOSTController(req, res) {
   
     try {
 
+        console.log(req.body.Tura_id)
+        console.log(req.user.userId)
+
         const felhasznaloId = req.user.userId;
         const turaId = req.body.Tura_id;
 
@@ -336,7 +339,7 @@ async function turakPOSTController(req, res) {
             })
             return;
         }
-        const felhasznalo = await Felhasznalo.findByPk(Letrehozo);
+        const felhasznalo = await Felhasznalo.findByPk(felhasznaloId);
 
         if (felhasznalo.Szuletesi_ido === null) {
             res.status(400).json({
@@ -364,7 +367,10 @@ async function turakPOSTController(req, res) {
             })
         
             await osszekapcsolas.save();
-        res.status(200).json({osszekapcsolas});
+        res.status(200).json({
+            osszekapcsolas,
+            success: true
+        });
         
         }
          
