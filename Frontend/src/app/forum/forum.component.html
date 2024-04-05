@@ -2,8 +2,10 @@
 <div class="forum" *ngFor="let poszt of Posztok">
   <p class="forumFelhasznaloNev" style="display: inline-block">{{poszt.Cim}}</p>
   <p *ngIf="poszt.PosztoloNeve === felhasznalonev" style="margin-left: 90%; display: inline-block">
+  <!--  POSZT MODODSITAS GOMB   -->
     <button (click)="PosztModositasModal(PosztModositas)"><mat-icon style="font-size: 28px">edit</mat-icon></button>
-    <button><mat-icon style="color: red; font-size: 28px">delete</mat-icon></button>
+  <!--  POSZT TÖRLÉS GOMB   -->
+    <button (click)="forumService.posztTorles(poszt.Poszt_id)"><mat-icon style="color: red; font-size: 28px">delete</mat-icon></button>
   </p>
   <p class="forumCim" (click)="PosztMegniytasModal(PosztMegnyitas, poszt.Poszt_id)"><button>Részletek</button></p>
 
@@ -43,7 +45,9 @@
         <p class="komment" style="font-style: italic; font-weight: bold">{{komment.Kommentelo}}</p>
         <p class="komment">{{komment.Komment}}</p>
           <p *ngIf="komment.Kommentelo === felhasznalonev">
-            <mat-icon>edit</mat-icon><mat-icon style="color: red">delete</mat-icon>
+            <mat-icon>edit</mat-icon>
+        <!--      KOMMENT TÖRLÉS      -->
+            <button (click)="forumService.kommentTorles(komment.Komment_id)"><mat-icon style="color: red">delete</mat-icon></button>
           </p>
           <p class="vonal"></p>
         </div>
@@ -74,7 +78,7 @@
       </div>
     </div>
     <div class="modal-footer centered szerkesztesModal">
-      <button type="button" class="btn btn-outline-dark mentesGomb" (click)="forumService.posztModositas(poszt, poszt.Poszt_id)">Mentés</button>
+      <button type="button" class="btn btn-outline-dark mentesGomb" (click)="forumService.posztModositas(ujPoszt, poszt.Poszt_id)">Mentés</button>
     </div>
 
   </ng-template>

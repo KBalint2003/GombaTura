@@ -11,4 +11,5 @@ forumRouter.put("/forum", AuthMiddleware, forumController.posztPUTController);
 forumRouter.patch("/forum", AuthMiddleware, forumController.posztPATCHController);
 forumRouter.delete("/forum", AuthMiddleware, forumController.posztDELETEController);
 forumRouter.put("/forum/komment", AuthMiddleware, forumController.kommentPUTController)
+forumRouter.delete("/forum/komment", AuthMiddleware, forumController.kommentDELETEController)
 module.exports = forumRouter;

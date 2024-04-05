@@ -15,6 +15,7 @@ export class ForumService {
   public posztModositasRoute = "http://localhost:3000/forum"
   public posztTorlesRoute = "http://localhost:3000/forum"
   public kommentLetrehozasRoute = "http://localhost:3000/forum/komment"
+  public kommentTorlesRoute = "http://localhost:3000/forum/komment"
 
   constructor(protected http: HttpClient, protected authService: AuthService) { }
 
@@ -51,7 +52,22 @@ export class ForumService {
       'posztId': PosztID
     });
     return this.http.patch(this.posztModositasRoute, {"poszt": ujPoszt}, {headers}).subscribe((valasz: any) => {
-      console.log(valasz.message)
+        if  (valasz.success) {
+          window.location.reload()
+        }
+    })
+  }
+
+  posztTorles(PosztID: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token,
+      'posztId': PosztID
+    });
+    return this.http.delete(this.posztTorlesRoute, {headers}).subscribe((valasz: any) => {
+      if (valasz.success) {
+        window.location.reload()
+      }
     })
   }
 
@@ -69,6 +85,19 @@ export class ForumService {
     }, error => {
       if (error.error.type === 'NincsKomment') {
         this.kommentHiba = 'NincsKomment'
+      }
+    })
+  }
+
+  kommentTorles(KommentId: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.authService.tokenIDjson.token,
+      'Kommentid': KommentId
+    });
+    return this.http.delete(this.kommentTorlesRoute, {headers}).subscribe((valasz: any) => {
+      if (valasz.success) {
+        window.location.reload()
       }
     })
   }

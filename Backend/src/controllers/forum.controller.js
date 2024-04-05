@@ -121,7 +121,6 @@ async function posztKommentekkelGETController(req, res) {
 
 async function posztPUTController(req, res) {
 
-    console.log(req.body.Poszt)
     const {Cim, Szoveg} = req.body.ujPoszt
     const Posztolo = req.user.userId
 
@@ -160,9 +159,29 @@ async function posztPUTController(req, res) {
 
 }
 
-function posztPATCHController(req, res) {
-    console.log(req.body)
+async function posztPATCHController(req, res) {
+
     const posztId = req.headers.posztid;
+
+
+    const letaroltPoszt = await Poszt.findByPk(posztId)
+
+    if (req.body.poszt.Poszt_id === "" ){
+        req.body.poszt.Poszt_id = letaroltPoszt.Poszt_id
+    }
+
+    if (req.body.poszt.PosztoloNeve === "" ){
+        req.body.poszt.PosztoloNeve = letaroltPoszt.PosztoloNeve
+    }
+
+    if (req.body.poszt.Cim === "" ){
+        req.body.poszt.Cim = letaroltPoszt.Cim
+    }
+
+    if (req.body.poszt.Szoveg === "" ){
+        req.body.poszt.Szoveg = letaroltPoszt.Szoveg
+    }
+
 
     Poszt.update(req.body.poszt, { where: { Poszt_id: posztId }, individualHooks: true })
     .then((rowsAffected) => {
@@ -188,7 +207,7 @@ function posztPATCHController(req, res) {
       } else {
         // if rowsAffected[0] !== 1 Nincs változás az elküldött adatok és a túrának a letárolt adatai között.
         res.status(200).send({
-          success: false,
+          success: true,
           status: 200,
           message: `Nincs változás az elküldött adatok és a posztnak a letárolt adatai között.`,
         });
@@ -202,13 +221,13 @@ function posztPATCHController(req, res) {
         message:"Szerver hiba"
       });
     });
-};
+}
 
-async function posztDELETEController(params) {
+async function posztDELETEController(req, res) {
+
     try {
-        
      
-    const posztId = req.headers.posztId;
+    const posztId = req.headers.posztid;
 
     if (posztId === undefined) {
         res.status(400).json({
@@ -238,6 +257,12 @@ async function posztDELETEController(params) {
             Poszt_id: posztId
         }
     })
+
+       res.status(200).json({
+           success :true,
+           message: "Túra sikeresen törölve"
+       })
+
 }
     catch (error) {
         console.log(error);
@@ -291,6 +316,7 @@ try {
 }
 
 function kommentPATCHController(req, res) {
+
     const kommentId = req.headers.kommentId;
 
     KommentModel.update(req.body.poszt, { where: { posztId }, individualHooks: true })
@@ -331,13 +357,13 @@ function kommentPATCHController(req, res) {
         message:"Szerver hiba"
       });
     });
-};
+}
 
-async function kommentDELETEController(params) {
+async function kommentDELETEController(req, res) {
     try {
-        
-     
-    const kommentId = req.headers.kommentId;
+
+
+    const kommentId = req.headers.kommentid;
 
     if (kommentId === undefined) {
         res.status(400).json({
@@ -347,7 +373,7 @@ async function kommentDELETEController(params) {
         })
         return;
     }
-    const vanEKomment = await Poszt.findAll({
+    const vanEKomment = await KommentModel.findAll({
         where: {
             Komment_id: kommentId
         }
@@ -367,6 +393,11 @@ async function kommentDELETEController(params) {
             Komment_id: kommentId
         }
     })
+
+        res.status(200).json({
+            success: true,
+            message: 'Komment sikeresen törölve'
+        })
 }
     catch (error) {
         console.log(error);
