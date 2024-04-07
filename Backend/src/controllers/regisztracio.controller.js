@@ -5,10 +5,6 @@ const { v4: uuidv4 } = require('uuid');
 const regisztracioMegkotesek = require('../megkotesek/regisztracioMegkotesek')
 const bcrypt = require('bcrypt');
 
-function regisztracioGETController(req, res){
-    res.status(200).send("Regisztráció oldal")
-}
-
 async function jelszoHash(jelszo){
     const hashedJelszo = await bcrypt.hash(jelszo, 10);
     return hashedJelszo;
@@ -16,6 +12,7 @@ async function jelszoHash(jelszo){
 
 async function regisztracioPUTController (req, res){
 
+    try{
     const { felhasznalonev, email, jelszo, jelszoUjra, szuletesiIdo, telefonSzam } = req.body;
 
     //Felhasználónév lekezelése
@@ -133,8 +130,16 @@ async function regisztracioPUTController (req, res){
     await felhasznalo.save();
 
 
-    res.status(200).json({felhasznalo, success: true});
-
+    res.status(201).json({felhasznalo, success: true});
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).json({
+            error: true,
+            status: 500,
+            message: "Szerver hiba."
+        })
+    }
 };
 
 

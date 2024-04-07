@@ -17,7 +17,7 @@ async function osszesGombaGETController(req, res) {
         res.status(500).json({
             error: true,
             status: 500,
-            message: "Szerver hiba!"
+            message: "Szerver hiba"
         })
     }
 

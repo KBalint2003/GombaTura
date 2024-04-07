@@ -59,12 +59,8 @@ async function bejelentkezesPOSTController(req, res) {
     }
     res.status(200).json({
         success: true,
-        
+        message: "Sikeres bejelentkezés!",
         data: {
-            felhasznalonev: letezoFelhasznalo.Felhasznalonev, 
-            felhasznaloId: letezoFelhasznalo.User_id,
-            email: letezoFelhasznalo.Email,
-            
             token: token,
         },
     });
@@ -87,8 +83,8 @@ async function kijelentkezesPOSTController(req, res) {
             await kijelentkezettToken.save();
 
             res.status(200).json({
+                success: true,
                 message: "Sikeres kijelentkezés!",
-                token:token
             })
         }
 

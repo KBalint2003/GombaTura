@@ -45,8 +45,8 @@ async function osszesTurakGETController(req, res) {
         });
 
         if (!turak.length) {
-            res.status(400).json({
-                status: 400,
+            res.status(404).json({
+                status: 404,
                 message: "Nincs túra, amire jelentkezni lehetne"
             });
             return;
@@ -124,8 +124,8 @@ async function osszesTurakGETController(req, res) {
         });
 
         if (!turak.length) {
-            res.status(400).json({
-                status: 400,
+            res.status(404).json({
+                status: 404,
                 message: "Nincs túra, amire jelentkezni lehetne"
             });
             return;
@@ -210,8 +210,8 @@ async function turakGETController(req, res) {
         });
 
         if (!turak.length) {
-            res.status(400).json({
-                status: 400,
+            res.status(404).json({
+                status: 404,
                 message: "Ön még nem hozott létre túrát!"
             });
             return;
@@ -283,8 +283,8 @@ async function turakJelentkezettGETController(req, res) {
         });
 
         if (!turak.length) {
-            res.status(400).json({
-                status: 400,
+            res.status(404).json({
+                status: 404,
                 message: "Ön még nem jelentkezett egy túrára sem!"
             });
             return;
@@ -368,7 +368,7 @@ async function turakPOSTController(req, res) {
         
             await osszekapcsolas.save();
         res.status(200).json({
-            osszekapcsolas,
+            message: "Sikeres jelentkezés!",
             success: true
         });
         
@@ -688,7 +688,7 @@ async function jelentkezesDELETEController(req, res) {
             res.status(404).json({
                 error: true,
                 status: 404,
-                message: "Ilyen felhasználóiazonosítóval nincs jelentkezés erre a túrára!"
+                message: "Ilyen felhasználói azonosítóval nincs jelentkezés erre a túrára!"
             })
             return;
         }

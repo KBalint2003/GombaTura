@@ -19,9 +19,9 @@ async function posztokGETController(req, res) {
         });
 
         if (!posztok.length) {
-            res.status(400).json({
+            res.status(404).json({
                 error: true,
-                status: 400,
+                status: 404,
                 message:"Nincsenek posztok"
             })
             return;
@@ -88,10 +88,10 @@ async function posztKommentekkelGETController(req, res) {
         });
 
         if (!poszt.length) {
-            res.status(400).json({
+            res.status(404).json({
                 error: true,
-                status: 400,
-                message:"Nincsenek posztok"
+                status: 404,
+                message:"Nincs poszt ilyen id-val"
             })
             return;
         }
@@ -121,6 +121,7 @@ async function posztKommentekkelGETController(req, res) {
 
 async function posztPUTController(req, res) {
 
+    try{
     const {Cim, Szoveg} = req.body.ujPoszt
     const Posztolo = req.user.userId
 
@@ -157,6 +158,15 @@ async function posztPUTController(req, res) {
         message: "A poszt sikeresen létre lett hozva!",
     });
 
+}
+catch(error){
+    console.log(error);
+    res.status(500).json({
+        error: true,
+        status: 500,
+        message: "Szerver hiba"
+    })
+}
 }
 
 async function posztPATCHController(req, res) {
@@ -260,7 +270,7 @@ async function posztDELETEController(req, res) {
 
        res.status(200).json({
            success :true,
-           message: "Túra sikeresen törölve"
+           message: "Poszt sikeresen törölve"
        })
 
 }

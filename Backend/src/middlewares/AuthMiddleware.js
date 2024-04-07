@@ -25,7 +25,7 @@ const tokenErvenyesites =async (req, res, next) => {
     if (listaEleme) {
       res.status(401).json({
         error: true,
-        code: 401,
+        code: 499,
         message: "Hozzáférés megtagadva: Ez a token már blacklisten van!"
       });
       return;

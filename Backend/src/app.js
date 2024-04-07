@@ -36,7 +36,6 @@ FelhasznaloModel.belongsToMany(TuraModel, { through: TuraraJelentkezes, as: 'Jel
 //route-ok importálása
 const regisztracioRouter = require("./routes/regisztracio.route");
 const bejelentkezesRouter = require("./routes/bejelentkezes.route");
-const fooldalRouter = require('./routes/fooldal.routes');
 const turakRouter = require('./routes/turak.route');
 const profilRouter = require('./routes/profil.route');
 const gombaRouter = require('./routes/gomba.route');
@@ -50,7 +49,6 @@ app.use(cors({ origin: 'http://localhost:4200', credentials: true }));
 const PORT = 3000;
 
 //route-ok definiálása
-app.use("/", fooldalRouter);
 app.use("/",regisztracioRouter);
 app.use("/",bejelentkezesRouter);
 app.use("/", turakRouter);
