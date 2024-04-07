@@ -45,7 +45,6 @@
         <p class="komment" style="font-style: italic; font-weight: bold">{{komment.Kommentelo}}</p>
         <p class="komment">{{komment.Komment}}</p>
           <p *ngIf="komment.Kommentelo === felhasznalonev">
-            <mat-icon>edit</mat-icon>
         <!--      KOMMENT TÖRLÉS      -->
             <button (click)="forumService.kommentTorles(komment.Komment_id)"><mat-icon style="color: red">delete</mat-icon></button>
           </p>

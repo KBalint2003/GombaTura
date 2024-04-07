@@ -1,113 +1,227 @@
-<!--<table class="table ">-->
-<!--  <thead>-->
-<!--    <tr>-->
-<!--    </tr>-->
-<!--  </thead>-->
-<!--  <tbody *ngFor="let gomba of gombak ">-->
-<!--      <tr>-->
-<!--          <th>{{gomba.Magyar_nev}}</th>-->
-<!--          <th>{{gomba.Latin_nev}}</th>-->
-<!--      </tr>-->
-
-<!--  </tbody>-->
-<!--</table>-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">Magyar név</th>
-    <th scope="col">Latin név</th>
-    <th scope="col">Nemzetség</th>
-    <th scope="col">Étkezés értéke</th>
-    <th scope="col">Feltétel</th>
-    <th scope="col">Leírás</th>
-    <th scope="col">Bocskor</th>
-    <th scope="col">Gallér</th>
-    <th scope="col">Szezon eleje</th>
-    <th scope="col">Szezon vége</th>
-    <th scope="col">Növényzet</th>
-    <th scope="col">Termőtest típus</th>
-    <th scope="col">Termőrétegtartó típusok</th>
-    <th scope="col">Kalap forma</th>
-    <th scope="col">Kalap felszín</th>
-    <th scope="col">Kalap perem</th>
-    <th scope="col">Lemezállás</th>
-    <th scope="col">Lemez él</th>
-    <th scope="col">Burok maradvány</th>
-    <th scope="col">Tönk alak</th>
-    <th scope="col">Tönk Felület</th>
-    <th scope="col">Hús</th>
-    <th scope="col">Hús elszíneződés</th>
-    <th scope="col">Íz</th>
-    <th scope="col">Illat</th>
-    <th scope="col">Ára</th>
-    <th scope="col">Kép készítő neve</th>
-    <th scope="col">Kép neve</th>
-  </tr>
-  </thead>
-  <tbody>
-  @for (gomba of gombakSlice; track gomba.Gomba_Id)  {
-  <tr>
-    <th scope="row">{{gomba.Gomba_Id}}</th>
-        <td>{{ gomba.Magyar_nev }}</td>
-        <td>{{gomba.Latin_nev }}</td>
-        <td>{{ gomba.Nemzetseg }}</td>
-        <td>{{gomba.Etkezes_ertek}}</td>
-        <td>{{gomba.Feltetel}}</td>
-        <td>{{gomba.Leiras}}</td>
-        <td>{{gomba.Bocskora}}</td>
-        <td>{{gomba.Galler}}</td>
-        <td>{{gomba.Szezon_eleje}}</td>
-        <td>{{gomba.Szezon_vege}}</td>
-        <td>{{gomba.Novenyzet}}</td>
-        <td>{{gomba.Termotest_tipus}}</td>
-        <td>{{gomba.Termoretegtarto_tipusok}}</td>
-        <td>{{gomba.Kalap_forma}}</td>
-        <td>{{gomba.Kalap_felszin}}</td>
-        <td>{{gomba.Kalap_perem}}</td>
-        <td>{{gomba.Lemezallas}}</td>
-        <td>{{gomba.Lemez_el}}</td>
-        <td>{{gomba.Burok_maradvany}}</td>
-        <td>{{gomba.Tonk_alak}}</td>
-        <td>{{gomba.Tonk_felulet}}</td>
-        <td>{{gomba.Hus}}</td>
-        <td>{{gomba.Hus_elszinezodes}}</td>
-        <td>{{gomba.Ize}}</td>
-        <td>{{gomba.Illata}}</td>
-        <td>{{gomba.Ara_HUF}}</td>
-        <td>{{gomba.Kep_keszito_neve}}</td>
-        <td>{{gomba.Kep_neve}}</td>
-      </tr>
-    }
-  </tbody>
-</table>
-
-<div class="d-flex justify-content-between p-2">
-  <ngb-pagination
-    (pageChange)="refreshCountries()"
-    [(page)]="page"
-    [collectionSize]="gombak.length"
-    [pageSize]="pageSize"
-  >
-  </ngb-pagination>
-
-  <select (ngModelChange)="refreshCountries()" [(ngModel)]="pageSize" class="form-select" style="width: auto">
-    <option [ngValue]="10">5 items per page</option>
-    <option [ngValue]="15">10 items per page</option>
-    <option [ngValue]="25">15 items per page</option>
-  </select>
+<div>
+  <input class="kereses" type="text" placeholder="Keresés... " [(ngModel)]="searchText" #searchbar/>
+  <button id="helpButton" placement="end" ngbTooltip="Bővebb információkért kattintson a gomba képére!"><mat-icon>help</mat-icon></button>
+  <table class="table table-striped">
+    <thead>
+    <tr *ngIf="(gombak | filter: searchText).length > 1">
+      <th>Gomba képe</th>
+      <th>Magyar név</th>
+      <th>Latin név</th>
+      <th>Leírás</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let gomba of gombak | filter: searchText">
+      <td class="gombaTd kep" (click)="GombaMegnyitasModal(gombaMegnyitas)">
+        <img src="{{gomba.Kep_neve}}" alt="" >
+      </td>
+      <td class="gombaTd">{{ gomba.Magyar_nev }}</td>
+      <td class="gombaTd">{{ gomba.Latin_nev }}</td>
+      <td class="gombaTd">{{ gomba.Leiras }}</td>
+      <ng-template #gombaMegnyitas let-modal class="gombaMegnyitas">
+        <div class="modal-header gombaMegnyitas">
+          <p id="modalCim">{{gomba.Magyar_nev}}</p>
+          <button type="button" class="bezaroGomb"  (click)="modal.dismiss('Cross click')">X</button>
+        </div>
+        <div class="modal-body gombaMegnyitas">
+          <table>
+            <tr>
+              <td class="modalCim">Magyar név:</td>
+              <td class="modalSzoveg">{{gomba.Magyar_nev}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Latin név:</td>
+              <td class="modalSzoveg">{{gomba.Latin_nev}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Nemzetség:</td>
+              <td class="modalSzoveg">{{gomba.Nemzetseg}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Étkezés érték:</td>
+              @if (gomba.Etkezes_ertek === 0) {
+                <td class="modalSzoveg">Ehető</td>
+              }
+              @else if (gomba.Etkezes_ertek === 1) {
+                <td class="modalSzoveg" style="color: red; font-weight: bold">Mérgező</td>
+              }
+              @else if (gomba.Etkezes_ertek === 2) {
+                <td class="modalSzoveg">Nem ehető</td>
+              }
+              @else if (gomba.Etkezes_ertek === 3) {
+                <td class="modalSzoveg" style="color: forestgreen; font-weight: bold">Védett</td>
+              }
+            </tr>
+            <tr>
+              @if (gomba.Feltetel === "") {}
+              @else {
+                <td class="modalCim">Feltétel:</td>
+                <td class="modalSzoveg">{{gomba.Feltetel}}</td>
+              }
+            </tr>
+            <tr>
+              <td class="modalCim">Leírás:</td>
+              <td class="modalSzoveg">{{gomba.Leiras}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Bocskor:</td>
+              @if (gomba.Bocskora === 0) {
+                <td class="modalSzoveg">Nincs</td>
+              }
+              @else {
+              <td class="modalSzoveg">Van</td>
+              }
+            </tr>
+            <tr>
+              <td class="modalCim">Gallér:</td>
+              @if (gomba.Galler === 0){
+                <td class="modalSzoveg">Nincs</td>
+              } @else {
+                <td class="modalSzoveg">Van</td>
+              }
+            </tr>
+            <tr>
+              <td class="modalCim">Szezon eleje:</td>
+              @if (gomba.Szezon_eleje === 3) {
+                <td class="modalSzoveg">Március</td>
+              }
+              @else if (gomba.Szezon_eleje === 4) {
+                <td class="modalSzoveg">Április</td>
+              }
+              @else if (gomba.Szezon_eleje === 5) {
+                <td class="modalSzoveg">Május</td>
+              }
+              @else if (gomba.Szezon_eleje === 6) {
+                <td class="modalSzoveg">Június</td>
+              }
+              @else if (gomba.Szezon_eleje === 7) {
+                <td class="modalSzoveg">Július</td>
+              }
+              @else if (gomba.Szezon_eleje === 8) {
+                <td class="modalSzoveg">Augusztus</td>
+              }
+              @else if (gomba.Szezon_eleje === 9) {
+                <td class="modalSzoveg">Szeptember</td>
+              }
+              @else if (gomba.Szezon_eleje === 10) {
+                <td class="modalSzoveg">Október</td>
+              }
+            </tr>
+            <tr>
+              <td class="modalCim">Szezon vége:</td>
+              @if (gomba.Szezon_vege === 4) {
+                <td class="modalSzoveg">Április</td>
+              }
+              @else if (gomba.Szezon_vege === 5) {
+                <td class="modalSzoveg">Május</td>
+              }
+              @else if (gomba.Szezon_vege === 7) {
+                <td class="modalSzoveg">Július</td>
+              }
+              @else if (gomba.Szezon_vege === 8) {
+                <td class="modalSzoveg">Augusztus</td>
+              }
+              @else if (gomba.Szezon_vege === 9) {
+                <td class="modalSzoveg">Szeptember</td>
+              }
+              @else if (gomba.Szezon_vege === 10) {
+                <td class="modalSzoveg">Október</td>
+              }
+              @else if (gomba.Szezon_vege === 11) {
+                <td class="modalSzoveg">November</td>
+              }
+              @else if (gomba.Szezon_vege === 12) {
+                <td class="modalSzoveg">December</td>
+              }
+            </tr>
+            <tr>
+              <td class="modalCim">Növényzet:</td>
+              <td class="modalSzoveg">{{gomba.Novenyzet}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Termőtest típus:</td>
+              <td class="modalSzoveg">{{gomba.Termotest_tipus}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Leírás:</td>
+              <td class="modalSzoveg">{{gomba.Leiras}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Termőrétegtartó típusok:</td>
+              <td class="modalSzoveg">{{gomba.Termoretegtarto_tipusok}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Kalap forma:</td>
+              <td class="modalSzoveg">{{gomba.Kalap_forma}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Kalaő felszín:</td>
+              <td class="modalSzoveg">{{gomba.Kalap_felszin}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Kalap perem:</td>
+              <td class="modalSzoveg">{{gomba.Kalap_perem}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Lemezállás:</td>
+              <td class="modalSzoveg">{{gomba.Lemezallas}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Lemez él:</td>
+              <td class="modalSzoveg">{{gomba.Lemez_el}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Burok maradvány:</td>
+              <td class="modalSzoveg">{{gomba.Burok_maradvany}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Tönk alak:</td>
+              <td class="modalSzoveg">{{gomba.Tonk_alak}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Tönk felület:</td>
+              <td class="modalSzoveg">{{gomba.Tonk_felulet}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Hús:</td>
+              <td class="modalSzoveg">{{gomba.Hus}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Hús elszíneződés:</td>
+              <td class="modalSzoveg">{{gomba.Hus_elszinezodes}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Íz:</td>
+              <td class="modalSzoveg">{{gomba.Ize}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Illat:</td>
+              <td class="modalSzoveg">{{gomba.Illata}}</td>
+            </tr>
+            <tr>
+              <td class="modalCim">Ára:</td>
+              @if (gomba.Ara_HUF == 0) {
+                <td class="modalSzoveg" style="color: forestgreen; font-weight: bold">Ingyenesen szedhető</td>
+              } @else {
+                <td class="modalSzoveg" style="color: red; font-weight: bold">{{gomba.Ara_HUF}} Ft</td>
+              }
+            </tr>
+            <tr>
+              <td class="modalCim">Kép készítő neve:</td>
+              <td class="modalSzoveg">{{gomba.Kep_keszito_neve}}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer gombaMegnyitas"></div>
+      </ng-template>
+    </tr>
+    <tr *ngIf="(gombak | filter: searchText).length === 0">
+      <td colspan="3" class="no-results">
+        <mat-icon>error</mat-icon>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>
+
+

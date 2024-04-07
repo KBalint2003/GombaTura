@@ -1,4 +1,71 @@
 .table {
-  margin: 3% 3% 3% 3%;
+  margin: 3% auto 3% auto;
   width: 950px;
+  border: 2px solid black;
+}
+
+th {
+  background-color: darkgray;
+  font-size: 20px;
+  border-right: 1px solid black;
+  text-align: center;
+}
+
+table {
+}
+
+#modalCim {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.modalCim {
+  font-weight: bold;
+  font-size: 18px;
+  border: 2px solid black;
+  padding: 20px;
+}
+
+.modalSzoveg {
+  border: 2px solid black;
+  padding: 20px;
+}
+
+.gombaTd {
+  vertical-align: middle;
+  border-right: 1px solid black;
+}
+
+img {
+  width: 600px;
+  height: 150px;
+}
+
+.kereses {
+  border: 1px solid black ;
+  margin: 3% 0 0 3%;
+  padding: 5px;
+  width: 20%;
+}
+
+.kep:hover {
+  background-color: lightgreen;
+}
+
+.bezaroGomb {
+  color: red;
+  font-weight: bold;
+}
+
+.gombaMegnyitas {
+  margin-left: -25%;
+  width: 800px;
+  background-color: white;
+  padding: 5%;
+}
+
+#helpButton {
+  margin-top: 2%;
+  margin-left: 1%;
+  font-size: 26px;
 }

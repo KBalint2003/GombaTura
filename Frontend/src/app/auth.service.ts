@@ -15,8 +15,8 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) { }
 
   private regisztracioRoute = "http://localhost:3000/regisztracio";
-  private bejelentkezesRoute = "http://localhost:3000/login";
-  private kijelentkezesRoute = "http://localhost:3000/logout"
+  private bejelentkezesRoute = "http://localhost:3000/bejelentkezes";
+  private kijelentkezesRoute = "http://localhost:3000/kijelentkezes"
 
   tokenIDjson: any
   regHiba: string = ''

@@ -7,7 +7,7 @@ const bejelentkezesController = require('../controllers/bejelentkezes.controller
 const bejelentkezesRouter = express.Router();
 
 //Route-ok létrehozása, ahol szükséges, a route elérési útja és a megfelelő controller közé az AuthMiddleware elhelyezése
-bejelentkezesRouter.post("/login", bejelentkezesController.bejelentkezesPOSTController)
-bejelentkezesRouter.post("/logout",AuthMiddleware, bejelentkezesController.kijelentkezesPOSTController)
+bejelentkezesRouter.post("/bejelentkezes", bejelentkezesController.bejelentkezesPOSTController)
+bejelentkezesRouter.post("/kijelentkezes",AuthMiddleware, bejelentkezesController.kijelentkezesPOSTController)
 
 module.exports = bejelentkezesRouter;

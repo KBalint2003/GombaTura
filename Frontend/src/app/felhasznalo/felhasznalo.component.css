@@ -63,11 +63,10 @@
 /* Profil törlése gomb. */
 
 #profdelete {
-  margin-top: 180%;
-  margin-left: 18%;
+  margin-top: 18%;
   background-color: crimson;
-  border-radius: 20%;
-  padding: 10%;
+  border-radius: 20px;
+  padding: 5%;
   font-size: larger;
 }
 

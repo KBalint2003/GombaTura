@@ -8,7 +8,6 @@ export class EnciklopediaService {
 
   constructor(protected http: HttpClient) { }
 
-  public gombaLekeres = "http://localhost:3000/enciklopedia";
 
 
 

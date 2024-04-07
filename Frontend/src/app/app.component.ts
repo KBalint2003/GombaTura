@@ -27,6 +27,7 @@ export class AppComponent implements OnInit{
       const idoMasodpercben = Math.floor(Date.now() / 1000);
       if (idoMasodpercben > dekodoltToken.exp) {
         localStorage.removeItem('access')
+        window.location.reload()
       }
       return
   }

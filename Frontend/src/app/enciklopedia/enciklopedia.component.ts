@@ -1,11 +1,13 @@
-import {Component, OnInit, } from '@angular/core';
-import {NgForOf, SlicePipe} from "@angular/common";
+import {Component, inject, OnInit, TemplateRef,} from '@angular/core';
+import {NgForOf, NgIf, SlicePipe} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
 import {Gomba} from "./gomba";
 import {EnciklopediaService} from "../enciklopedia.service";
 import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { DecimalPipe } from '@angular/common';
-import {NgbPaginationConfig, NgbPaginationModule, NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
+import {Kereses} from "./kereses";
+import {MatIcon} from "@angular/material/icon";
+import {NgbModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
 
 
@@ -15,20 +17,23 @@ import {NgbPaginationConfig, NgbPaginationModule, NgbTypeaheadModule} from '@ng-
   imports: [
     DecimalPipe,
     FormsModule,
-    NgbTypeaheadModule,
-    NgbPaginationModule,
     NgForOf,
     SlicePipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Kereses,
+    NgIf,
+    MatIcon,
+    NgbTooltip
   ],
   templateUrl: './enciklopedia.component.html',
   styleUrl: './enciklopedia.component.css'
 })
 export class EnciklopediaComponent implements OnInit{
 
-  constructor(protected http: HttpClient, protected enciklopediaService: EnciklopediaService, config: NgbPaginationConfig, ) {
+  constructor(protected http: HttpClient) {
   }
 
+  protected gombaLekeres = "http://localhost:3000/enciklopedia";
 
 
   gomba: Gomba = {
@@ -64,30 +69,20 @@ export class EnciklopediaComponent implements OnInit{
   }
 
   gombak: Gomba[] = []
-  gombakSlice: Gomba[] = []
 
-  page = 0;
-  pageSize = 2;
+  searchText = '';
+
+  private modalService = inject(NgbModal);
 
 
   ngOnInit() {
-    this.refreshCountries()
-    return this.http.get<Gomba>(this.enciklopediaService.gombaLekeres).subscribe((valasz: any) => {
+    return this.http.get<Gomba>(this.gombaLekeres).subscribe((valasz: any) => {
       this.gombak = valasz.gombak
-      this.gombakSlice = this.gombak.slice(
-        (this.page - 1) * this.pageSize,
-        (this.page - 1) * this.pageSize + this.pageSize
-      )
     })
   }
 
-  refreshCountries() {
-    console.log(this.page)
-    this.gombakSlice = this.gombak.slice(
-      (this.page) * this.pageSize,
-      (this.page) * this.pageSize + this.pageSize,
-    );
-    console.log(this.gombakSlice)
+  GombaMegnyitasModal(gombaMegnyitas: TemplateRef<any>) {
+    this.modalService.open(gombaMegnyitas, { ariaLabelledBy: 'gombaMegnyitas' })
   }
 
 

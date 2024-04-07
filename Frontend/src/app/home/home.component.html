@@ -1,5 +1,4 @@
-@if (images) {
-  <ngb-carousel class="keptar" [pauseOnHover] = true [interval]= 3000>
+<ngb-carousel class="keptar" [pauseOnHover] = true [interval]= 3000>
     <ng-template ngbSlide>
       <div class="keptarKep">
         <a routerLink="/enciklopedia"><img [src]="images[0]" alt="Random first slide" /></a>
@@ -41,4 +40,4 @@
       </div>
     </ng-template>
   </ngb-carousel>
-}<app-footer></app-footer>
+<app-footer></app-footer>
