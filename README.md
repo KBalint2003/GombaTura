@@ -32,7 +32,7 @@ Fejlesztéshez használt szoftverek:
 NodeJs: 18.15.0
 Angular: 17.0.8
 Visual Studio Code: 1.88.0
-Xampp: 8.2.12 (ApacheFriends XAMPP Version)
+Xampp: 10.4.28 (ApacheFriends XAMPP Version)
 
 Üzembehelyezés menete:
 A github zip fájlban letelepítés
