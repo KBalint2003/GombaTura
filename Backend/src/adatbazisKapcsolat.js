@@ -2,7 +2,7 @@
 const { Sequelize } = require('sequelize');
 
 //Kapcsolat definiálása a sequelize-nak
-const sequelize = new Sequelize('gombaproba','root','',{
+const sequelize = new Sequelize('mushroomtour','root','',{
     host: 'localhost',
     dialect: 'mariadb',
     define: {
