@@ -3,14 +3,18 @@ import {FormsModule} from "@angular/forms";
 import {signupObj} from "../felhasznaloAdatObj";
 import { AuthService } from "../auth.service";
 import {NgIf} from "@angular/common";
+import {MatIcon} from "@angular/material/icon";
+import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-regisztracio',
   standalone: true,
-  imports: [
-    FormsModule,
-    NgIf
-  ],
+    imports: [
+        FormsModule,
+        NgIf,
+        MatIcon,
+        NgbTooltip
+    ],
   templateUrl: './regisztracio.component.html',
   styleUrl: './regisztracio.component.css'
 })

@@ -105,7 +105,12 @@ export class TuraService {
         window.location.reload()
       }
     }, error => {
-      console.log(error)
+      if (error.error.type === "nincsSzulEv") {
+        this.turahiba = 'nincsSzulEv'
+      }
+      else if (error.error.type === "nem18") {
+        this.turahiba = "nem18"
+      }
     } )
   }
 

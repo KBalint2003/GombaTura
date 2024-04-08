@@ -40,7 +40,7 @@
             <tr>
               <td class="modalCim">Étkezés érték:</td>
               @if (gomba.Etkezes_ertek === 0) {
-                <td class="modalSzoveg">Ehető</td>
+                <td class="modalSzoveg" style="color: forestgreen; font-weight: bold">Ehető</td>
               }
               @else if (gomba.Etkezes_ertek === 1) {
                 <td class="modalSzoveg" style="color: red; font-weight: bold">Mérgező</td>
@@ -49,7 +49,7 @@
                 <td class="modalSzoveg">Nem ehető</td>
               }
               @else if (gomba.Etkezes_ertek === 3) {
-                <td class="modalSzoveg" style="color: forestgreen; font-weight: bold">Védett</td>
+                <td class="modalSzoveg" style="color: orange; font-weight: bold">Védett</td>
               }
             </tr>
             <tr>
@@ -217,7 +217,8 @@
     </tr>
     <tr *ngIf="(gombak | filter: searchText).length === 0">
       <td colspan="3" class="no-results">
-        <mat-icon>error</mat-icon>
+        Nincs a keresésnek megfelelő találat
+
       </td>
     </tr>
     </tbody>

@@ -2,7 +2,6 @@ import {Component, inject, OnInit, TemplateRef,} from '@angular/core';
 import {NgForOf, NgIf, SlicePipe} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
 import {Gomba} from "./gomba";
-import {EnciklopediaService} from "../enciklopedia.service";
 import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { DecimalPipe } from '@angular/common';
 import {Kereses} from "./kereses";

@@ -85,6 +85,7 @@ async function posztokProfilGETController(req, res) {
 
         }));
 
+
         res.status(200).json({
             success: true,
             posztok: formazottPosztok

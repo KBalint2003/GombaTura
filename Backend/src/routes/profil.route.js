@@ -9,7 +9,7 @@ const profilRouter = express.Router();
 
 //Route-ok létrehozása, a route elérési útja és a megfelelő controller közé az AuthMiddleware elhelyezése
 profilRouter.get("/profil",AuthMiddleware, profilController.felhasznaloGETController);
-profilRouter.get("/profil", AuthMiddleware, forumController.posztokProfilGETController)
+profilRouter.get("/profil/posztok", AuthMiddleware, forumController.posztokProfilGETController)
 profilRouter.patch("/profil",AuthMiddleware, profilController.felhasznaloPATCHController);
 profilRouter.delete("/profil",AuthMiddleware, profilController.felhasznaloDELETEController);
 

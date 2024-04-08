@@ -356,6 +356,7 @@ async function turakPOSTController(req, res) {
         if (tizennyolcE < 18) {
             res.status(403).json({
                 error: true,
+                type: 'nem18',
                 status: 403,
                 message: "Legalább 18 évesnek kell lenni, hogy túrára tudjon jelentkezni!"
             })
@@ -472,7 +473,7 @@ async function turakPUTController(req, res) {
             res.status(400).json({
                 error: true,
                 status: 400,
-                type: "RosszErkIdo",
+                type: "F",
                 message: "Az érkezési idő nem lehet kisebb vagy egyenlő az indulási idővel!"
             })
             return;

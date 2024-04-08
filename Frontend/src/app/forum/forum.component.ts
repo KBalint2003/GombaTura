@@ -45,12 +45,7 @@ export class ForumComponent implements OnInit{
 
   Kommentek : Komment[] = []
 
-  ujPosztKommenttel: PosztKommenttel = {
-    Poszt_id: '',
-    Cim : '',
-    Szoveg: '',
-    PosztoloNeve: '',
-  }
+
 
   PosztokKommenttel : PosztKommenttel[] = []
 

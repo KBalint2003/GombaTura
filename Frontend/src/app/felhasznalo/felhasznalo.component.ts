@@ -6,14 +6,15 @@ import {signupObj} from "../felhasznaloAdatObj";
 import {jwtDecode, JwtPayload} from "jwt-decode";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "../auth.service";
-import {NgIf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-felhasznalo',
   standalone: true,
   imports: [
     FormsModule,
-    NgIf
+    NgIf,
+    NgForOf
   ],
   templateUrl: './felhasznalo.component.html',
   styleUrl: './felhasznalo.component.css'
@@ -36,7 +37,7 @@ export class FelhasznaloComponent implements OnInit{
     telszam = ''
     szulido = ''
 
-  constructor(protected http: HttpClient,private felhasznaloService: FelhasznaloService, protected authservice: AuthService) {
+  constructor(protected http: HttpClient,protected felhasznaloService: FelhasznaloService, protected authservice: AuthService) {
   }
 
   ngOnInit() {
@@ -49,11 +50,13 @@ export class FelhasznaloComponent implements OnInit{
       this.felhasznalo.userID = dekodoltToken.userId
       this.felhasznalo.felhasznalonev = dekodoltToken.felhasznalonev
 
+      this.felhasznaloService.sajatPosztLekeres()
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.authservice.tokenIDjson.token
     });
-      return this.http.get(this.felhasznaloService.profilAdatLekeres, {headers}).subscribe((valasz: any) => {
+      return this.http.get(this.felhasznaloService.profilAdatLekeresRoute, {headers}).subscribe((valasz: any) => {
         this.telszam = valasz.user.Telefon_szam
         this.szulido = valasz.user.Szuletesi_ido
       })
@@ -68,7 +71,6 @@ export class FelhasznaloComponent implements OnInit{
 
   profilTorlesGomb() {
     this.felhasznaloService.profiltorles()
-    console.log("Törlés")
   }
 
 }

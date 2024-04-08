@@ -9,6 +9,8 @@
 <div class="alertbox">
   <p class="alert alert-danger" *ngIf="this.turaservice.turahiba.length > 2 && JelentkezettTura.checked">Ön még nem jelentkezett egy túrára sem!</p>
   <p class="alert alert-danger" *ngIf="this.turaservice.turahiba == 'Ön még nem hozott létre egy túrát sem.' && SajatTura.checked">Ön még nem hozott létre egy túrát sem!</p>
+  <p class="alert alert-danger" *ngIf="this.turaservice.turahiba == 'nincsSzulEv'">A túra jelentkezéséhez adja meg a születési évét a Profil menüben.</p>
+  <p class="alert alert-danger" *ngIf="this.turaservice.turahiba == 'nem18'">A túra jelentkezéséhez minimum 18 évesnek kell lenni.</p>
 </div>
   <div class="container tura" *ngFor="let tura of turak">
     <!-- A túra megnevezése -->

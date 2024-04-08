@@ -5,23 +5,19 @@ footer {
 
 /* A kapcsolat és a forrás igazításai*/
 
-#kapcsolat, #forras {
+#kapcsolat {
   display: inline-block;
 }
 
-#kapcsolat {
-  float: right;
-  margin-right: 10%;
-}
 
-#forras {
+#kapcsolat {
   float: left;
   margin-left: 10%;
+  font-size: larger;
 }
 
-#kapcs,#forr {
+#kapcs {
   color: rgb(255, 0, 0);
-  font-size: larger;
 }
 
 
