@@ -49,6 +49,56 @@ async function posztokGETController(req, res) {
     }
 }
 
+async function posztokProfilGETController(req, res) {
+   
+    try{
+
+        const id = req.user.userId;
+
+        const posztok = await Poszt.findAll({
+            include: [
+                {
+                    model: Felhasznalo,
+                    as: "PosztoloNeve",
+                    attributes: ["Felhasznalonev"]
+                }
+            ],
+            group: 'Poszt_id',
+            raw: true,
+            where: {Posztolo : id}
+        });
+
+        if (!posztok.length) {
+            res.status(404).json({
+                error: true,
+                status: 404,
+                message:"Nincsenek posztok"
+            })
+            return;
+        }
+
+        const formazottPosztok = posztok.map(poszt =>({
+            Poszt_id: poszt.Poszt_id,
+            Cim: poszt.Cim,
+            Szoveg: poszt.Szoveg,
+            PosztoloNeve: poszt["PosztoloNeve.Felhasznalonev"],
+
+        }));
+
+        res.status(200).json({
+            success: true,
+            posztok: formazottPosztok
+        })
+    }
+    catch{
+        res.status(500).send({
+            success: false,
+            status: 500,
+            message:"Szerver hiba"
+          });
+    }
+}
+
 async function posztKommentekkelGETController(req, res) {
 
     try{
@@ -325,50 +375,6 @@ try {
     }
 }
 
-function kommentPATCHController(req, res) {
-
-    const kommentId = req.headers.kommentId;
-
-    KommentModel.update(req.body.poszt, { where: { posztId }, individualHooks: true })
-    .then((rowsAffected) => {
-      //Nem található poszt ilyen id-val
-      if (Object.entries(rowsAffected[1]).length === 0) {
-        res.status(404).send({
-          success: false,
-          status: 404,
-          message: `Komment ${posztId} id-val nem található. A Komment frissítése sikertelen.`,
-        });
-
-        return;
-      }
-
-      //if rowsAffected[0] === 1 Van változás
-      if (rowsAffected[0] === 1) {
-        res.status(200).send({
-          success: true,
-          status: 200,
-          message: `Poszt frissítve.`,
-
-        });
-      } else {
-        // if rowsAffected[0] !== 1 Nincs változás az elküldött adatok és a túrának a letárolt adatai között.
-        res.status(200).send({
-          success: false,
-          status: 200,
-          message: `Nincs változás az elküldött adatok és a posztnak a letárolt adatai között.`,
-        });
-      }
-    })
-    .catch((error) => {
-        console.log(error);
-      res.status(500).send({
-        success: false,
-        status: 500,
-        message:"Szerver hiba"
-      });
-    });
-}
-
 async function kommentDELETEController(req, res) {
     try {
 
@@ -419,4 +425,4 @@ async function kommentDELETEController(req, res) {
     }
 }
 
-module.exports = {posztokGETController,posztKommentekkelGETController, posztPUTController,posztPATCHController, posztDELETEController,kommentPUTController, kommentPATCHController, kommentDELETEController}
+module.exports = {posztokGETController,posztKommentekkelGETController, posztokProfilGETController, posztPUTController,posztPATCHController, posztDELETEController,kommentPUTController,  kommentDELETEController}

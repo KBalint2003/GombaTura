@@ -147,5 +147,5 @@ async function regisztracioPUTController (req, res){
 
 
 module.exports= {
-    regisztracioGETController, regisztracioPUTController
+     regisztracioPUTController
 }
