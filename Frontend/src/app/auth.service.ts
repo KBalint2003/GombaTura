@@ -32,15 +32,11 @@ export class AuthService {
 
 
   ujFelhasznalo(felhasznalo: signupObj): Subscription {
-    return this.http.put<signupObj>(this.regisztracioRoute, felhasznalo,).subscribe((valasz: any) => {
+    return this.http.put<signupObj>(this.regisztracioRoute, felhasznalo).subscribe((valasz: any) => {
       if (valasz.success) {
         this.router.navigate(['/'])
-          .then(() => {
-            console.log("Sikeres navigálás")
-          })
-          .catch(() => {
-            console.log("Sikertelen navigálás")
-          })
+          .then(() => {})
+          .catch(() => {})
       }
     }, error => {
       if (error.error.type === "Nincsfnev") {
