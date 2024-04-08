@@ -1,5 +1,6 @@
 # GombaTura
 Iskola logója: ![image](https://github.com/KBalint2003/GombaTura/assets/112862164/a0c55f5f-8603-4fa9-a883-dd4d2338ec85)
+
 Iskola neve: Szent István Katolikus Technikum és Gimnázium
 
 Projekt címe: MushroomTour
