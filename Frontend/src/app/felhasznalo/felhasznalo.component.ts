@@ -43,7 +43,6 @@ export class FelhasznaloComponent implements OnInit{
   ngOnInit() {
     const token = localStorage.getItem('access')
     if (!token) {
-      console.error("Nincs token")
       return
     }
       const dekodoltToken = jwtDecode(token) as JwtPayload & { felhasznalonev: string, userId: string }

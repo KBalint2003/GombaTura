@@ -30,6 +30,3 @@ export interface Gomba {
   Kep_neve: string
 }
 
-export interface Gombak {
-  gombak: Gomba[]
-}
